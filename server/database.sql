@@ -5,5 +5,6 @@ CREATE TABLE users(
     firstname VARCHAR(30),
     lastname VARCHAR(30),
     email VARCHAR(30),
-    user_password VARCHAR
+    user_password VARCHAR,
+    confirm_password VARCHAR
 );

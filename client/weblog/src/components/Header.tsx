@@ -12,7 +12,7 @@ const Header: React.FC = () => {
                 <li className='hover:text-indigo-600'><Link to='/'>Home</Link></li>
                 <li className='hover:text-indigo-600'><Link to='/about'>About</Link></li>
                 <li className='hover:text-indigo-600'><Link to='/contact'>Contact</Link></li>
-                <Link to='/signup'><button className='bg-indigo-600 rounded-sm p-1 text-sm text-white hover:shadow-md'>Login/SignUp</button></Link>
+                <Link to='/register'><button className='bg-indigo-600 rounded-sm p-1 text-sm text-white hover:shadow-md'>Login/SignUp</button></Link>
             </ul>
         </div>
     </div>
