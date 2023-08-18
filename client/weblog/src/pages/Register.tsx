@@ -29,7 +29,7 @@ const Register: React.FC = () => {
           e.preventDefault();
           const { firstname, lastname, email, user_password, confirm_password } = user;
         try {
-            const response = await fetch('/user/register', {
+            const response = await fetch('/user-register', {
                 method: 'POST',
                 headers: { 'Content-type' : 'application/json' },
                 body : JSON.stringify({firstname, lastname, email, user_password, confirm_password})
@@ -66,7 +66,7 @@ const Register: React.FC = () => {
                     <input className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border rounded' type="password" name='user_password' value={user.user_password} onChange={handleChange}/>
                     </span>
                     <span className='flex flex-col gap-1'>
-                    <p className='text-sm text-gray-600'>Confim Password</p>
+                    <p className='text-sm text-gray-600'>Confirm Password</p>
                     <input className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border rounded' type="password" name='confirm_password' value={user.confirm_password} onChange={handleChange}/>
                     </span>
                 </form>
