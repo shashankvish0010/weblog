@@ -16,38 +16,47 @@ const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 const db = require('../dbconnect');
 const { v4: uuidv4 } = require('uuid');
-const dbpool = require('../../dbconnect');
+const dbpool = require('../dbconnect');
 const bcrypt = require('bcrypt');
+const bodyParser = require('body-parser');
+router.use(bodyParser.json());
 router.get('/', (req, res) => res.send("hello from backend"));
 router.post('/user-register', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = uuidv4();
-    const { firstname, lastname, email, user_password, confirm_password } = req.body;
-    if (!firstname || !lastname || !email || !user_password || !confirm_password) {
-        res.json({ success: false, message: 'Fill all the fields' });
-    }
-    const emailexist = yield dbpool.query('SELECT email from users WHERE email=$1', [email]);
-    if (emailexist) {
-        res.json({ success: false, message: 'Email already registered' });
-    }
-    const salt = bcrypt.gensalt(10);
-    const hashedPassword = yield bcrypt.hash(user_password, salt);
-    const confirmHashedPassword = yield bcrypt.hash(confirm_password, salt);
-    const ismatch = bcrypt.compare(hashedPassword, confirmHashedPassword);
-    if (!ismatch) {
-        res.json({ success: false, message: 'Password does not match' });
-    }
     try {
-        const user = yield dbpool.query('INSERT INTO users(id, firstname, lastname, email, user_password, confirm_password) VALUES ($1, $2, $3, $4, $5, $6)', [id, firstname, lastname, email, user_password, confirm_password]);
-        if (user) {
-            res.json({ success: true, message: 'Registered Successfully' });
+        const id = uuidv4();
+        const { firstname, lastname, email, user_password, confirm_password } = req.body;
+        if (!firstname || !lastname || !email || !user_password || !confirm_password) {
+            return res.json({ success: false, message: 'Fill all the fields' });
+        }
+        //   const emailExistsResult = await dbpool.query('SELECT email from users WHERE email=$1', [email]);
+        //   if (emailExistsResult.rows.length > 0) {
+        //     return res.json({ success: false, message: 'Email already registered' });
+        //   }
+        const saltRounds = 10;
+        const salt = yield bcrypt.genSalt(saltRounds);
+        const hashedPassword = yield bcrypt.hash(user_password, salt);
+        const confirmHashedPassword = yield bcrypt.hash(confirm_password, salt);
+        const isMatch = hashedPassword === confirmHashedPassword;
+        if (!isMatch) {
+            return res.json({ success: false, message: 'Password does not match' });
+        }
+        const insertQuery = `
+        INSERT INTO users(id, firstname, lastname, email, user_password, confirm_password)
+        VALUES ($1, $2, $3, $4, $5, $6)
+        RETURNING *`;
+        const userInsertResult = yield dbpool.query(insertQuery, [
+            id, firstname, lastname, email, hashedPassword, confirmHashedPassword
+        ]);
+        if (userInsertResult.rows.length > 0) {
+            return res.json({ success: true, message: 'Registered Successfully' });
         }
         else {
-            res.json({ success: false, message: 'User cannot be registered' });
+            return res.json({ success: false, message: 'User cannot be registered' });
         }
     }
     catch (error) {
-        res.json({ success: false, message: error });
+        return res.json({ success: false, message: error });
     }
 }));
-router.get('/apit', (req, res) => res.send("apti"));
+router.get('/arpit', (req, res) => res.send("apti"));
 module.exports = router;

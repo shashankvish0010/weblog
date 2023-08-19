@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Register: React.FC = () => {
+    const Navigate = useNavigate()
     interface userdata {
         firstname : String;
         lastname : String;
@@ -16,7 +17,7 @@ const Register: React.FC = () => {
         user_password : '',
         confirm_password : ''
     });
-
+    const [status, setStatus] = useState({message : ''})
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
         setUser(prevUser => ({
@@ -29,14 +30,17 @@ const Register: React.FC = () => {
           e.preventDefault();
           const { firstname, lastname, email, user_password, confirm_password } = user;
         try {
-            const response = await fetch('/user-register', {
+            const response = await fetch('/user/register', {
                 method: 'POST',
                 headers: { 'Content-type' : 'application/json' },
                 body : JSON.stringify({firstname, lastname, email, user_password, confirm_password})
             });
             if(response) {
                 const data = await response.json();
-                console.log(data);
+                setStatus( prevStatus => ({
+                    ...prevStatus, message : data.message
+                }))
+                setTimeout( () => {if(data.success===true) {Navigate('/login')} },1500)
             } else { console.log("data not sent") }
         } catch (error) {
             console.log(error);
@@ -44,7 +48,8 @@ const Register: React.FC = () => {
     }
 
   return (
-    <div className='h-[100vh] w-[100vw] flex items-center justify-center'>
+    <div className='h-[100vh] w-[100vw] flex flex-col gap-2 items-center justify-center'>
+    <span><p>{status.message}</p></span>
         <div className='flex flex-col justify-around gap-5 border shadow-md w-max h-max p-4'>
             <div className='text-2xl text-indigo-600 font-semibold'><h1>Register</h1></div>
             <div>
