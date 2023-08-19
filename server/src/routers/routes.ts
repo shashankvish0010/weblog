@@ -1,14 +1,13 @@
-import { log } from "console";
 import  express  from "express"
 const router = express.Router();
-const db = require('../dbconnect');
-const { v4: uuidv4 } = require('uuid');
-const dbpool = require('../dbconnect')
-const bcrypt = require('bcrypt')
-const bodyParser = require('body-parser')
-const jwt = require('jsonwebtoken')
+import { v4 as uuidv4 } from "uuid";
+import dbpool from '../../dbconnect';
+import bcrypt from 'bcrypt';
+import bodyParser from 'body-parser';
+import jwt from 'jsonwebtoken';
+
 require('dotenv').config()
- 
+  
 router.use(bodyParser.json())
  
 router.get('/', (req,res)=> res.send("hello from backend"))
@@ -39,6 +38,30 @@ router.post('/user/register', async (req,res) => {
 }
     }
 }
+});
+
+router.post('/user/login', async (req,res) => {
+    const { email, user_password } = req.body;
+    if( !email || !user_password ) {
+        res.json({ success : false, message : "Fill all the fields."});
+    } else {
+        const userInfo = await dbpool.query('SELECT * FROM users WHERE email = $1', [email])
+        console.log(userInfo.rows[0].email);
+        
+        if(!userInfo) {
+            res.json({ success : false, message : "Email does not exists."});
+        }
+        else {
+        const storedPassword = userInfo.rows[0].user_password;
+        const ismatch = await bcrypt.compare( user_password, storedPassword);
+        if(ismatch){
+            const token = jwt.sign('jwt', userInfo.rows[0].id);
+            res.json({ success : true,token, message : "Login Successfully"});
+        }else {
+            res.json({ success : false, message : "Password is incorrect."});
+        }
+        }
+    }
 })
 
 module.exports = router

@@ -6,6 +6,7 @@ export default defineConfig({
   server : {
     proxy : {
       '/api' : 'http://localhost:8080/',
-      '/user/register' : 'http://localhost:8080/'
+      '/user/register' : { target : 'http://localhost:8080/', },
+      '/user/login' :  { target : 'http://localhost:8080/', }
   }
 }})

@@ -1,9 +1,9 @@
-const express = require('express')
+import express from 'express';
 const app = express();
-const db = require('../dbconnect');
-const dbpool = require('../dbconnect')
-const cors = require('cors')
-const bodyParser = require('body-parser');
+import db from '../dbconnect';
+import dbpool from '../dbconnect';
+import cors from 'cors';
+import bodyParser from 'body-parser';
 app.use(bodyParser.json())
 app.use(cors())
 app.use(require('./routers/routes'))

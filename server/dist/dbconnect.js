@@ -8,4 +8,4 @@ const pool = new pg_1.Pool({
     port: 5432,
     database: "weblog"
 });
-module.exports = pool;
+exports.default = pool;

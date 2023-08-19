@@ -54,4 +54,20 @@ router.post('/user/register', (req, res) => __awaiter(void 0, void 0, void 0, fu
         }
     }
 }));
+router.post('/user/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email, user_password } = req.body;
+    if (!email || !user_password) {
+        res.json({ success: false, message: "Fill all the fields." });
+    }
+    else {
+        const userEmailExists = yield dbpool.query('SELECT * from users WHERE email=$1', [email]);
+        console.log(userEmailExists);
+        // if(!userEmailExists) {
+        //     res.json({ success : false, message : "Email does not exists."});
+        // }
+        // else {
+        // const userStoredPassword =
+        // }
+    }
+}));
 module.exports = router;
