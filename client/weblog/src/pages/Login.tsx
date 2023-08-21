@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useContext} from 'react'
 import { Link, useNavigate } from 'react-router-dom';
+import { UserContext } from '../Context/UserData';
 
 const Login: React.FC = () => {
     const Navigate = useNavigate()
+    const logcontext = useContext(UserContext)
     interface userCredentials {
         email : String;
         user_password : String;
@@ -11,7 +13,6 @@ const Login: React.FC = () => {
         email : '',
         user_password : ''
     });
-    const [status, setStatus] = useState({message : ''})
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
         setUser(prevUser => ({
@@ -19,37 +20,13 @@ const Login: React.FC = () => {
             [name]:value
         }));
     }
-    const setCookie = (token : String) => {
-        try {
-            document.cookie = `jwt = ${token}; path=/`
-        } catch (error) {
-            console.log(error);      
-        }
-    }
-    const handleSubmit = async (e: React.FormEvent) => {
-          e.preventDefault();
-          const { email, user_password } = user;
-        try {
-            const response = await fetch('/user/login', {
-                method: 'POST',
-                headers: { 'Content-type' : 'application/json' },
-                body : JSON.stringify({ email, user_password })
-            });
-            if(response) {
-                const data = await response.json();
-                setStatus( prevStatus => ({
-                    ...prevStatus, message : data.message
-                }))
-                setTimeout( () => {if(data.success===true) {Navigate('/home'); setCookie(data.token)} },1000)
-            } else { console.log("data not sent") }
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    useEffect(()=> {if(logcontext?.loginstatus.success === true){
+        Navigate('/')
+    }}, [logcontext]);
 
   return (
     <div className='h-[100vh] w-[100vw] flex flex-col gap-2 items-center justify-center'>
-    <span><p>{status.message}</p></span>
+    <span className='p-1 text-center font-semibold shadow-md'><p>{logcontext?.loginstatus.message}</p></span>
         <div className='flex flex-col justify-around gap-5 border shadow-md w-max h-max p-4'>
             <div className='text-2xl text-indigo-600 font-semibold'><h1>Login</h1></div>
             <div>
@@ -70,7 +47,7 @@ const Login: React.FC = () => {
                 <p><Link to='/login'>Register</Link></p>
             </div>
             <div className='text-center'>
-            <button className='bg-indigo-600 w-[35vw] shadow-md rounded-sm p-2 text-md font-semibold text-white' onClick={handleSubmit}>Login</button>
+            <button className='bg-indigo-600 w-[35vw] shadow-md rounded-sm p-2 text-md font-semibold text-white' onClick={()=> {logcontext?.Login(user)}}>Login</button>
             </div>
         </div>
     </div>

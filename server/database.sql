@@ -7,3 +7,12 @@ CREATE TABLE users(
     email VARCHAR,
     user_password VARCHAR
 );
+
+CREATE TABLE admin(
+    id VARCHAR PRIMARY KEY,
+    firstname VARCHAR,
+    lastname VARCHAR,
+    email VARCHAR,
+    admin_password VARCHAR,
+    activation_key VARCHAR
+);
