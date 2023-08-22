@@ -11,5 +11,7 @@ export default defineConfig({
       '/admin/register' : { target : 'http://localhost:8080/' },
       '/admin/login' : { target : 'http://localhost:8080/' },
       '/user/logout': { target : 'http://localhost:8080/' },
+      '/add/subscriber' :  { target : 'http://localhost:8080/' },
+      '/edit/profile' :  { target : 'http://localhost:8080/' },
   }
 }})

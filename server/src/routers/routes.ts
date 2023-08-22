@@ -4,11 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import dbpool from '../../dbconnect';
 import bcrypt from 'bcrypt';
 import bodyParser from 'body-parser';
-import jwt from 'jsonwebtoken';
-import { log } from "console";
-
-require('dotenv').config()
-  
+import jwt from 'jsonwebtoken';  
 router.use(bodyParser.json())
  
 router.get('/', (req,res)=> res.send("hello from backend"))
@@ -54,7 +50,7 @@ router.post('/user/login', async (req,res) => {
         const storedPassword = userInfo.rows[0].user_password;
         const ismatch = await bcrypt.compare( user_password, storedPassword);
         if(ismatch){
-            const token = jwt.sign('jwt', userInfo.rows[0].id);
+            const token = jwt.sign(userInfo.rows[0].id, 'SECRETTOPOFUSERS');
             res.cookie("user_access_token", token).status(201).json({ success : true, userData : userInfo.rows[0], message : "Login Successfully"});
         }else {
             res.json({ success : false, message : "Password is incorrect."});
@@ -110,8 +106,13 @@ router.post('/admin/login', async (req,res) => {
         const storedPassword = adminInfo.rows[0].admin_password;
         const ismatch = await bcrypt.compare(admin_password, storedPassword);
         if(ismatch){
-            const token = jwt.sign('jwt', adminInfo.rows[0].id);
-            res.json({ success : true,token, message : "Login Successfully"});
+            const token = jwt.sign(adminInfo.rows[0].id, 'SECRETTOPOFADMINS');
+            const auth = jwt.verify(token, 'SECRETTOPOFADMINS');
+            if(token && auth){
+                res.cookie("admin_access", token).status(201).json({success : true, adminData : adminInfo.rows[0], message : "Cookie set"})
+            }else {
+                res.json({success : false, message : "Cookie not set"})
+            }
         }else {
             res.json({ success : false, message : "Password is incorrect."});
         }
@@ -124,6 +125,39 @@ router.get('/user/logout', async (req,res) => {
        if(result){
         res.json({success : true, message : "Logout"})
        }
+});
+
+router.put('/add/subscriber', async (req,res)=> {
+    const {id, email} = req.body;
+    try {
+        const subscriberInfo = await dbpool.query('SELECT * FROM users WHERE id=$1', [id]);
+        console.log(email);
+        
+        // if(subscriberInfo){
+        //    const response = await dbpool.query('UPDATE users SET subscription=$2 WHERE id=$1', [id, true])
+        //    response ? res.json({success : true, userData : subscriberInfo.rows[0].email ,message : "Thank you for subscribing"}) : 
+        //    res.json({success : false, message : "User not found, Please login"})
+        // }else {
+        //     res.json({success : false, message : "User not found, Please login"})
+        // }
+    } catch (error) {
+        console.log(error);
+    } 
+})
+
+router.put('/edit/profile', async (req,res) => {
+const {id, firstname , lastname , email } = req.body;
+try {
+    const user = await dbpool.query('SELECT * FROM users WHERE id=$1', [id]);
+    if(user){
+       const response = await dbpool.query('UPDATE users SET firstname=$1, lastname=$2, email=$3 WHERE id=$4', [firstname, lastname, email, id])
+       response ? res.json({success:true, message:"Profile Updated"}) : res.json({success:false, message:"User profile not updated"})
+    }else{
+        res.json({success:false, message:"User not found"})
+    }
+} catch (error) {
+    console.log(error);
+}
 })
 
 module.exports = router

@@ -1,66 +1,29 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
+import { AdminContext } from '../Context/AdminData';
 
 const AdminLog: React.FC = () => {
     const Navigate = useNavigate()
-    interface adminCredentials {
-        email : String;
-        admin_password : String;
-    }
-    const [user, setUser] = useState<adminCredentials>({
-        email : '',
-        admin_password : ''
-    });
-    const [status, setStatus] = useState({message : ''})
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = e.target;
-        setUser(prevUser => ({
-            ...prevUser,
-            [name]:value
-        }));
-    }
-    const setCookie = (token : String) => {
-        try {
-            document.cookie = `jwt = ${token}; path=/`
-        } catch (error) {
-            console.log(error);      
-        }
-    }
-    const handleSubmit = async (e: React.FormEvent) => {
-          e.preventDefault();
-          const { email, admin_password } = user;
-        try {
-            const response = await fetch('/admin/login', {
-                method: 'POST',
-                headers: { 'Content-type' : 'application/json' },
-                body : JSON.stringify({ email, admin_password })
-            });
-            if(response) {
-                const data = await response.json();
-                setStatus( prevStatus => ({
-                    ...prevStatus, message : data.message
-                }))
-                setTimeout( () => {if(data.success===true) {Navigate('/panel'); setCookie(data.token)} },1000)
-            } else { console.log("data not sent") }
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    const Admindata = useContext(AdminContext);
+
+    useEffect(()=> {if(Admindata?.status.success){
+        Navigate('/panel')
+    }}, [Admindata]);
 
   return (
     <div className='h-[100vh] w-[100vw] flex flex-col gap-2 items-center justify-center'>
-    <span className='p-1 text-center font-semibold shadow-md'><p>{status.message}</p></span>
+    <span className='p-1 text-center font-semibold shadow-md'><p>{Admindata?.status.message}</p></span>
         <div className='flex flex-col justify-around gap-5 border shadow-md w-max h-max p-4'>
             <div className='text-2xl text-indigo-600 font-semibold'><h1>Login</h1></div>
             <div>
                 <form method='POST' className='flex gap-3 flex-col justify-center'>
                     <span className='flex flex-col gap-1'>
                     <p className='text-sm text-gray-600'>Email</p>
-                    <input className='px-2 h-[2.25rem] w-[65vw] md:w-[35vw] border rounded' type="text" name='email' value={user.email} onChange={handleChange}/>
+                    <input className='px-2 h-[2.25rem] w-[65vw] md:w-[35vw] border rounded' type="text" name='email' value={Admindata?.admin.email} onChange={Admindata?.handleChange}/>
                     </span>
                     <span className='flex flex-col gap-1'>
                     <p className='text-sm text-gray-600'>Password</p>
-                    <input className='px-2 h-[2.25rem] w-[65vw] md:w-[35vw] border rounded' type="password" name='admin_password' value={user.admin_password} onChange={handleChange}/>
+                    <input className='px-2 h-[2.25rem] w-[65vw] md:w-[35vw] border rounded' type="password" name='admin_password' value={Admindata?.admin.admin_password} onChange={Admindata?.handleChange}/>
                     </span>
                 </form>
             </div>
@@ -70,7 +33,7 @@ const AdminLog: React.FC = () => {
                 <p><Link to='/admin/log'>Register</Link></p>
             </div>
             <div className='text-center'>
-            <button className='bg-indigo-600 w-[35vw] shadow-md rounded-sm p-2 text-md font-semibold text-white' onClick={handleSubmit}>Login</button>
+            <button className='bg-indigo-600 w-[35vw] shadow-md rounded-sm p-2 text-md font-semibold text-white' onClick={Admindata?.AdminLogin}>Login</button>
             </div>
         </div>
     </div>

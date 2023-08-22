@@ -5,7 +5,8 @@ CREATE TABLE users(
     firstname VARCHAR,
     lastname VARCHAR,
     email VARCHAR,
-    user_password VARCHAR
+    user_password VARCHAR,
+    subscription BOOLEAN,
 );
 
 CREATE TABLE admin(

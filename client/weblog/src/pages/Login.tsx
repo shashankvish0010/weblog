@@ -20,7 +20,7 @@ const Login: React.FC = () => {
             [name]:value
         }));
     }
-    useEffect(()=> {if(logcontext?.loginstatus.success === true){
+    useEffect(()=> {if(logcontext?.loginstatus.success){
         Navigate('/')
     }}, [logcontext]);
 

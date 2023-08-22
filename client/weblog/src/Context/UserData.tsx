@@ -34,9 +34,10 @@ export const UserContextProvider = (props: any) => {
       if(response) {
           const data = await response.json();
           console.log(data);
+          if(data.success){
           setUser(
             (data.userData)
-          )
+          )}
           setLoginStatus((
              {success: data.success, message: data.message}
           ))
@@ -63,10 +64,11 @@ const Logout = async () => {
 }
 
 useEffect(()=> {
-  localStorage.setItem("user", JSON.stringify(user))
+  localStorage.setItem("user", JSON.stringify(user));
+  document.cookie ? setLoginStatus({ success : true, message : 'User login' }) : setLoginStatus({ success : false, message : 'Please Login' })
 }, [user]);
 
-    const info: ContextValue = {Login, Logout,user, loginstatus}
+    const info: ContextValue = {Login, Logout, user, loginstatus}
   return (
    <UserContext.Provider value={info}>
     {props.children}
