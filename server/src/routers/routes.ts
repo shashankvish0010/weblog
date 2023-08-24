@@ -132,8 +132,10 @@ router.put('/add/subscriber', async (req,res)=> {
         const subscriberInfo = await dbpool.query('SELECT * FROM users WHERE id=$1', [id]);
         if(subscriberInfo){
            const response = await dbpool.query('UPDATE users SET subscription=$2 WHERE id=$1', [id, true])
-           response ? res.json({success : true, userData : subscriberInfo.rows[0] ,message : "Thank you for subscribing"}) : 
-           res.json({success : false, message : "User not found, Please login"})
+           if(response){
+            res.json({success : true, userData : subscriberInfo.rows[0] ,message : "Thank you for subscribing"})
+           }else{  
+            res.json({success : false, message : "User not found, Please login"}) }
         }else {
             res.json({success : false, message : "User not found, Please login"})
         }
@@ -144,8 +146,11 @@ router.put('/unsubscribe', async (req,res)=> {
         const subscriberInfo = await dbpool.query('SELECT * FROM users WHERE id=$1', [id]);
         if(subscriberInfo){
            const response = await dbpool.query('UPDATE users SET subscription=$2 WHERE id=$1', [id, false])
-           response ? res.json({success : true, userdata : subscriberInfo.rows[0] ,message : "Unsubscribed"}) : 
+           if(response){
+            res.json({success : true, userdata : subscriberInfo.rows[0] ,message : "Unsubscribed"})}
+            else{ 
            res.json({success : false, message : "User not found, Please login"})
+            }
         }else {
             res.json({success : false, message : "User not found, Please login"})
         }
@@ -166,32 +171,54 @@ try {
 }
 })
 
-router.post('/private/blogpost', (req,res) => {
-    const { id, title, description, image, tags } = req.body;
-})
-
-router.post('/public/blogpost', async (req,res) => {
-    const { id, title, image, description, tags } = req.body;
-console.log(id, title, image, description, tags);
-
+router.post('/publish/blogpost', async (req,res) => {
+    const blogId = uuidv4();
+    const { id, title, image, description, tags, key } = req.body;
     try {
         const user_writer_info = await dbpool.query('SELECT * FROM users WHERE id=$1', [id]);
         if(user_writer_info.rows.length > 0){
-
-          
+            const { firstname, lastname, email } = user_writer_info.rows[0];
+            const result = await dbpool.query('INSERT INTO blogposts(id , writer_firstname , writer_lastname , writer_email , blog_title , blog_image , blog_description , blog_keywords , public_view) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)', 
+            [ blogId, firstname, lastname, email, title, image, description, tags, key]);
+            if(key === true){
+            if(result){
+                res.json({ success:true, message:"Post published Successfully" })
+            }else{
+                res.json({ success:false, message:"Post not published" })
+            }}
+            else{
+                if(result){
+                    res.json({ success:true, message:"Post saved in Private" })
+                }else{
+                    res.json({ success:false, message:"Post not saved" })
+                }
+            }
         }else{
             const admin_writer_info = await dbpool.query('SELECT * FROM admin WHERE id=$1', [id]);
             if(admin_writer_info.rows.length > 0){
-
+                const { firstname, lastname, email } = admin_writer_info.rows[0];
+                const result = await dbpool.query('INSERT INTO blogposts(id , writer_firstname , writer_lastname , writer_email , blog_title , blog_image , blog_description , blog_keywords , public_view) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)', 
+                [ blogId, firstname, lastname, email, title, image, description, tags, key]);
+                if(key === true){
+                if(result){
+                    res.json({ success:true, message:"Post published Successfully" })
+                }else{
+                    res.json({ success:false, message:"Post not published" })
+                }}
+                else{
+                    if(result){
+                        res.json({ success:true, message:"Post saved in Private" })
+                    }else{
+                        res.json({ success:false, message:"Post not saved" })
+                    }
+                }
             }else{
                 res.json({ success:false, message:"Cannot find user" })
             }
         }
-
     } catch (error) {
         console.log(error);
     }
-    res.json({success : true, id, title, image, description, tags})
 })
 
 module.exports = router
