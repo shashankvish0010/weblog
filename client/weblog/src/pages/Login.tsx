@@ -44,7 +44,7 @@ const Login: React.FC = () => {
             <span className='h-[0.15rem] rounded-md w-[65vw] md:w-[35vw] bg-indigo-600 text-center'></span>
             <div className='flex flex-row flex-wrap justify-around text-base'>
                 <p>Create a new account.</p>
-                <p><Link to='/login'>Register</Link></p>
+                <p><Link to='/register'>Register</Link></p>
             </div>
             <div className='text-center'>
             <button className='bg-indigo-600 w-[35vw] shadow-md rounded-sm p-2 text-md font-semibold text-white' onClick={()=> {logcontext?.Login(user)}}>Login</button>

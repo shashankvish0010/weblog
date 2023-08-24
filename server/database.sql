@@ -17,3 +17,15 @@ CREATE TABLE admin(
     admin_password VARCHAR,
     activation_key VARCHAR
 );
+
+CREATE TABLE blogposts(
+    id VARCHAR PRIMARY KEY,
+    writer_firstname VARCHAR,
+    writer_lastname VARCHAR,
+    writer_email VARCHAR,
+    blog_title VARCHAR,
+    blog_image VARCHAR,
+    blog_description VARCHAR,
+    blog_keywords VARCHAR,
+    public_view BOOLEAN
+)

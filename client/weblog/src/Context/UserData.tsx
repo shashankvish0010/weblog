@@ -3,8 +3,11 @@ import React, {createContext, useEffect, useState} from 'react'
 interface ContextValue {
   Login: (input: userInput) => Promise<void>;
   Logout: () => Promise<void>;
+  addSubscribe: (id : String) => Promise<void>;
+  unSubscribe: (id : String) => Promise<void>;
   loginstatus: userStatus;
-  user : any
+  user : any;
+  setUser : any
   }
 interface userInput {
   email: String,
@@ -63,12 +66,62 @@ const Logout = async () => {
   }
 }
 
+const addSubscribe = async (id: String) => {    
+  try {
+   const response = await fetch('/add/subscriber', {
+    method: 'PUT',
+    headers : {"Content-Type" : "application/json"},
+    body: JSON.stringify({
+      id
+    })
+   })
+   if(response) {
+    const data = await response.json()
+    console.log(data);
+    if (data.success) {
+      setUser(data.userData); // Update user data
+    } else {
+      console.log("addSubscribe Error:", data.message);         
+    }
+   }else {
+    console.log("Can get any sub data");         
+   }
+  } catch (error) {
+   console.log(error);
+  }        
+};
+
+const unSubscribe = async (id: String) => {    
+  try {
+   const response = await fetch('/unsubscribe', {
+    method: 'PUT',
+    headers : {"Content-Type" : "application/json"},
+    body: JSON.stringify({
+      id
+    })
+   })
+   if(response) {
+    const data = await response.json()
+    console.log(data);
+    if (data.success) {
+      setUser(data.userdata); // Update user data
+    } else {
+      console.log("addSubscribe Error:", data.message);         
+    }
+   }else {
+    console.log("Cant get any sub data");         
+   }
+  } catch (error) {
+   console.log(error);
+  }        
+}
+
 useEffect(()=> {
   localStorage.setItem("user", JSON.stringify(user));
   document.cookie ? setLoginStatus({ success : true, message : 'User login' }) : setLoginStatus({ success : false, message : 'Please Login' })
 }, [user]);
 
-    const info: ContextValue = {Login, Logout, user, loginstatus}
+    const info: ContextValue = {Login, Logout, unSubscribe, addSubscribe, user, loginstatus}
   return (
    <UserContext.Provider value={info}>
     {props.children}

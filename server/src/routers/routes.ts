@@ -128,21 +128,27 @@ router.get('/user/logout', async (req,res) => {
 });
 
 router.put('/add/subscriber', async (req,res)=> {
-    const {id, email} = req.body;
-    try {
+    const {id} = req.body;
         const subscriberInfo = await dbpool.query('SELECT * FROM users WHERE id=$1', [id]);
-        console.log(email);
-        
-        // if(subscriberInfo){
-        //    const response = await dbpool.query('UPDATE users SET subscription=$2 WHERE id=$1', [id, true])
-        //    response ? res.json({success : true, userData : subscriberInfo.rows[0].email ,message : "Thank you for subscribing"}) : 
-        //    res.json({success : false, message : "User not found, Please login"})
-        // }else {
-        //     res.json({success : false, message : "User not found, Please login"})
-        // }
-    } catch (error) {
-        console.log(error);
-    } 
+        if(subscriberInfo){
+           const response = await dbpool.query('UPDATE users SET subscription=$2 WHERE id=$1', [id, true])
+           response ? res.json({success : true, userData : subscriberInfo.rows[0] ,message : "Thank you for subscribing"}) : 
+           res.json({success : false, message : "User not found, Please login"})
+        }else {
+            res.json({success : false, message : "User not found, Please login"})
+        }
+})
+
+router.put('/unsubscribe', async (req,res)=> {
+    const {id} = req.body;
+        const subscriberInfo = await dbpool.query('SELECT * FROM users WHERE id=$1', [id]);
+        if(subscriberInfo){
+           const response = await dbpool.query('UPDATE users SET subscription=$2 WHERE id=$1', [id, false])
+           response ? res.json({success : true, userdata : subscriberInfo.rows[0] ,message : "Unsubscribed"}) : 
+           res.json({success : false, message : "User not found, Please login"})
+        }else {
+            res.json({success : false, message : "User not found, Please login"})
+        }
 })
 
 router.put('/edit/profile', async (req,res) => {
@@ -158,6 +164,34 @@ try {
 } catch (error) {
     console.log(error);
 }
+})
+
+router.post('/private/blogpost', (req,res) => {
+    const { id, title, description, image, tags } = req.body;
+})
+
+router.post('/public/blogpost', async (req,res) => {
+    const { id, title, image, description, tags } = req.body;
+console.log(id, title, image, description, tags);
+
+    try {
+        const user_writer_info = await dbpool.query('SELECT * FROM users WHERE id=$1', [id]);
+        if(user_writer_info.rows.length > 0){
+
+          
+        }else{
+            const admin_writer_info = await dbpool.query('SELECT * FROM admin WHERE id=$1', [id]);
+            if(admin_writer_info.rows.length > 0){
+
+            }else{
+                res.json({ success:false, message:"Cannot find user" })
+            }
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+    res.json({success : true, id, title, image, description, tags})
 })
 
 module.exports = router

@@ -7,8 +7,8 @@ import './App.css'
 import Login from './pages/Login'
 import AdminReg from './pages/AdminReg'
 import AdminLog from './pages/AdminLog'
-import WriteBlog from './pages/WriteBlog'
 import UserProfile from './pages/UserProfile'
+import WriteBlog from './pages/WriteBlog'
 
 const App: React.FC = () => {
   return (
@@ -21,7 +21,7 @@ const App: React.FC = () => {
         <Route path='/register' element={<Register/>} />
         <Route path='/login' element={<Login/>} />
         <Route path='/profile' element={<UserProfile/>} />
-        <Route path='/blogpost' element={<WriteBlog/>} />
+        <Route path='/write' element={<WriteBlog/>} />
       </Routes>
      </Router>
   )

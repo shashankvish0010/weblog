@@ -13,5 +13,8 @@ export default defineConfig({
       '/user/logout': { target : 'http://localhost:8080/' },
       '/add/subscriber' :  { target : 'http://localhost:8080/' },
       '/edit/profile' :  { target : 'http://localhost:8080/' },
+      '/unsubscribe':  { target : 'http://localhost:8080/' },
+      '/public/blogpost':  { target : 'http://localhost:8080/' },
+      '/private/blogpost':  { target : 'http://localhost:8080/' },
   }
 }})

@@ -68,7 +68,7 @@ const UserProfile: React.FC = () => {
           </span>
           <span className='flex flex-col gap-1'>
             <p className='text-sm text-gray-600'>Password</p>
-            <span className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border rounded'>{userdata?.user.user_password}</span>
+            <span className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border overflow-auto rounded'>{userdata?.user.user_password}</span>
           </span>
         </div>) :
 
