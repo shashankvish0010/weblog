@@ -173,13 +173,13 @@ try {
 
 router.post('/publish/blogpost', async (req,res) => {
     const blogId = uuidv4();
-    const { id, title, image, description, tags, key } = req.body;
+    const { id, title, image, description,meta, tags, key } = req.body;
     try {
         const user_writer_info = await dbpool.query('SELECT * FROM users WHERE id=$1', [id]);
         if(user_writer_info.rows.length > 0){
             const { firstname, lastname, email } = user_writer_info.rows[0];
-            const result = await dbpool.query('INSERT INTO blogposts(id , writer_firstname , writer_lastname , writer_email , blog_title , blog_image , blog_description , blog_keywords , public_view) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)', 
-            [ blogId, firstname, lastname, email, title, image, description, tags, key]);
+            const result = await dbpool.query('INSERT INTO blogposts(id , writer_firstname , writer_lastname , writer_email , blog_title , blog_image , blog_description , blog_keywords , public_view, meta_description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)', 
+            [ blogId, firstname, lastname, email, title, image, description, tags, key, meta]);
             if(key === true){
             if(result){
                 res.json({ success:true, message:"Post published Successfully" })
@@ -197,8 +197,8 @@ router.post('/publish/blogpost', async (req,res) => {
             const admin_writer_info = await dbpool.query('SELECT * FROM admin WHERE id=$1', [id]);
             if(admin_writer_info.rows.length > 0){
                 const { firstname, lastname, email } = admin_writer_info.rows[0];
-                const result = await dbpool.query('INSERT INTO blogposts(id , writer_firstname , writer_lastname , writer_email , blog_title , blog_image , blog_description , blog_keywords , public_view) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)', 
-                [ blogId, firstname, lastname, email, title, image, description, tags, key]);
+                const result = await dbpool.query('INSERT INTO blogposts(id , writer_firstname , writer_lastname , writer_email , blog_title , blog_image , blog_description , blog_keywords , public_view, meta_description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)', 
+                [ blogId, firstname, lastname, email, title, image, description, tags, key, meta]);
                 if(key === true){
                 if(result){
                     res.json({ success:true, message:"Post published Successfully" })
@@ -223,9 +223,9 @@ router.post('/publish/blogpost', async (req,res) => {
 
 router.get('/api/posts', async (req,res)=>{
     try {
-        const blogs = await dbpool.query('SELECT * FROM blogposts WHERE public_view=$1', [true]);
-        if(blogs){
-            res.json({success:true, blogs, message:"Posts fetched"})
+        const blogsinfo = await dbpool.query('SELECT * FROM blogposts WHERE public_view=$1', [true]);
+        if(blogsinfo){
+            res.json({success:true, blogs : blogsinfo.rows, message:"Posts fetched"})
         }else{
             res.json({success:false, message:"Posts not fetched"})
         }

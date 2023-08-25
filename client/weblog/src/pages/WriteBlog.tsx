@@ -7,6 +7,7 @@ import { Icon } from '@iconify/react';
 interface blogdata {
     title: String;
     image: String;
+    meta: String;
     tags: String
 }
 interface datafetch {
@@ -20,6 +21,7 @@ const WriteBlog: React.FC = () => {
     const [blog, setBlog] = useState<blogdata>({
         title: '',
         image: '',
+        meta:'',
         tags: ''
     })
     const [description, setDescription] = useState('')
@@ -103,6 +105,8 @@ const WriteBlog: React.FC = () => {
                         <div className='h-max w-[75vw]'>
                             <JoditEditor ref={editor} value={description} onChange={newDescription => setDescription(newDescription)} />
                         </div>
+                        <span className='text-2xl text-indigo-600 font-medium'>Meta Description - 100 words</span>
+                        <textarea className='border-indigo-600 border rounded shadow w-[75vw] h-max p-1' type="text" value={blog.meta} onChange={handlechange} name='meta' />
                         <span className='text-2xl text-indigo-600 font-medium'>Keywords / Tags</span>
                         <input className='border-indigo-600 border rounded shadow w-[75vw] h-[7vh] px-2' type="text" value={blog.tags} onChange={handlechange} name='tags' />
                     </form><div className='flex md:flex-row flex-col items-center gap-5'>

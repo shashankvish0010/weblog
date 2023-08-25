@@ -3,8 +3,8 @@ import {createContext, useEffect, useState} from 'react'
 interface ContextValue {
     fetchPosts: () => Promise<void>;
     LoadPost: (Postid: String) => Promise<void>;
-    blogdata: blogpostbody;
-    allposts: allbogs[]
+    blogdata: blogpostbody | undefined;
+    allposts: allbogs[];
 }
 
 interface allbogs {
@@ -32,16 +32,7 @@ interface blogpostbody {
 export const postContext = createContext<ContextValue | null>(null);
 
 export const PostContextProvider = (props: any) => {
-    const [allposts, SetAllPosts] = useState<allbogs>({
-        blog_id : '',
-        blog_title : '',
-        blog_image : '',
-        blog_description : '',
-        blog_keywords : '',
-        writer_firstname : '',
-        writer_lastname : '',
-        writer_email : ''
-    })
+    const [allposts, SetAllPosts] = useState<allbogs>()
 
     const [blogdata, setBlogData] = useState<blogpostbody>()
 
@@ -56,17 +47,9 @@ export const PostContextProvider = (props: any) => {
             if(response){
                 const data = await response.json();
                 console.log(data);  
-                if(data.success){SetAllPosts((prev) => ({
-                    ...prev,
-                    blog_id : data.blogs.blog_id,
-                    blog_title : data.blogs.blog_title,
-                    blog_image : data.blogs.blog_image,
-                    blog_description : data.blogs.blog_description,
-                    blog_keywords : data.blogs.blog_keywords,
-                    writer_firstname : data.blogs.writer_firstname,
-                    writer_lastname : data.blogs.writer_lastname,
-                    writer_email : data.blogs.writer_email,
-                }))}
+                if(data.success){SetAllPosts(
+
+                    (data.blogs))}
                 else{
                     console.log(data.message);
                 }

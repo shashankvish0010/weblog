@@ -66,11 +66,11 @@ const Home: React.FC = () => {
           <span className='rounded-md h-[0.15rem] bg-indigo-600 w-[30vw]'></span>
         </div>
       </div>
-      <div className='h-max w-[100vw] flex gap-5'>
-      { postinfo?.allposts.length > 0 ?
+      <div className='h-max w-[100vw] flex p-3 gap-5'>
+      { postinfo?.allposts?.length? ( ( postinfo.allposts.length> 0) ?
       (postinfo?.allposts.map( (post: any) => 
         (<PostContainer 
-         id={post.blog_id} 
+         id={post.id} 
          title={post.blog_title} 
          image={post.blog_image} 
          description={post.blog_description} 
@@ -78,13 +78,20 @@ const Home: React.FC = () => {
          firstname={post.writer_firstname} 
          lastname={post.writer_lastname} 
          email={post.writer_email} />
-        ))) 
+        )))
         :
         (
           <div className='h-max w-[100vw] p-3 flex items-center justify-center'>
             <Buffering/>
           </div>
-        )}
+        ))
+        :
+        (
+        <div className='h-max w-[100vw] p-3 flex items-center justify-center'>
+          <Buffering/>
+        </div>
+        )
+      }
       </div>
     </div>
   );

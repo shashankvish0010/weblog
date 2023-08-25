@@ -27,5 +27,6 @@ CREATE TABLE blogposts(
     blog_image VARCHAR,
     blog_description VARCHAR,
     blog_keywords VARCHAR,
-    public_view BOOLEAN
-)
+    public_view BOOLEAN,
+    meta_description VARCHAR
+);
