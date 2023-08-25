@@ -221,4 +221,17 @@ router.post('/publish/blogpost', async (req,res) => {
     }
 })
 
+router.get('/api/posts', async (req,res)=>{
+    try {
+        const blogs = await dbpool.query('SELECT * FROM blogposts WHERE public_view=$1', [true]);
+        if(blogs){
+            res.json({success:true, blogs, message:"Posts fetched"})
+        }else{
+            res.json({success:false, message:"Posts not fetched"})
+        }
+    } catch (error) {
+        console.log(error);
+    }
+})
+
 module.exports = router

@@ -3,6 +3,7 @@ import { UserContext } from '../Context/UserData'
 import { useNavigate } from 'react-router-dom';
 import { postContext } from '../Context/PostData';
 import PostContainer from '../components/PostContainer';
+import Buffering from '../components/Buffering';
 
 const Home: React.FC = () => {
   const navigate = useNavigate()
@@ -66,15 +67,24 @@ const Home: React.FC = () => {
         </div>
       </div>
       <div className='h-max w-[100vw] flex gap-5'>
-         <PostContainer 
-         id={postinfo?.allposts.blog_id} 
-         title={postinfo?.allposts.blog_title} 
-         image={postinfo?.allposts.blog_image} 
-         description={postinfo?.allposts.blog_description} 
-         tags={postinfo?.allposts.blog_keywords} 
-         firstname={postinfo?.allposts.writer_firstname} 
-         lastname={postinfo?.allposts.writer_lastname} 
-         email={postinfo?.allposts.writer_email} />
+      { postinfo?.allposts.length > 0 ?
+      (postinfo?.allposts.map( (post: any) => 
+        (<PostContainer 
+         id={post.blog_id} 
+         title={post.blog_title} 
+         image={post.blog_image} 
+         description={post.blog_description} 
+         tags={post.blog_keywords} 
+         firstname={post.writer_firstname} 
+         lastname={post.writer_lastname} 
+         email={post.writer_email} />
+        ))) 
+        :
+        (
+          <div className='h-max w-[100vw] p-3 flex items-center justify-center'>
+            <Buffering/>
+          </div>
+        )}
       </div>
     </div>
   );

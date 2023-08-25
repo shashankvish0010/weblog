@@ -252,4 +252,18 @@ router.post('/publish/blogpost', (req, res) => __awaiter(void 0, void 0, void 0,
         console.log(error);
     }
 }));
+router.get('/api/posts', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const blogs = yield dbconnect_1.default.query('SELECT * FROM blogposts WHERE public_view=$1', [true]);
+        if (blogs) {
+            res.json({ success: true, blogs, message: "Posts fetched" });
+        }
+        else {
+            res.json({ success: false, message: "Posts not fetched" });
+        }
+    }
+    catch (error) {
+        console.log(error);
+    }
+}));
 module.exports = router;
