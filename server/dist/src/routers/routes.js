@@ -148,8 +148,8 @@ router.get('/user/logout', (req, res) => __awaiter(void 0, void 0, void 0, funct
         res.json({ success: true, message: "Logout" });
     }
 }));
-router.put('/add/subscriber', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.body;
+router.put('/add/subscriber/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
     const subscriberInfo = yield dbconnect_1.default.query('SELECT * FROM users WHERE id=$1', [id]);
     if (subscriberInfo) {
         const response = yield dbconnect_1.default.query('UPDATE users SET subscription=$2 WHERE id=$1', [id, true]);
@@ -164,8 +164,8 @@ router.put('/add/subscriber', (req, res) => __awaiter(void 0, void 0, void 0, fu
         res.json({ success: false, message: "User not found, Please login" });
     }
 }));
-router.put('/unsubscribe', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.body;
+router.put('/unsubscribe/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
     const subscriberInfo = yield dbconnect_1.default.query('SELECT * FROM users WHERE id=$1', [id]);
     if (subscriberInfo) {
         const response = yield dbconnect_1.default.query('UPDATE users SET subscription=$2 WHERE id=$1', [id, false]);
@@ -264,6 +264,27 @@ router.get('/api/posts', (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
     catch (error) {
         console.log(error);
+    }
+}));
+router.get('/view/post/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.body;
+    if (id) {
+        const postData = yield dbconnect_1.default.query('SELECT * FROM blogposts WHERE id=$1', [id]);
+        if (postData) {
+            const post = postData.rows[0];
+            if (post) {
+                res.json({ success: true, post, message: "Post sent successfully" });
+            }
+            else {
+                res.json({ success: false, message: "Posts not found from db" });
+            }
+        }
+        else {
+            res.json({ success: false, message: "Posts not fetched" });
+        }
+    }
+    else {
+        res.json({ success: false, message: "Post Id not recieved" });
     }
 }));
 module.exports = router;

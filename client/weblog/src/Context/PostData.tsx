@@ -4,18 +4,17 @@ interface ContextValue {
     fetchPosts: () => Promise<void>;
     LoadPost: (Postid: String) => Promise<void>;
     blogdata: blogpostbody | undefined;
-    allposts: allbogs[];
+    allposts: allblogs[];
 }
 
-interface allbogs {
+interface allblogs {
     blog_id : '',
     blog_title : '',
     blog_image : '',
+    meta_description : '',
     blog_description : '',
-    blog_keywords : '',
     writer_firstname : '',
     writer_lastname : '',
-    writer_email : '',
 }
 
 interface blogpostbody {
@@ -23,6 +22,7 @@ interface blogpostbody {
     title: String;
     image: String;
     description: String;
+    meta: String;
     tags: String;
     firstname: String;
     lastname: String;
@@ -32,7 +32,7 @@ interface blogpostbody {
 export const postContext = createContext<ContextValue | null>(null);
 
 export const PostContextProvider = (props: any) => {
-    const [allposts, SetAllPosts] = useState<allbogs>()
+    const [allposts, SetAllPosts] = useState<allblogs[]>()
 
     const [blogdata, setBlogData] = useState<blogpostbody>()
 
@@ -46,9 +46,7 @@ export const PostContextProvider = (props: any) => {
             });
             if(response){
                 const data = await response.json();
-                console.log(data);  
                 if(data.success){SetAllPosts(
-
                     (data.blogs))}
                 else{
                     console.log(data.message);
@@ -61,7 +59,7 @@ export const PostContextProvider = (props: any) => {
         }
     };
 
-    const LoadPost = async (Postid: String) => {
+    const LoadPost = async (Postid: String) => {        
         try {
             const response = await fetch(`/view/post/${Postid}`, {
                 method: "GET",

@@ -66,18 +66,17 @@ const Home: React.FC = () => {
           <span className='rounded-md h-[0.15rem] bg-indigo-600 w-[30vw]'></span>
         </div>
       </div>
-      <div className='h-max w-[100vw] flex p-3 gap-5'>
+      <div className='h-[100vh] w-[100vw] flex flex-wrap justify-center mt-2 p-3 gap-10'>
       { postinfo?.allposts?.length? ( ( postinfo.allposts.length> 0) ?
       (postinfo?.allposts.map( (post: any) => 
         (<PostContainer 
          id={post.id} 
          title={post.blog_title} 
          image={post.blog_image} 
+         meta={post.meta_description}
          description={post.blog_description} 
-         tags={post.blog_keywords} 
          firstname={post.writer_firstname} 
-         lastname={post.writer_lastname} 
-         email={post.writer_email} />
+         lastname={post.writer_lastname} />
         )))
         :
         (

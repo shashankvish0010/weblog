@@ -16,5 +16,6 @@ export default defineConfig({
       '/unsubscribe':  { target : 'http://localhost:8080/' },
       '/publish/blogpost':  { target : 'http://localhost:8080/' },
       '/api/posts':  { target : 'http://localhost:8080/' },
+      '/view/post':  { target : 'http://localhost:8080/' },
   }
 }})

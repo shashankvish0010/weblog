@@ -68,12 +68,9 @@ const Logout = async () => {
 
 const addSubscribe = async (id: String) => {    
   try {
-   const response = await fetch('/add/subscriber', {
+   const response = await fetch(`/add/subscriber/${id}`, {
     method: 'PUT',
-    headers : {"Content-Type" : "application/json"},
-    body: JSON.stringify({
-      id
-    })
+    headers : {"Content-Type" : "application/json"}
    })
    if(response) {
     const data = await response.json()
@@ -93,12 +90,9 @@ const addSubscribe = async (id: String) => {
 
 const unSubscribe = async (id: String) => {    
   try {
-   const response = await fetch('/unsubscribe', {
+   const response = await fetch(`/unsubscribe/${id}`, {
     method: 'PUT',
-    headers : {"Content-Type" : "application/json"},
-    body: JSON.stringify({
-      id
-    })
+    headers : {"Content-Type" : "application/json"}
    })
    if(response) {
     const data = await response.json()

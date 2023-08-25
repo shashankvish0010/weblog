@@ -5,6 +5,7 @@ import dbpool from '../../dbconnect';
 import bcrypt from 'bcrypt';
 import bodyParser from 'body-parser';
 import jwt from 'jsonwebtoken';  
+import { log } from "console";
 router.use(bodyParser.json())
  
 router.get('/', (req,res)=> res.send("hello from backend"))
@@ -127,8 +128,8 @@ router.get('/user/logout', async (req,res) => {
        }
 });
 
-router.put('/add/subscriber', async (req,res)=> {
-    const {id} = req.body;
+router.put('/add/subscriber/:id', async (req,res)=> {
+    const {id} = req.params;
         const subscriberInfo = await dbpool.query('SELECT * FROM users WHERE id=$1', [id]);
         if(subscriberInfo){
            const response = await dbpool.query('UPDATE users SET subscription=$2 WHERE id=$1', [id, true])
@@ -141,8 +142,8 @@ router.put('/add/subscriber', async (req,res)=> {
         }
 })
 
-router.put('/unsubscribe', async (req,res)=> {
-    const {id} = req.body;
+router.put('/unsubscribe/:id', async (req,res)=> {
+    const {id} = req.params;
         const subscriberInfo = await dbpool.query('SELECT * FROM users WHERE id=$1', [id]);
         if(subscriberInfo){
            const response = await dbpool.query('UPDATE users SET subscription=$2 WHERE id=$1', [id, false])
@@ -231,6 +232,25 @@ router.get('/api/posts', async (req,res)=>{
         }
     } catch (error) {
         console.log(error);
+    }
+})
+
+router.get('/view/post/:id', async (req,res) => {
+    const {id} = req.body
+    if(id){
+        const postData = await dbpool.query('SELECT * FROM blogposts WHERE id=$1', [id]);
+        if(postData){
+            const post = postData.rows[0];
+            if(post){
+                res.json({success:true,post, message:"Post sent successfully"})
+            }else{
+                res.json({success:false, message:"Posts not found from db"})
+            }
+        }else{
+            res.json({success:false, message:"Posts not fetched"})
+        }
+    }else{
+        res.json({success:false, message:"Post Id not recieved"})
     }
 })
 

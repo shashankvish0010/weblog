@@ -60,14 +60,14 @@ const WriteBlog: React.FC = () => {
     }
 
     const hanldeSubmit = async (key: boolean) => {
-        const { title, image, tags } = blog;
+        const { title, image, meta, tags } = blog;
         const id: String = userinfo?.user.id || admininfo?.storeAdmin.id
         try {
             const response = await fetch('/publish/blogpost', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    id, title, image, description, tags, key
+                    id, title, image, meta, description, tags, key
                 }
                 )
             })
