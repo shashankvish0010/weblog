@@ -1,9 +1,10 @@
-import {createContext, useState} from 'react'
+import {createContext, useEffect, useState} from 'react'
 
 interface ContextValue {
     fetchPosts: () => Promise<void>;
     LoadPost: (Postid: String) => Promise<void>;
     blogdata: blogpostbody;
+    allposts: [blogpostbody];
 }
 
 interface blogpostbody {
@@ -20,6 +21,7 @@ interface blogpostbody {
 export const postContext = createContext<ContextValue | null>(null);
 
 export const PostContextProvider = (props: any) => {
+    const [allposts, SetAllPosts] = useState()
 
     const [blogdata, setBlogData] = useState<blogpostbody>()
 
@@ -33,7 +35,8 @@ export const PostContextProvider = (props: any) => {
             });
             if(response){
                 const data = await response.json();
-                console.log(data);   
+                console.log(data);  
+                SetAllPosts(data.AllblogData) 
             }else{
                 console.log("Posts not recieved");
             }
@@ -59,7 +62,12 @@ export const PostContextProvider = (props: any) => {
         }
     }
 
-    const info = {fetchPosts, LoadPost, blogdata};
+    useEffect(() => {
+      fetchPosts();
+    }, [allposts])
+    
+
+    const info = {fetchPosts, LoadPost, allposts, blogdata};
 
   return (
     <postContext.Provider value={info}>

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {useContext} from 'react'
+import { postContext } from '../Context/PostData';
 
 interface blogpostbody {
     id: String;
@@ -12,6 +13,7 @@ interface blogpostbody {
     }
 
 const PostContainer: React.FC<blogpostbody> = (props) => {
+    const blogInfo = useContext(postContext);
         const { id, title, image, description, firstname, lastname } = props;
   return (
     <div className='h-max w-max flex flex-col p-3 gap-4 items-center'>
@@ -29,7 +31,7 @@ const PostContainer: React.FC<blogpostbody> = (props) => {
                 <p>{firstname} {lastname}</p>
             </div>
             <div>
-            <button onClick={LoadPost(id)} className='bg-indigo-600 shadow-md rounded-sm p-2 text-base font-semibold text-white'>
+            <button onClick={()=>blogInfo?.LoadPost(id)} className='bg-indigo-600 shadow-md rounded-sm p-2 text-base font-semibold text-white'>
               Read More
             </button>     
         </div>
