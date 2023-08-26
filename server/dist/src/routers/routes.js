@@ -267,7 +267,7 @@ router.get('/api/posts', (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 }));
 router.get('/view/post/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.body;
+    const { id } = req.params;
     if (id) {
         const postData = yield dbconnect_1.default.query('SELECT * FROM blogposts WHERE id=$1', [id]);
         if (postData) {

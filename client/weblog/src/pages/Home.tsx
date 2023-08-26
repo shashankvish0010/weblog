@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { postContext } from '../Context/PostData';
 import PostContainer from '../components/PostContainer';
 import Buffering from '../components/Buffering';
+import Footer from '../components/Footer';
 
 const Home: React.FC = () => {
   const navigate = useNavigate()
@@ -91,6 +92,7 @@ const Home: React.FC = () => {
         </div>
         )
       }
+      <Footer/>
       </div>
     </div>
   );

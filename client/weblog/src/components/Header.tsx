@@ -19,17 +19,6 @@ const Header: React.FC = () => {
                 <li className='hover:text-indigo-600'><Link to='/'>Home</Link></li>
                 <li className='hover:text-indigo-600'><Link to='/about'>About</Link></li>
                 <li className='hover:text-indigo-600'><Link to='/contact'>Contact</Link></li>
-                {/* {logcontext?.loginstatus.success ? <li className='hover:text-indigo-600'><Link to='/profile'><Icon icon="gg:profile" height='4vh' /></Link></li> 
-                : <li className='hover:text-indigo-600 hidden'><Link to='/profile'><Icon icon="iconamoon:profile-circle-fill" /></Link></li>}
-                {(admincontext?.status.success === false) ?
-                
-                (logcontext?.loginstatus.success === false ? <Link to='/register'><button className='bg-indigo-600 rounded-sm p-1 text-sm text-white hover:shadow-md'>Login/SignUp</button></Link> :
-                <button onClick={handleUserLogout} className='bg-indigo-600 rounded-sm p-1 text-sm text-white hover:shadow-md'>Logout</button>)
-                
-              :
-                (admincontext?.status.success ? <button onClick={handleAdminLogout} className='bg-indigo-600 rounded-sm p-1 text-sm text-white hover:shadow-md'>Logout</button> :
-                 <button onClick={handleAdminLogout} className='bg-indigo-600 hidden rounded-sm p-1 text-sm text-white hover:shadow-md'>Logout</button>)
-                } */}
             {logcontext?.loginstatus.success ? (
             <li className='hover:text-indigo-600'>
               <Link to='/profile'>

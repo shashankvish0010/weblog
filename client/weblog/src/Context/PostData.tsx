@@ -69,6 +69,8 @@ export const PostContextProvider = (props: any) => {
             });
             if(response){
                 const data = await response.json();
+                console.log(data);
+                
                 setBlogData(data.blogData)
             }
         } catch (error) {

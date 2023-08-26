@@ -236,7 +236,7 @@ router.get('/api/posts', async (req,res)=>{
 })
 
 router.get('/view/post/:id', async (req,res) => {
-    const {id} = req.body
+    const {id} = req.params
     if(id){
         const postData = await dbpool.query('SELECT * FROM blogposts WHERE id=$1', [id]);
         if(postData){
