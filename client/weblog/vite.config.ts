@@ -17,5 +17,8 @@ export default defineConfig({
       '/publish/blogpost':  { target : 'http://localhost:8080/' },
       '/api/posts':  { target : 'http://localhost:8080/' },
       '/view/post':  { target : 'http://localhost:8080/' },
+      '/fetch/user/posts':  { target : 'http://localhost:8080/' },
+      '/delete/post': { target : 'http://localhost:8080/' },
+      '/flag/post': { target : 'http://localhost:8080/' },
   }
 }})

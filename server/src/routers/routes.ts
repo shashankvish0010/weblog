@@ -1,4 +1,5 @@
 import  express  from "express"
+
 const router = express.Router();
 import { v4 as uuidv4 } from "uuid";
 import dbpool from '../../dbconnect';
@@ -242,15 +243,68 @@ router.get('/view/post/:id', async (req,res) => {
         if(postData){
             const post = postData.rows[0];
             if(post){
-                res.json({success:true,post, message:"Post sent successfully"})
+                res.json({success : true, blogData : post, message : 'Completd'})
             }else{
                 res.json({success:false, message:"Posts not found from db"})
             }
         }else{
             res.json({success:false, message:"Posts not fetched"})
         }
-    }else{
+    }else{ 
         res.json({success:false, message:"Post Id not recieved"})
+    }
+})
+
+router.get('/admin/logout', async (req,res) => {
+   const result = await res.clearCookie("admin_access");
+   if(result){
+    res.json({success:true, message:"Admin Logout"})
+   }
+})
+
+router.get('/fetch/user/posts/:email', async (req,res) => {
+    const {email} = req.params;
+    try {
+        if(email){
+            const userPosts = await dbpool.query('SELECT * FROM blogposts WHERE writer_email=$1',[email])
+            if(userPosts.rows.length > 0){
+                res.json({success:true, userPostsData: userPosts.rows, message: "Posts fetched successfully"})
+            }else{
+            res.json({success:false, message: "No posts to show"})
+        }
+        }else{
+            res.json({success:false, message: "Email not receieved"})
+        }
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+router.delete('/delete/post/:id', async (req,res) => {
+    const {id} = req.params;
+    if(id){
+        const result = await dbpool.query('DELETE FROM blogposts WHERE id=$1', [id])
+        if(result){
+            res.json({success:true, message: "Post Deleted"})
+        }else{
+            res.json({success:false, message: "Post not deleted"})
+        }
+    }else{
+        res.json({success:false, message: "Post Id not receieved"})
+    } 
+})
+
+router.put('/flag/post/:id', async (req,res) => {
+    const {id} = req.params;
+    if(id){
+        const result = await dbpool.query('UPDATE blogposts SET public_view=$2 WHERE id=$1', [id, false])
+        if(result){
+            res.json({success:true, message: "Post flagges"})
+        }else{
+            res.json({success:false, message: "Post not flagged"})
+        }
+    }else{
+        res.json({success:false, message: "Post Id not receieved"})
     }
 })
 

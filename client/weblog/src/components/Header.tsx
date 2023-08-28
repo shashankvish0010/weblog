@@ -19,6 +19,7 @@ const Header: React.FC = () => {
                 <li className='hover:text-indigo-600'><Link to='/'>Home</Link></li>
                 <li className='hover:text-indigo-600'><Link to='/about'>About</Link></li>
                 <li className='hover:text-indigo-600'><Link to='/contact'>Contact</Link></li>
+                <li className='hover:text-indigo-600'><Link to='/write'>Add Post</Link></li>
             {logcontext?.loginstatus.success ? (
             <li className='hover:text-indigo-600'>
               <Link to='/profile'>

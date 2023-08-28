@@ -89,7 +89,7 @@ const WriteBlog: React.FC = () => {
     return (
         <div>
             <div className='h-max w-[100vw] flex flex-col items-center gap-5 p-3'>
-                {status.success === false ?
+                {status.success === false && document.cookie ?
                     (<><span className='p-1 text-center font-semibold shadow-md'><p>{status.message}</p></span><form method="POST" className='h-max w-max flex flex-col items-center gap-5'>
                         <span className='text-2xl text-indigo-600 font-medium'>Title</span>
                         <input className='border-indigo-600 border rounded shadow w-[75vw] h-[7vh] px-2' type="text" value={blog.title} onChange={handlechange} name='title' />
@@ -126,8 +126,12 @@ const WriteBlog: React.FC = () => {
                     :
                     (
                         <div className='h-[100vh] w-[100vw] flex items-center justify-center'>
+                            {document.cookie ? 
                             <p className='text-indigo-600 title md:text-2xl text-xl font-bold text-center'>{status.message}</p>
-                        </div>
+                            :
+                            <p className='text-indigo-600 title md:text-2xl text-xl font-bold text-center'>Plaese Login</p>
+                            }
+                            </div>
                     )
                 }
             </div>
