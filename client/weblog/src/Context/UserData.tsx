@@ -60,7 +60,7 @@ export const UserContextProvider = (props: any) => {
           'Content-Type': 'application/json'
         }
       })
-      if (res) { setUser(''); setLoginStatus({ success: false, message: 'Logout' }) }
+      if (res) { setLoginStatus({ success: false, message: 'Logout' }); setUser(''); }
       else {
         console.log("Cant logout");
       }

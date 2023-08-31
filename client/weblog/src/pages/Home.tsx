@@ -1,36 +1,75 @@
-import React, {useContext,useEffect} from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../Context/UserData'
 import { useNavigate } from 'react-router-dom';
 import { postContext } from '../Context/PostData';
+import { Icon } from '@iconify/react'
 import PostContainer from '../components/PostContainer';
 import Buffering from '../components/Buffering';
 import Footer from '../components/Footer';
+
+interface PostInt {
+  blog_id: '',
+  blog_title: '',
+  blog_image: '',
+  meta_description: '',
+  blog_description: '',
+  writer_firstname: '',
+  writer_lastname: '',
+  public_view: '',
+}
 
 const Home: React.FC = () => {
   const navigate = useNavigate()
   const postinfo = useContext(postContext)
   const subcontext = useContext(UserContext);
+  const [searchQuery, setSearchQuery] = useState<String>('')
+  const [resultData, setResultData] = useState<PostInt[]>()
   const handleSubscribeClick = () => {
-    if (subcontext?.user) { 
+    if (subcontext?.user) {
       subcontext.addSubscribe(subcontext.user.id);
     }
   };
 
+  const hanldeSearch = async () => {
+    try {
+      const response = await fetch('/search/post/'+searchQuery, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      if (response) {
+        const data = await response.json();
+        console.log(data);
+        
+        setResultData(data.filteredPosts)
+      } else {
+        console.log("No response");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const handleUnsubscribeClick = () => {
-    if (subcontext?.user) { 
+    if (subcontext?.user) {
       subcontext.unSubscribe(subcontext.user.id);
     }
   };
-  
-  useEffect(()=> {
+
+  useEffect(() => {
     postinfo?.fetchPosts();
   }, []);
 
   return (
     <div className='h-[100vh] w-[100vw]'>
       <div className='h-[40vh] w-[100vw] flex flex-col justify-center items-center gap-3 p-2'>
-         <p className='title text-3xl font-bold text-center'>Latest news, updates, and stories for <span className='text-indigo-600'>developers</span></p>
-         {subcontext?.user?.subscription === true ? (
+        <p className='title text-3xl font-bold text-center'>Latest news, updates, and stories for <span className='text-indigo-600'>developers</span></p>
+        <div className='h-max w-max rounded-full p-1.5 text-base border-2 border-indigo-600 flex flex-row items-center'>
+          <input className='md:w-[30vw] w-[70vw] placeholder:text-black placeholder:font-semibold' type="text" placeholder='Search' value={searchQuery} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)} />
+          <Icon onClick={hanldeSearch} className='cursor-pointer' icon="majesticons:search-line" height={'4vh'} color='#3949ab' />
+        </div>
+        {subcontext?.user?.subscription === true ? (
           <p className='title text-xl font-bold'>Thanks for subscribing.</p>
         ) : (
           <p className='title text-xl font-bold'>To get latest updates</p>
@@ -68,31 +107,43 @@ const Home: React.FC = () => {
         </div>
       </div>
       <div className='h-[100vh] w-[100vw] flex flex-wrap justify-center mt-2 p-3 gap-10'>
-      { postinfo?.allposts?.length? ( ( postinfo.allposts.length> 0) ?
-      (postinfo?.allposts.map( (post: any) => 
-        (<PostContainer 
-         id={post.id} 
-         title={post.blog_title} 
-         image={post.blog_image} 
-         meta={post.meta_description}
-         description={post.blog_description} 
-         firstname={post.writer_firstname} 
-         lastname={post.writer_lastname} />
-        )))
-        :
-        (
-          <div className='h-max w-[100vw] p-3 flex items-center justify-center'>
-            <Buffering/>
-          </div>
-        ))
-        :
-        (
-        <div className='h-max w-[100vw] p-3 flex items-center justify-center'>
-          <Buffering/>
-        </div>
-        )
-      }
-      <Footer/>
+        { resultData?.length > 0 ?
+          (resultData?.map((post) =>
+            <PostContainer
+              id={post.id}
+              title={post.blog_title}
+              image={post.blog_image}
+              meta={post.meta_description}
+              description={post.blog_description}
+              firstname={post.writer_firstname}
+              lastname={post.writer_lastname} />
+          )) : null
+        }
+        {postinfo?.allposts?.length ? ((postinfo.allposts.length > 0) ?
+          (postinfo?.allposts.map((post: any) =>
+          (<PostContainer
+            id={post.id}
+            title={post.blog_title}
+            image={post.blog_image}
+            meta={post.meta_description}
+            description={post.blog_description}
+            firstname={post.writer_firstname}
+            lastname={post.writer_lastname} />
+          )))
+          :
+          (
+            <div className='h-max w-[100vw] p-3 flex items-center justify-center'>
+              <Buffering />
+            </div>
+          ))
+          :
+          (
+            <div className='h-max w-[100vw] p-3 flex items-center justify-center'>
+              <Buffering />
+            </div>
+          )
+        }
+        <Footer />
       </div>
     </div>
   );

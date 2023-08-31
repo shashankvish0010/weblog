@@ -19,9 +19,12 @@ const dbconnect_1 = __importDefault(require("../../dbconnect"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const nodemailer_1 = __importDefault(require("nodemailer"));
 router.use(body_parser_1.default.json());
+let originalOtp;
 router.get('/', (req, res) => res.send("hello from backend"));
 router.post('/user/register', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("enter");
     const id = (0, uuid_1.v4)();
     const { firstname, lastname, email, user_password, confirm_password } = req.body;
     if (!firstname || !lastname || !email || !user_password || !confirm_password) {
@@ -33,21 +36,90 @@ router.post('/user/register', (req, res) => __awaiter(void 0, void 0, void 0, fu
             res.json({ success: false, message: 'Email already registered' });
         }
         else {
-            const salt = Number(bcrypt_1.default.genSalt(10));
-            const hashedPassword = yield bcrypt_1.default.hash(user_password, salt);
-            const confirmHashedPassword = yield bcrypt_1.default.hash(confirm_password, salt);
-            const ismatch = yield bcrypt_1.default.compare(user_password, confirmHashedPassword);
-            if (!ismatch) {
-                res.json({ success: false, message: 'Password does not match' });
-            }
-            else {
-                const user = yield dbconnect_1.default.query("INSERT INTO users(id, firstname, lastname, email, user_password) VALUES($1, $2, $3, $4, $5)", [id, firstname, lastname, email, hashedPassword]);
-                if (user) {
-                    res.json({ success: true, message: 'Registered Successfully' });
+            const genertedOTP = Number(`${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`);
+            originalOtp = genertedOTP;
+            const transporter = nodemailer_1.default.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: process.env.EMAIL,
+                    pass: process.env.PASSWORD
+                }
+            });
+            const email_message = {
+                from: `"Shashank V. WeBlog" <${process.env.EMAIL}>`,
+                to: email,
+                subject: "Verify your account",
+                text: `Your verification code is ${originalOtp} by weblog.`,
+            };
+            transporter.sendMail(email_message).then(() => __awaiter(void 0, void 0, void 0, function* () {
+                const salt = Number(bcrypt_1.default.genSalt(10));
+                const hashedPassword = yield bcrypt_1.default.hash(user_password, salt);
+                const confirmHashedPassword = yield bcrypt_1.default.hash(confirm_password, salt);
+                const ismatch = yield bcrypt_1.default.compare(user_password, confirmHashedPassword);
+                if (!ismatch) {
+                    res.json({ success: false, message: 'Password does not match' });
                 }
                 else {
-                    res.json({ success: false, message: 'User cannot be registered' });
+                    const user = yield dbconnect_1.default.query("INSERT INTO users(id, firstname, lastname, email, user_password) VALUES($1, $2, $3, $4, $5)", [id, firstname, lastname, email, hashedPassword]);
+                    if (user) {
+                        res.json({ success: true, id, message: 'Registered Successfully' });
+                    }
+                    else {
+                        res.json({ success: false, message: 'User cannot be registered' });
+                    }
                 }
+            })).catch((error) => {
+                console.log(error);
+            });
+        }
+    }
+}));
+router.put('/verify/account/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const { otp } = req.body;
+    console.log(id, otp);
+    if (otp) {
+        if (otp === originalOtp) {
+            const result = yield dbconnect_1.default.query('UPDATE users SET account_verified=$2 WHERE id=$1', [id, true]);
+            if (result) {
+                res.json({ success: true, message: "Account Verified" });
+            }
+            else {
+                res.json({ success: false, message: 'Incorrect OTP entered' });
+            }
+        }
+        else {
+            res.json({ success: false, message: 'OTP is invalid' });
+        }
+    }
+}));
+router.get('/verify/account/re/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const genertedOTP = Number(`${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`);
+    originalOtp = genertedOTP;
+    if (id) {
+        if (id) {
+            const user = yield dbconnect_1.default.query('SELECT * FROM users WHERE id=$1', [id]);
+            if (user) {
+                const transporter = nodemailer_1.default.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: process.env.EMAIL,
+                        pass: process.env.PASSWORD
+                    }
+                });
+                const email_message = {
+                    from: `"Shashank V. WeBlog" <${process.env.EMAIL}>`,
+                    to: user.rows[0].email,
+                    subject: "Verify your account",
+                    text: `Your verification code is ${originalOtp} by weblog.`,
+                };
+                transporter.sendMail(email_message).then(() => {
+                    res.json({ success: true, message: "Check your email to get the OTP" });
+                }).catch((error) => {
+                    console.log(error);
+                    res.json({ success: false, message: "Error occurred" });
+                });
             }
         }
     }
@@ -63,14 +135,19 @@ router.post('/user/login', (req, res) => __awaiter(void 0, void 0, void 0, funct
             res.json({ success: false, message: "Email does not exists." });
         }
         else {
-            const storedPassword = userInfo.rows[0].user_password;
-            const ismatch = yield bcrypt_1.default.compare(user_password, storedPassword);
-            if (ismatch) {
-                const token = jsonwebtoken_1.default.sign(userInfo.rows[0].id, 'SECRETTOPOFUSERS');
-                res.cookie("user_access_token", token).status(201).json({ success: true, userData: userInfo.rows[0], message: "Login Successfully" });
+            if (userInfo.rows[0].account_verified === true) {
+                const storedPassword = userInfo.rows[0].user_password;
+                const ismatch = yield bcrypt_1.default.compare(user_password, storedPassword);
+                if (ismatch) {
+                    const token = jsonwebtoken_1.default.sign(userInfo.rows[0].id, process.env.USERS_SECRET || '');
+                    res.cookie("user_access_token", token).status(201).json({ success: true, userData: userInfo.rows[0], message: "Login Successfully" });
+                }
+                else {
+                    res.json({ success: false, message: "Password is incorrect." });
+                }
             }
             else {
-                res.json({ success: false, message: "Password is incorrect." });
+                res.json({ success: false, message: "Please verify your account" });
             }
         }
     }
@@ -127,10 +204,10 @@ router.post('/admin/login', (req, res) => __awaiter(void 0, void 0, void 0, func
             const storedPassword = adminInfo.rows[0].admin_password;
             const ismatch = yield bcrypt_1.default.compare(admin_password, storedPassword);
             if (ismatch) {
-                const token = jsonwebtoken_1.default.sign(adminInfo.rows[0].id, 'SECRETTOPOFADMINS');
-                const auth = jsonwebtoken_1.default.verify(token, 'SECRETTOPOFADMINS');
+                const token = jsonwebtoken_1.default.sign(adminInfo.rows[0].id, process.env.ADMIN_SECRET || '');
+                const auth = jsonwebtoken_1.default.verify(token, process.env.ADMIN_SECRET || '');
                 if (token && auth) {
-                    res.cookie("admin_access", token).status(201).json({ success: true, adminData: adminInfo.rows[0], message: "Cookie set" });
+                    res.cookie("admin_access_token", token).status(201).json({ success: true, adminData: adminInfo.rows[0], message: "Cookie set" });
                 }
                 else {
                     res.json({ success: false, message: "Cookie not set" });
@@ -143,7 +220,7 @@ router.post('/admin/login', (req, res) => __awaiter(void 0, void 0, void 0, func
     }
 }));
 router.get('/user/logout', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield res.clearCookie("user_access_token");
+    const result = res.clearCookie("user_access_token");
     if (result) {
         res.json({ success: true, message: "Logout" });
     }
@@ -252,6 +329,26 @@ router.post('/publish/blogpost', (req, res) => __awaiter(void 0, void 0, void 0,
         console.log(error);
     }
 }));
+router.put('/edit/blogpost', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id, title, image, meta, tags, description, key } = req.body;
+    try {
+        if (id) {
+            const blog = yield dbconnect_1.default.query('UPDATE blogposts SET blog_title=$1, blog_image=$2, meta_description=$3, blog_keywords=$4, blog_description=$5, public_view=$7 WHERE id=$6', [title, image, meta, tags, description, id, key]);
+            if (blog) {
+                res.json({ success: true, message: "Posts Updated" });
+            }
+            else {
+                res.json({ success: false, message: "Posts not updated" });
+            }
+        }
+        else {
+            res.json({ success: false, message: "Posts Id not found" });
+        }
+    }
+    catch (error) {
+        console.log(error);
+    }
+}));
 router.get('/api/posts', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const blogsinfo = yield dbconnect_1.default.query('SELECT * FROM blogposts WHERE public_view=$1', [true]);
@@ -288,7 +385,7 @@ router.get('/view/post/:id', (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
 }));
 router.get('/admin/logout', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield res.clearCookie("admin_access");
+    const result = res.clearCookie("admin_access_token");
     if (result) {
         res.json({ success: true, message: "Admin Logout" });
     }
@@ -341,6 +438,50 @@ router.put('/flag/post/:id', (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
     else {
         res.json({ success: false, message: "Post Id not receieved" });
+    }
+}));
+router.get('/test/email', (req, res) => {
+    let config = {
+        service: 'gmail',
+        auth: {
+            user: 'shashankvishwakarma416@gmail.com',
+            pass: 'wvjvcddffannskap'
+        }
+    };
+    let message = {
+        from: process.env.EMAIL,
+        to: 'shashankvishwakarma222@gmail.com',
+        subject: "test success",
+        text: "Hello world?",
+        html: "<b>Hello world?</b>",
+    };
+    let transporter = nodemailer_1.default.createTransport(config);
+    transporter.sendMail(message).then(() => {
+        res.json("Verfied test mail");
+    }).catch((error) => {
+        res.json(error);
+    });
+});
+router.get('/search/post/:query', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { query } = req.params;
+    try {
+        const TotalPosts = yield dbconnect_1.default.query('SELECT * FROM blogposts');
+        if (TotalPosts.rows.length > 0) {
+            const filteredPosts = TotalPosts.rows.filter((post) => {
+                return (post.blog_title.toLowerCase().includes((query).toLowerCase()) ||
+                    post.blog_description.toLowerCase().includes((query).toLowerCase()) ||
+                    post.blog_keywords.toLowerCase().includes((query).toLowerCase()));
+            });
+            if (filteredPosts.length > 0) {
+                res.json({ success: true, filteredPosts, message: 'Sent Filtered Results' });
+            }
+            else {
+                res.json({ success: false, message: 'No result found' });
+            }
+        }
+    }
+    catch (error) {
+        console.log(error);
     }
 }));
 module.exports = router;

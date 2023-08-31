@@ -3,11 +3,12 @@ import {Icon} from '@iconify/react'
 import { useNavigate } from 'react-router-dom'
 import { postContext } from '../Context/PostData'
 
+
 const ProfilePost: React.FC = (props) => {
     const { id, image, title, meta, publicView, admin} = props;
     const Navigate = useNavigate();
     const post = useContext(postContext)
-    const EditPost = (blogId: String) => Navigate('/edit/post'+blogId)
+    const EditPost = (blogId: String) => Navigate('/edit/post/'+blogId)
 
     const LoadPost = async (Postid: String) => {        
         try {

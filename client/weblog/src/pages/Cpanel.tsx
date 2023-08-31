@@ -12,7 +12,7 @@ const Cpanel: React.FC = () => {
             </div>
             <div className='w-[100vw] flex flex-row justify-around items-center'>
                 <span className='rounded-md h-[0.15rem] bg-indigo-600 w-[30vw]'></span>
-                All Posts
+                <p className='text-xl font-semibold'>All Live Posts</p>
                 <span className='rounded-md h-[0.15rem] bg-indigo-600 w-[30vw]'></span>
             </div>
             <div className='flex flex-col justify-center gap-5'>

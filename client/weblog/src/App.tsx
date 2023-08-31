@@ -13,6 +13,8 @@ import Contact from './pages/Contact'
 import About from './pages/About'
 import Post from './pages/Post'
 import Cpanel from './pages/Cpanel'
+import OTPverification from './pages/OTPverification'
+import EditPost from './pages/EditPost'
 
 
 const App: React.FC = () => {
@@ -28,9 +30,11 @@ const App: React.FC = () => {
         <Route path='/admin/reg' element={<AdminReg/>} />
         <Route path='/admin/log' element={<AdminLog/>} />
         <Route path='/register' element={<Register/>} />
+        <Route path='/verify' element={<OTPverification/>} />
         <Route path='/login' element={<Login/>} />
         <Route path='/profile' element={<UserProfile/>} />
         <Route path='/write' element={<WriteBlog/>} />
+        <Route path='/edit/post/:id' element={<EditPost/>} />
       </Routes>
      </Router>
   )

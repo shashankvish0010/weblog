@@ -51,8 +51,6 @@ const UserProfile: React.FC = () => {
     }            
   }
   
-  console.log(userPosts);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setEditProfile((currentProfile) => ({

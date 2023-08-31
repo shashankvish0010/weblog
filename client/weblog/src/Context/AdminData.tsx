@@ -77,7 +77,7 @@ export const AdminContextProvider = (props: any) => {
           'Content-Type' : 'application/json'
         }
       })
-      if(res){setStoreAdmin(''); setStatus({ success : false, message : 'Logout' })}
+      if(res){setStatus({ success : false, message : 'Logout' }); setStoreAdmin('');}
       else{ console.log("Cant logout");
       }
     } catch (error) {

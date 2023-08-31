@@ -21,7 +21,7 @@ const WriteBlog: React.FC = () => {
     const [blog, setBlog] = useState<blogdata>({
         title: '',
         image: '',
-        meta:'',
+        meta: '',
         tags: ''
     })
     const [description, setDescription] = useState('')
@@ -108,6 +108,7 @@ const WriteBlog: React.FC = () => {
                         <span className='text-2xl text-indigo-600 font-medium'>Meta Description - 100 words</span>
                         <textarea className='border-indigo-600 border rounded shadow w-[75vw] h-max p-1' type="text" value={blog.meta} onChange={handlechange} name='meta' />
                         <span className='text-2xl text-indigo-600 font-medium'>Keywords / Tags</span>
+                        <p className='title text-base font-bold'>Separate with commas</p>
                         <input className='border-indigo-600 border rounded shadow w-[75vw] h-[7vh] px-2' type="text" value={blog.tags} onChange={handlechange} name='tags' />
                     </form><div className='flex md:flex-row flex-col items-center gap-5'>
                             <button
@@ -126,12 +127,12 @@ const WriteBlog: React.FC = () => {
                     :
                     (
                         <div className='h-[100vh] w-[100vw] flex items-center justify-center'>
-                            {document.cookie ? 
-                            <p className='text-indigo-600 title md:text-2xl text-xl font-bold text-center'>{status.message}</p>
-                            :
-                            <p className='text-indigo-600 title md:text-2xl text-xl font-bold text-center'>Plaese Login</p>
+                            {document.cookie ?
+                                <p className='text-indigo-600 title md:text-2xl text-xl font-bold text-center'>{status.message}</p>
+                                :
+                                <p className='text-indigo-600 title md:text-2xl text-xl font-bold text-center'>Please Login</p>
                             }
-                            </div>
+                        </div>
                     )
                 }
             </div>

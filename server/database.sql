@@ -7,6 +7,7 @@ CREATE TABLE users(
     email VARCHAR,
     user_password VARCHAR,
     subscription BOOLEAN,
+    account_verified BOOLEAN
 );
 
 CREATE TABLE admin(
