@@ -87,7 +87,7 @@ export const AdminContextProvider = (props: any) => {
 
   useEffect(()=> {
         localStorage.setItem("admin", JSON.stringify(storeAdmin));
-        document.cookie ? setStatus({success : true, message : "Login successfully"}) :
+        document.cookie != '' && storeAdmin != null ? setStatus({success : true, message : "Login successfully"}) :
         setStatus({success : false, message : "Please Login"})
   }, [storeAdmin]);
 

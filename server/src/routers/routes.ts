@@ -457,4 +457,32 @@ router.get('/search/post/:query', async (req,res)=>{
     }
 })
 
+router.post('/send/updates', async (req,res) => {
+    const {title, body} = req.body
+    
+    try {
+        const emails = await dbpool.query('SELECT email FROM users WHERE subscription=$1', [true]) 
+        console.log(emails.rows.map((curr) => console.log(curr.email))
+        );
+        
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL,
+                pass: process.env.PASSWORD
+            }
+        })
+        const email_message = {
+            from: `"Shashank V. WeBlog" <${process.env.EMAIL}>`,
+            to: emails.rows.map((curr) => {return(curr.email)}),
+            subject: title,
+            html: body
+        }
+
+        transporter.sendMail(email_message).then(()=> {res.json({success: true, message: "email sent"})}).catch((err)=>console.log(err))
+    } catch (error) {
+        console.log(error);
+    }
+})
+
 module.exports = router

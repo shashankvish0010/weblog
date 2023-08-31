@@ -7,6 +7,7 @@ export default defineConfig({
     proxy : {
       '/api' : 'http://localhost:8080/',
       '/search/post' : 'http://localhost:8080/',
+      '/send/updates' : 'http://localhost:8080/',
       '/user/register' : { target : 'http://localhost:8080/' },
       '/user/login' :  { target : 'http://localhost:8080/' },
       '/admin/register' : { target : 'http://localhost:8080/' },

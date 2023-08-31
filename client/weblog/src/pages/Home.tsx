@@ -101,8 +101,8 @@ const Home: React.FC = () => {
       </div>
       <div>
         <div className='w-[100vw] flex flex-row justify-around items-center'>
-          <span className='rounded-md h-[0.15rem] bg-indigo-600 w-[30vw]'></span>{' '}
-          <h1 className='text-xl font-semibold'>All Articles</h1>{' '}
+          <span className='rounded-md h-[0.15rem] bg-indigo-600 w-[30vw]'></span>
+          <h1 className='text-xl font-semibold'>All Articles</h1>
           <span className='rounded-md h-[0.15rem] bg-indigo-600 w-[30vw]'></span>
         </div>
       </div>

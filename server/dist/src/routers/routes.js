@@ -484,4 +484,28 @@ router.get('/search/post/:query', (req, res) => __awaiter(void 0, void 0, void 0
         console.log(error);
     }
 }));
+router.post('/send/updates', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { title, body } = req.body;
+    try {
+        const emails = yield dbconnect_1.default.query('SELECT email FROM users WHERE subscription=$1', [true]);
+        console.log(emails.rows.map((curr) => console.log(curr.email)));
+        const transporter = nodemailer_1.default.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL,
+                pass: process.env.PASSWORD
+            }
+        });
+        const email_message = {
+            from: `"Shashank V. WeBlog" <${process.env.EMAIL}>`,
+            to: emails.rows.map((curr) => { return (curr.email); }),
+            subject: title,
+            html: body
+        };
+        transporter.sendMail(email_message).then(() => { res.json({ success: true, message: "email sent" }); }).catch((err) => console.log(err));
+    }
+    catch (error) {
+        console.log(error);
+    }
+}));
 module.exports = router;
