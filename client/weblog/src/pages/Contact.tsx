@@ -41,7 +41,7 @@ const Contact: React.FC = () => {
           <Icon icon="ic:baseline-email" color='orange' height='4vh'/>
           <p className='text-gray-600 font-medium'>shashankvishwakarma001@gmail.com</p>
           </div>
-        <a href="https://github.com/shashankvish"><div className='flex flex-row gap-2 p-1 h-max w-max'>
+        <a href="https://github.com/shashankvish0010"><div className='flex flex-row gap-2 p-1 h-max w-max'>
           <Icon icon="icon-park:github" height='4vh'/>
           <p className='text-gray-600 font-medium'>GitHub</p>
           </div></a>

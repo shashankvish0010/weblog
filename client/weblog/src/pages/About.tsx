@@ -1,70 +1,72 @@
 import React from 'react';
-import { Icon } from '@iconify/react';
 import Footer from '../components/Footer';
 const About: React.FC = () => {
   return (
     <div className="w-screen h-screen flex flex-col gap-5 items-center p-3">
       <div>
-     <h1 className='text-xl font-bold'>About We<span className='text-indigo-600'>Blog</span></h1>
+        <h1 className='text-xl font-bold'>About We<span className='text-indigo-600'>Blog</span></h1>
       </div>
       <div className="h-max w-[90vw] flex flex-col justify-evenly gap-5 shadow-xl rounded p-5">
         <p className="text-base space-y-1 font-normal">
-          Fresh Food is a full-stack project developed using the MERN (MongoDB, Express.js, React.js, Node.js) stack, along with React.js for the front end and Tailwind CSS for styling. It leverages modern technologies to create a seamless platform for customers, food partners, and the admin team.
-        </p>
+          WeBlog is a full-stack web platform crafted with the powerful PERN stack (PostgreSQL, Express.js, React.js, Node.js). Complemented by a sleek React.js frontend, styled with Tailwind CSS, WeBlog offers bloggers a seamless and secure space to unite, share, and thrive.        </p>
         <h1 className="font-semibold text-xl">Features offered :</h1>
         <ul className="pl-5">
           <li className='flex flex-row items-center h-max gap-2'>
-          <Icon icon="codicon:activate-breakpoints" height='3vh' color='blue'/>
-            Acts as a technology platform connecting customers and food partners.
-          </li>
-          <li  className='flex flex-row items-center h-max gap-2'>
-          <Icon icon="codicon:activate-breakpoints" height='3vh' color='blue'/>
-            Offers multiple roles: Customers, Fresh Food Admin, and Food Partners Admin.
-          </li>
-          <li  className='flex flex-row items-center h-max gap-2'>
-          <Icon icon="codicon:activate-breakpoints" height='3vh' color='blue'/>
-            Implements authentication using JWT (JSON Web Tokens) for secure access to admin functionalities.
-          </li>
-          <li  className='flex flex-row items-center h-max gap-2'>
-          <Icon icon="codicon:activate-breakpoints" height='3vh' color='blue'/>
-          Preserving cookies for future data collection and secure requests to confirm users identities at the backend          </li>
-          <li  className='flex flex-row items-center h-max gap-2'>
-          <Icon icon="codicon:activate-breakpoints" height='3vh' color='blue'/>
-            Does not rely on third-party APIs; all data is stoblue within the application.
-          </li>
-          <li  className='flex flex-row items-center h-max gap-2'>
-          <Icon icon="codicon:activate-breakpoints" height='3vh' color='blue'/>
-            Fresh Food Admin can manage coupon codes for promotional offers and discounts.
-          </li>
-          <li  className='flex flex-row items-center h-max gap-2'>
-          <Icon icon="codicon:activate-breakpoints" height='3vh' color='blue'/>
-            Utilizes REST APIs for data retrieval and manipulation from database via backend routes, No additional third party Api is used.
-          </li>
-          <li  className='flex flex-row items-center h-max gap-2'>
-          <Icon icon="codicon:activate-breakpoints" height='3vh' color='blue'/>
-            Enables food partners to easily add, edit, or remove dishes from their menus with CRUD operations.
-          </li>
-          <li  className='flex flex-row items-center h-max gap-2'>
-          <Icon icon="codicon:activate-breakpoints" height='3vh' color='blue'/>
-            Provides comprehensive analytics for Fresh Food Admin, including sales tracking, customer count, and more.
+            <p><span className='text-indigo-600 font-semibold'>Connecting Bloggers: </span>
+              WeBlog serves as a hub, connecting developers and fostering a vibrant community. It's a space where developers / bloggers can come together to share their knowledge, experiences, and insights.</p>
           </li>
           <li className='flex flex-row items-center h-max gap-2'>
-          <Icon icon="codicon:activate-breakpoints" height='3vh' color='blue'/>
-          Integration of a payment gateway using the Razorpay API to collect payments from customers.
+            <p>
+              <span className='text-indigo-600 font-semibold'>Multi-Role Platform: </span>
+              WeBlog offers distinct roles to cater to every user's needs - Bloggers, WeBlog Admins, and Content Contributors. Each role has its unique privileges and responsibilities.
+
+
+            </p>          </li>
+          <li className='flex flex-row items-center h-max gap-2'>
+            <p>
+              <span className='text-indigo-600 font-semibold'>Secure Access: </span>
+              Security is paramount at WeBlog. We employ OTP (One-Time Password) verification, seamlessly integrated with Nodemailer, ensuring secure access to admin functionalities while preserving user data with encrypted cookies.
+
+            </p>          </li>
+          <li className='flex flex-row items-center h-max gap-2'>
+            <p>
+              <span className='text-indigo-600 font-semibold'>Self-Contained Data: </span>
+              Unlike many platforms, we keep all our data in-house. No reliance on third-party APIs means we have full control over data management and security.
+            </p>       </li>
+          <li className='flex flex-row items-center h-max gap-2'>
+            <p>
+              <span className='text-indigo-600 font-semibold'>Admin Empowerment: </span>
+              WeBlog Admins have the tools to manage the platform effectively. They can control promotional offers, discounts, and provide a seamless experience for all users.  </p>           </li>
+          <li className='flex flex-row items-center h-max gap-2'>
+            <p>
+              <span className='text-indigo-600 font-semibold'>RESTful APIs: </span>
+              WeBlog relies on REST APIs for data retrieval and manipulation, all managed via backend routes. We value simplicity and transparency in our data handling.  </p>           </li>
+          <li className='flex flex-row items-center h-max gap-2'>
+            <p>
+              <span className='text-indigo-600 font-semibold'>Content Management: </span>
+              Content Contributors can effortlessly add, edit, and remove their posts, enabling them to share their valuable insights with the community.  </p>            </li>
+        </ul>
+
+        <h1 className="font-semibold text-xl">Features offered :</h1>
+        <ul className="pl-5">
+          <li className='flex flex-row items-center h-max gap-2'>
+            <p>
+              <span className='text-indigo-600 font-semibold'>Comprehensive Analytics: </span>
+              WeBlog offers advanced analytics, including traffic statistics, engagement metrics, and more, empowering WeBlog Admins with valuable insights for optimizing the platform.
+
+            </p>
           </li>
           <li className='flex flex-row items-center h-max gap-2'>
-          <Icon icon="codicon:activate-breakpoints" height='3vh' color='blue'/>
-          The admin panel includes promotional offers and vouchers to lower consumers' expenses.
+            <p>
+              <span className='text-indigo-600 font-semibold'>Content Discovery: </span>
+              Users can easily discover new and trending content on WeBlog, making it a go-to platform for staying informed and entertained.
+            </p>
           </li>
-          <li className='flex flex-row items-center h-max gap-2'>
-          <Icon icon="codicon:activate-breakpoints" height='3vh' color='blue'/>
-          Customers can sort dishes by new, best selling, most popular, today's special, duration, and price.           </li>
         </ul>
         <p className="text-base font-normal">
-          In summary, Fresh Food is a feature-rich project that leverages modern technologies to create a seamless platform for customers, food partners, and the admin team. It enables efficient management of food-related operations while providing valuable insights for business growth and optimization.
-        </p>
+          Join WeBlog today and be part of a vibrant community where developers unite, share their stories, and embark on an exciting journey of creativity and expression. WeBlog - Where Developers Shine!</p>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

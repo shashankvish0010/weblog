@@ -9,9 +9,9 @@ const Footer: React.FC = () => {
       <h1 className='text-xl font-bold'>We<span className='text-indigo-600'>Blog</span></h1>
       <div className='h-max w-max'>
         <ul className='md:w-[35vw] w-[80vw] text-base font-semibold h-max flex flex-row items-center justify-around'>
-          <Link to='/about'>About</Link>
-          <Link to='/contact'>Contact</Link>
-          <Link to='/admin/reg'>Admin</Link>
+          <Link className='hover:text-indigo-600' to='/about'>About</Link>
+          <Link className='hover:text-indigo-600' to='/contact'>Contact</Link>
+          <Link className='hover:text-indigo-600' to='/admin/reg'>Admin</Link>
         </ul>
       </div>
       </div>
