@@ -427,13 +427,35 @@ router.delete('/delete/post/:id', (req, res) => __awaiter(void 0, void 0, void 0
 }));
 router.put('/flag/post/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
+    const { body } = req.body;
     if (id) {
-        const result = yield dbconnect_1.default.query('UPDATE blogposts SET public_view=$2 WHERE id=$1', [id, false]);
-        if (result) {
-            res.json({ success: true, message: "Post flagges" });
+        const WriterEmail = yield dbconnect_1.default.query('SELECT writer_firstname, writer_email FROM blogposts WHERE id=$1', [id]);
+        if (WriterEmail.rows.length > 0) {
+            const result = yield dbconnect_1.default.query('UPDATE blogposts SET public_view=$2 WHERE id=$1', [id, false]);
+            if (result) {
+                const transporter = nodemailer_1.default.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: process.env.EMAIL,
+                        pass: process.env.PASSWORD
+                    }
+                });
+                const email_message = {
+                    from: `"Shashank V. WeBlog" <${process.env.EMAIL}>`,
+                    to: WriterEmail.rows[0].writer_email,
+                    subject: `${WriterEmail.rows[0].writer_firstname}, Your Post Got Flagged`,
+                    html: body
+                };
+                transporter.sendMail(email_message).then(() => {
+                    res.json({ success: true, message: "Post flagged" });
+                }).catch((error) => { console.log(error); });
+            }
+            else {
+                res.json({ success: false, message: "Post not flagged" });
+            }
         }
         else {
-            res.json({ success: false, message: "Post not flagged" });
+            res.json({ success: false, message: "Cannot get writers email" });
         }
     }
     else {

@@ -16,6 +16,7 @@ import Cpanel from './pages/Cpanel'
 import OTPverification from './pages/OTPverification'
 import EditPost from './pages/EditPost'
 import Email from '../src/pages/Email'
+import Flag from './pages/Flag'
 
 
 const App: React.FC = () => {
@@ -26,6 +27,7 @@ const App: React.FC = () => {
         <Route path='/' element={<Home/>} />
         <Route path='/panel' element={<Cpanel/>} />
         <Route path='/sendmail' element={<Email/>}/>
+        <Route path='/flag/:id' element={<Flag/>}/>
         <Route path='/about' element={<About/>} />
         <Route path='/getview/post/:id' element={<Post/>} />
         <Route path='/contact' element={<Contact/>} />

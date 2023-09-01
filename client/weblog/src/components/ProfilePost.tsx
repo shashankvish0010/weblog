@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import {Icon} from '@iconify/react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { postContext } from '../Context/PostData'
 
 
@@ -54,9 +54,9 @@ const ProfilePost: React.FC = (props) => {
                     <Icon icon="iconamoon:edit-light" color='white' /> Read
                 </button>
                 { admin === true ? 
-                (<button onClick={() => post?.FlagPost(id)} className='bg-orange-600 md:w-[8vw] w-[25vw] flex items-center justify-center gap-1 font-medium shadow-md rounded-sm px-1 text-base text-white'>
+                (<Link to={`/flag/${id}`}><button className='bg-orange-600 md:w-[8vw] w-[25vw] flex items-center justify-center gap-1 font-medium shadow-md rounded-sm px-1 text-base text-white'>
                     <Icon icon="prime:flag" color="white" /> Flag
-                </button>)
+                </button></Link>)
                 :
                  (<button onClick={() => EditPost(id)} className='bg-green-500 md:w-[8vw] w-[25vw] flex items-center justify-center gap-1 font-medium shadow-md rounded-sm px-1 text-base text-white'>
                     <Icon icon="iconamoon:edit-light" color='white' /> Edit
