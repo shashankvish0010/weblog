@@ -1,8 +1,11 @@
 import React from 'react'
 import { Icon } from '@iconify/react'
-
+import Icons from '../components/Icons'
 
 const Contact: React.FC = () => {
+  const IconArr: String[] = ["devicon:cplusplus", "logos:javascript", "devicon:typescript", "devicon:postgresql-wordmark", "devicon:mongodb-wordmark", "skill-icons:react-dark"
+, "logos:nodejs", "skill-icons:expressjs-dark","devicon:tailwindcss", "logos:webrtc", "devicon:socketio", "logos:html-5", "devicon:css3-wordmark", "vscode-icons:file-type-scss",
+"logos:figma", "devicon:git", "devicon:github", "logos:docker-icon"]
   return (
     <div className='flex flex-col h-max w-screen'>
         <div className='flex flex-col h-[100vh] w-screen md:justify-evenly gap-y-10 items-center'>
@@ -13,10 +16,19 @@ const Contact: React.FC = () => {
         </div>
         <div className='flex flex-col h-max gap-3 p-2 md:w-[65vw] w-[50vw]'>
           <h1 className='md:text-xl text-base font-semibold'>Shashank Vishwakarma</h1>
-          <p className='text-sm text-gray-600 font-medium'>I am a MERN full-stack developer who designed and developed WeBlog, a
-           seamless platform connecting customers with food partners, utilizing MongoDB, Express.js, React.js, Tailwind CSS,
-            and Node.js to create a modern and scalable application.
+          <p className='text-sm text-gray-600 font-medium'>I am a full-stack developer who designed and developed WeBlog, a
+           seamless platform connecting the developers with others creating community, utilizing Postgres SQL, Express.js, React.js, Tailwind CSS,
+            and Node.js with TypeScript to create a modern and scalable Web application.
           </p>
+        </div>
+      </div>
+
+      <div className='h-max flex flex-col gap-5 shadow-2xl rounded md:w-[80vw] w-[75vw] p-3 items-center'>
+      <p className='title text-xl font-bold'>Explored <span className='text-indigo-600'>Tech Stack</span></p>
+       <div className='h-max w-[100%] flex items-center flex-wrap justify-around gap-3'>
+        {
+          IconArr.map((icon)=> <Icons iconName={icon} /> )
+        }
         </div>
       </div>
 
