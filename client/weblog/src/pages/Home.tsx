@@ -21,12 +21,12 @@ interface PostInt {
 const Home: React.FC = () => {
   const navigate = useNavigate()
   const postinfo = useContext(postContext)
-  const subcontext = useContext(UserContext);
+  const usercontext = useContext(UserContext);
   const [searchQuery, setSearchQuery] = useState<String>('')
   const [resultData, setResultData] = useState<PostInt[]>()
   const handleSubscribeClick = () => {
-    if (subcontext?.user) {
-      subcontext.addSubscribe(subcontext.user.id);
+    if (usercontext?.user) {
+      usercontext.addSubscribe(usercontext.user.id);
     }
   };
 
@@ -52,8 +52,8 @@ const Home: React.FC = () => {
   }
 
   const handleUnsubscribeClick = () => {
-    if (subcontext?.user) {
-      subcontext.unSubscribe(subcontext.user.id);
+    if (usercontext?.user) {
+      usercontext.unSubscribe(usercontext.user.id);
     }
   };
 
@@ -69,13 +69,13 @@ const Home: React.FC = () => {
           <input className='md:w-[30vw] w-[70vw] placeholder:text-black placeholder:font-semibold' type="text" placeholder='Search' value={searchQuery} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)} />
           <Icon onClick={hanldeSearch} className='cursor-pointer' icon="majesticons:search-line" height={'4vh'} color='#3949ab' />
         </div>
-        {subcontext?.user?.subscription === true ? (
+        {usercontext?.user?.subscription === true ? (
           <p className='title text-xl font-bold'>Thanks for subscribing.</p>
         ) : (
           <p className='title text-xl font-bold'>To get latest updates</p>
         )}
-        {subcontext?.loginstatus.success === true && subcontext?.user ? (
-          subcontext?.user?.subscription === false ? (
+        {usercontext?.loginstatus.success === true && usercontext?.user ? (
+          usercontext?.user?.subscription === false ? (
             <button
               onClick={handleSubscribeClick}
               className='bg-indigo-600 shadow-md rounded-sm p-2 text-base font-semibold text-white'

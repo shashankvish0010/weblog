@@ -4,7 +4,7 @@ import { UserContext } from '../Context/UserData';
 
 const Login: React.FC = () => {
     const Navigate = useNavigate()
-    const logcontext = useContext(UserContext)
+    const usercontext = useContext(UserContext)
     interface userCredentials {
         email : String;
         user_password : String;
@@ -20,13 +20,13 @@ const Login: React.FC = () => {
             [name]:value
         }));
     }
-    useEffect(()=> {if(logcontext?.loginstatus.success){
+    useEffect(()=> {if(usercontext?.loginstatus.success === true){
         Navigate('/')
-    }}, [logcontext]);
+    }}, [usercontext]);
 
   return (
     <div className='h-[100vh] w-[100vw] flex flex-col gap-2 items-center justify-center'>
-    <span className='p-1 text-center font-semibold shadow-md'><p>{logcontext?.loginstatus.message}</p></span>
+    <span className='p-1 text-center font-semibold shadow-md'><p>{usercontext?.loginstatus.message}</p></span>
         <div className='flex flex-col justify-around gap-5 border shadow-md w-max h-max p-4'>
             <div className='text-2xl text-indigo-600 font-semibold'><h1>Login</h1></div>
             <div>
@@ -47,7 +47,7 @@ const Login: React.FC = () => {
                 <p><Link to='/register'>Register</Link></p>
             </div>
             <div className='text-center'>
-            <button className='bg-indigo-600 w-[35vw] shadow-md rounded-sm p-2 text-md font-semibold text-white' onClick={()=> {logcontext?.Login(user)}}>Login</button>
+            <button className='bg-indigo-600 w-[35vw] shadow-md rounded-sm p-2 text-md font-semibold text-white' onClick={()=> {usercontext?.dispatch({ type : "LOGIN", data: user})}}>Login</button>
             </div>
         </div>
     </div>

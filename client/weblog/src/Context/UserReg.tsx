@@ -1,4 +1,4 @@
-import React, { useState, createContext, useEffect } from 'react'
+import React, { useState, createContext } from 'react'
 
 interface ContextValue {
     user: userdata
@@ -70,10 +70,6 @@ export const RegisterContextProvider = (props: any) => {
             console.log(error);
         }
     }
-
-    useEffect(() => {
-        document.cookie ? setStatus({ success: true, message: 'Registered Successfully' }) : setStatus({ success: false, message: 'Please Register' })
-    }, [])
 
     const info = { handleChange, handleSubmit, registeredUserId, user, status }
     return (

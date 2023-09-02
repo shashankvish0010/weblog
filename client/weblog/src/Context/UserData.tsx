@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useEffect, useState, useReducer } from 'react'
 
 interface ContextValue {
   Login: (input: userInput) => Promise<void>;
@@ -6,7 +6,10 @@ interface ContextValue {
   fetchPostsData: (email: String) => Promise<void>;
   addSubscribe: (id: String) => Promise<void>;
   unSubscribe: (id: String) => Promise<void>;
+  reducer: (state: any, action: any) => Promise<void>;
   loginstatus: userStatus;
+  state: any
+  dispatch: any
   user: any;
   setUser: any
 }
@@ -25,49 +28,58 @@ export const UserContext = createContext<ContextValue | null>(null)
 export const UserContextProvider = (props: any) => {
   const [loginstatus, setLoginStatus] = useState<userStatus>({ success: false, message: '' })
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || null)
-
-  const Login = async (input: userInput) => {
-
-    const { email, user_password } = input;
-    try {
-      const response = await fetch('/user/login', {
-        method: 'POST',
-        headers: { 'Content-type': 'application/json' },
-        body: JSON.stringify({ email, user_password })
-      });
-      if (response) {
-        const data = await response.json();
-        console.log(data);
-        if (data.success) {
-          setUser(
-            (data.userData)
-          );
+  const reducer = async (_state: userStatus, action: { type: string; data?: any }) => {
+    switch (action.type) {
+      case "LOGIN": {
+        try {
+          const { email, user_password } = action.data;
+          const response = await fetch('/user/login', {
+            method: 'POST',
+            headers: { 'Content-type': 'application/json' },
+            body: JSON.stringify({ email, user_password })
+          });
+          if (response) {
+            const data = await response.json();
+            if (data.success) {
+              setUser(data.userData);
+            }
+            setLoginStatus( (state) => ({...state, success: data.success, message: data.message }))
+          } else {
+            console.log("data not sent");
+          }
+        } catch (error) {
+          console.log(error);
         }
-        setLoginStatus((
-          { success: data.success, message: data.message }
-        ))
-      } else { console.log("data not sent") }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  const Logout = async () => {
-    try {
-      const res = await fetch('/user/logout', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      if (res) { setLoginStatus({ success: false, message: 'Logout' }); setUser(''); }
-      else {
-        console.log("Cant logout");
+        break;
       }
-    } catch (error) {
-      console.log(error);
-    }
+  
+      case "LOGOUT": {
+        try {
+          const res = await fetch('/user/logout', {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+          if (res) {
+            setUser('');
+            setLoginStatus( (state) => ({...state, success: false, message: "User Logout" }))
+          }
+          else {
+            console.log("Cant logout");
+          }
+        } catch (error) {
+          console.log(error);
+        }
+        break;
+      }
+      default:
+        return loginstatus; // Move the default return statement outside of the switch
+    }  
   }
+  console.log(loginstatus);
+  
+  const [state, dispatch] = useReducer(reducer, '');  
 
   const addSubscribe = async (id: String) => {
     try {
@@ -119,7 +131,7 @@ export const UserContextProvider = (props: any) => {
   }, [user]);
 
 
-  const info: ContextValue = { Login, Logout, unSubscribe, addSubscribe, user, loginstatus }
+  const info: ContextValue = {  unSubscribe, addSubscribe, dispatch, user,state, loginstatus }
   return (
     <UserContext.Provider value={info}>
       {props.children}
