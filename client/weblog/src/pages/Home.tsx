@@ -24,11 +24,6 @@ const Home: React.FC = () => {
   const usercontext = useContext(UserContext);
   const [searchQuery, setSearchQuery] = useState<String>('')
   const [resultData, setResultData] = useState<PostInt[]>()
-  const handleSubscribeClick = () => {
-    if (usercontext?.user) {
-      usercontext.addSubscribe(usercontext.user.id);
-    }
-  };
 
   const hanldeSearch = async () => {
     try {
@@ -51,12 +46,6 @@ const Home: React.FC = () => {
     }
   }
 
-  const handleUnsubscribeClick = () => {
-    if (usercontext?.user) {
-      usercontext.unSubscribe(usercontext.user.id);
-    }
-  };
-
   useEffect(() => {
     postinfo?.fetchPosts();
   }, []);
@@ -75,16 +64,16 @@ const Home: React.FC = () => {
           <p className='title text-xl font-bold'>To get latest updates</p>
         )}
         {usercontext?.loginstatus.success === true && usercontext?.user ? (
-          usercontext?.user?.subscription === false ? (
+          usercontext.user.subscription === false ? (
             <button
-              onClick={handleSubscribeClick}
+              onClick={()=>{usercontext.dispatch({ type:"SUBSCRIBE", id:usercontext.user.id})}}
               className='bg-indigo-600 shadow-md rounded-sm p-2 text-base font-semibold text-white'
             >
               SUBSCRIBE
             </button>
           ) : (
             <button
-              onClick={handleUnsubscribeClick}
+              onClick={()=>{usercontext.dispatch({type:"UNSUBSCRIBE", id: usercontext.user.id})}}
               className='bg-indigo-600 shadow-md rounded-sm p-2 text-base font-semibold text-white'
             >
               UNSUBSCRIBE

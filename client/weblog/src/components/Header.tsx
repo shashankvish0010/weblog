@@ -35,12 +35,10 @@ const Header: React.FC = () => {
           ) : (
             admincontext?.status.success === true ? (
               <li className='hover:text-indigo-600'>
-                <button onClick={() => { admincontext?.AdminLogout() }} className='bg-indigo-600 rounded-sm p-1 text-sm text-white hover:shadow-md'>Logout</button>
+                <button onClick={() => { admincontext?.dispatch({ type: "ADMINLOGOUT" }) }} className='bg-indigo-600 rounded-sm p-1 text-sm text-white hover:shadow-md'>Logout</button>
               </li>
             ) : (
-              <li className='hover:text-indigo-600 hidden'>
-                <button onClick={() => { admincontext?.AdminLogout() }} className='bg-indigo-600 rounded-sm p-1 text-sm text-white hover:shadow-md'>Logout</button>
-              </li>
+             null
             )
           )}
           {usercontext?.loginstatus.success === true ? (
@@ -50,11 +48,7 @@ const Header: React.FC = () => {
               </Link>
             </li>
           ) : (
-            <li className='hover:text-indigo-600 hidden'>
-              <Link to='/profile'>
-                <Icon icon='iconamoon:profile-circle-fill' />
-              </Link>
-            </li>
+            null
           )}
         </ul>
         <div className='ml-[90%] md:hidden block'>

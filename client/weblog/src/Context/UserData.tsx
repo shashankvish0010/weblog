@@ -28,7 +28,7 @@ export const UserContext = createContext<ContextValue | null>(null)
 export const UserContextProvider = (props: any) => {
   const [loginstatus, setLoginStatus] = useState<userStatus>({ success: false, message: '' })
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || null)
-  const reducer = async (_state: userStatus, action: { type: string; data?: any }) => {
+  const reducer = async (_state: userStatus, action: { type: string; data?: any, id?: String }) => {
     switch (action.type) {
       case "LOGIN": {
         try {
@@ -63,7 +63,7 @@ export const UserContextProvider = (props: any) => {
           });
           if (res) {
             setUser('');
-            setLoginStatus( (state) => ({...state, success: false, message: "User Logout" }))
+            setLoginStatus( (state) => ({...state, success: false, message: "Please Login" }))
           }
           else {
             console.log("Cant logout");
@@ -73,6 +73,52 @@ export const UserContextProvider = (props: any) => {
         }
         break;
       }
+
+      case "SUBSCRIBE": {
+        try {
+          const response = await fetch(`/add/subscriber/${action.id}`, {
+            method: 'PUT',
+            headers: { "Content-Type": "application/json" }
+          })
+          if (response) {
+            const data = await response.json()
+            if (data.success) {
+              setUser(data.userData); // Update user data
+            } else {
+              console.log("addSubscribe Error:", data.message);
+            }
+          } else {
+            console.log("Can get any sub data");
+          }
+        } catch (error) {
+          console.log(error);
+        }
+        break;
+      }
+
+      case "UNSUBSCRIBE": {
+        try {
+          const response = await fetch(`/unsubscribe/${action.id}`, {
+            method: 'PUT',
+            headers: { "Content-Type": "application/json" }
+          })
+          if (response) {
+            const data = await response.json()
+            console.log(data);
+            if (data.success) {
+              setUser(data.userdata); // Update user data
+            } else {
+              console.log("addSubscribe Error:", data.message);
+            }
+          } else {
+            console.log("Cant get any sub data");
+          }
+        } catch (error) {
+          console.log(error);
+        }
+        break;
+      }
+
       default:
         return loginstatus; // Move the default return statement outside of the switch
     }  
@@ -82,47 +128,11 @@ export const UserContextProvider = (props: any) => {
   const [state, dispatch] = useReducer(reducer, '');  
 
   const addSubscribe = async (id: String) => {
-    try {
-      const response = await fetch(`/add/subscriber/${id}`, {
-        method: 'PUT',
-        headers: { "Content-Type": "application/json" }
-      })
-      if (response) {
-        const data = await response.json()
-        console.log(data);
-        if (data.success) {
-          setUser(data.userData); // Update user data
-        } else {
-          console.log("addSubscribe Error:", data.message);
-        }
-      } else {
-        console.log("Can get any sub data");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+
   };
 
   const unSubscribe = async (id: String) => {
-    try {
-      const response = await fetch(`/unsubscribe/${id}`, {
-        method: 'PUT',
-        headers: { "Content-Type": "application/json" }
-      })
-      if (response) {
-        const data = await response.json()
-        console.log(data);
-        if (data.success) {
-          setUser(data.userdata); // Update user data
-        } else {
-          console.log("addSubscribe Error:", data.message);
-        }
-      } else {
-        console.log("Cant get any sub data");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+
   }
 
   useEffect(() => {

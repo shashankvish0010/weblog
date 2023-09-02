@@ -1,9 +1,11 @@
-import React, { useState, createContext, useEffect } from 'react'
+import React, { useState, createContext, useEffect, useReducer } from 'react'
 
 interface ContextValue {
     AdminLogin : () => Promise<void>;
     AdminLogout : () => Promise<void>;
     handleChange : () => Promise<void>;
+    reducer: (state: any, type: any) => Promise<void>;
+    dispatch: any;
     admin : adminCredentials;
     storeAdmin : adminInfo;
     status : credentialinfo
@@ -38,6 +40,29 @@ export const AdminContextProvider = (props: any) => {
         admin_password : ''
     });
 
+    const reducer = async (_state: any, action: { type: String} ) => {
+      switch (action.type){
+        case "ADMINLOGOUT" : {
+          try {
+            const res = await fetch('/admin/logout', {
+              method: 'GET',
+              headers: {
+                'Content-Type' : 'application/json'
+              }
+            })
+            if(res){setStatus({ success : false, message : 'Logout' }); setStoreAdmin('');}
+            else{ console.log("Cant logout");
+            }
+          } catch (error) {
+            console.log(error);
+          }
+          break
+        }
+      }
+    }
+
+    const [state, dispatch] = useReducer(reducer, '')
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
         setAdmin(prevAdmin => ({
@@ -70,19 +95,19 @@ export const AdminContextProvider = (props: any) => {
   };
 
   const AdminLogout = async () => {
-    try {
-      const res = await fetch('/admin/logout', {
-        method: 'GET',
-        headers: {
-          'Content-Type' : 'application/json'
-        }
-      })
-      if(res){setStatus({ success : false, message : 'Logout' }); setStoreAdmin('');}
-      else{ console.log("Cant logout");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    //   const res = await fetch('/admin/logout', {
+    //     method: 'GET',
+    //     headers: {
+    //       'Content-Type' : 'application/json'
+    //     }
+    //   })
+    //   if(res){setStatus({ success : false, message : 'Logout' }); setStoreAdmin('');}
+    //   else{ console.log("Cant logout");
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
   }
 
   useEffect(()=> {
@@ -91,7 +116,7 @@ export const AdminContextProvider = (props: any) => {
         setStatus({success : false, message : "Please Login"})
   }, [storeAdmin]);
 
-    const info = {AdminLogin, AdminLogout, handleChange, storeAdmin, admin, status};
+    const info = {AdminLogin, dispatch, handleChange, storeAdmin, admin, status};
 
   return (
     <AdminContext.Provider value={info}>
