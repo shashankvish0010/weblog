@@ -12,7 +12,13 @@ const Post: React.FC = () => {
     const params = useParams();
     const bloginfo = useContext(postContext);
     const postinfo = useContext(postContext)
+    function reverseString(dateString: String) {
+        const [year, month, day] = dateString.split('-');
 
+        const reverseString = `${day}-${month}-${year}`;
+  
+        return reverseString;
+    }
     if (bloginfo?.postStatus?.success === false) {
         useEffect(() => {
             bloginfo?.LoadPost(params.id);
@@ -21,6 +27,7 @@ const Post: React.FC = () => {
     }
 
     console.log(bloginfo)
+
     return (
         <div className='h-max w-[100vw]'>
             {bloginfo?.postStatus?.success === true ?
@@ -43,6 +50,7 @@ const Post: React.FC = () => {
                     <div className='flex flex-row items-center justify-evenly'>
                         <div><Icon icon="formkit:avatarman" height='5vh' color='blue' /></div>
                         <div className='flex md:flex-row text-base font-semibold flex-col p-2 gap-2'>
+                        <p>Posted: {reverseString(bloginfo?.blogdata?.posted.slice(0, 10))}</p>
                             <p>Written By: {bloginfo?.blogdata?.writer_firstname} {bloginfo?.blogdata?.writer_lastname}</p>
                             <p className='text-indigo-600'>{bloginfo?.blogdata?.writer_email}</p>
                         </div>

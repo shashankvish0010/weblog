@@ -118,6 +118,7 @@ export const UserContextProvider = (props: any) => {
     document.cookie != null && user != null ? setLoginStatus({ success: true, message: 'User login' }) : setLoginStatus({ success: false, message: 'Please Login' })
   }, [user]);
 
+
   const info: ContextValue = { Login, Logout, unSubscribe, addSubscribe, user, loginstatus }
   return (
     <UserContext.Provider value={info}>

@@ -256,13 +256,14 @@ router.put('/edit/profile', async (req, res) => {
 
 router.post('/publish/blogpost', async (req, res) => {
     const blogId = uuidv4();
+    const date = new Date()
     const { id, title, image, description, meta, tags, key } = req.body;
     try {
         const user_writer_info = await dbpool.query('SELECT * FROM users WHERE id=$1', [id]);
         if (user_writer_info.rows.length > 0) {
             const { firstname, lastname, email } = user_writer_info.rows[0];
-            const result = await dbpool.query('INSERT INTO blogposts(id , writer_firstname , writer_lastname , writer_email , blog_title , blog_image , blog_description , blog_keywords , public_view, meta_description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
-                [blogId, firstname, lastname, email, title, image, description, tags, key, meta]);
+            const result = await dbpool.query('INSERT INTO blogposts(id , writer_firstname , writer_lastname , writer_email , blog_title , blog_image , blog_description , blog_keywords , public_view, meta_description, posted) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)',
+                [blogId, firstname, lastname, email, title, image, description, tags, key, meta, date.toDateString()]);
             if (key === true) {
                 if (result) {
                     res.json({ success: true, message: "Post published Successfully" })

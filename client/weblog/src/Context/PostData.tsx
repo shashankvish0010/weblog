@@ -39,6 +39,7 @@ interface blogpostbody {
     firstname: String;
     lastname: String;
     email: String;
+    posted: String
 }
 
 export const postContext = createContext<ContextValue | null>(null);
@@ -47,7 +48,7 @@ export const PostContextProvider = (props: any) => {
     const [postStatus, setPostStatus] = useState<datastatus>({ success: false, message: '' })
     const [allposts, SetAllPosts] = useState<allblogs[]>()
     const [deletePost, setDeletePost] = useState<datastatus>({ success: false, message: '' })
-    const [blogdata, setBlogData] = useState<blogpostbody>()
+    const [blogdata, setBlogData] = useState<blogpostbody>()    
 
     const fetchPosts = async () => {
         try {
