@@ -21,6 +21,8 @@ router.post('/user/register', async (req, res) => {
         res.json({ success: false, message: 'Fill all the fields' });
     }
     else {
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if(emailPattern.test(email)){
         const emailexist = await dbpool.query('SELECT email from users WHERE email=$1', [email])
         if (emailexist.rows.length > 0) {
             res.json({ success: false, message: 'Email already registered' });
@@ -59,7 +61,10 @@ router.post('/user/register', async (req, res) => {
                 console.log(error);
             })
         }
+    }else{
+        res.json({ success: false, message: 'Invalid Email' });
     }
+}
 });
 
 router.put('/verify/account/:id', async (req, res) => {
