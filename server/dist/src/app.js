@@ -11,6 +11,8 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 app.use(body_parser_1.default.json({ limit: '10mb' }));
 app.use(body_parser_1.default.urlencoded({ limit: '10mb', extended: true }));
-app.use((0, cors_1.default)());
+app.use((0, cors_1.default)({
+    origin: "http://localhost:5173"
+}));
 app.use(require('./routers/routes'));
 app.listen(process.env.PORT, () => console.log("Server running"));

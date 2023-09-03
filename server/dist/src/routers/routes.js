@@ -31,46 +31,52 @@ router.post('/user/register', (req, res) => __awaiter(void 0, void 0, void 0, fu
         res.json({ success: false, message: 'Fill all the fields' });
     }
     else {
-        const emailexist = yield dbconnect_1.default.query('SELECT email from users WHERE email=$1', [email]);
-        if (emailexist.rows.length > 0) {
-            res.json({ success: false, message: 'Email already registered' });
-        }
-        else {
-            const genertedOTP = Number(`${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`);
-            originalOtp = genertedOTP;
-            const transporter = nodemailer_1.default.createTransport({
-                service: 'gmail',
-                auth: {
-                    user: process.env.EMAIL,
-                    pass: process.env.PASSWORD
-                }
-            });
-            const email_message = {
-                from: `"Shashank V. WeBlog" <${process.env.EMAIL}>`,
-                to: email,
-                subject: "Verify your account",
-                text: `Your verification code is ${originalOtp} by weblog.`,
-            };
-            transporter.sendMail(email_message).then(() => __awaiter(void 0, void 0, void 0, function* () {
-                const salt = Number(bcrypt_1.default.genSalt(10));
-                const hashedPassword = yield bcrypt_1.default.hash(user_password, salt);
-                const confirmHashedPassword = yield bcrypt_1.default.hash(confirm_password, salt);
-                const ismatch = yield bcrypt_1.default.compare(user_password, confirmHashedPassword);
-                if (!ismatch) {
-                    res.json({ success: false, message: 'Password does not match' });
-                }
-                else {
-                    const user = yield dbconnect_1.default.query("INSERT INTO users(id, firstname, lastname, email, user_password) VALUES($1, $2, $3, $4, $5)", [id, firstname, lastname, email, hashedPassword]);
-                    if (user) {
-                        res.json({ success: true, id, message: 'Registered Successfully' });
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (emailPattern.test(email)) {
+            const emailexist = yield dbconnect_1.default.query('SELECT email from users WHERE email=$1', [email]);
+            if (emailexist.rows.length > 0) {
+                res.json({ success: false, message: 'Email already registered' });
+            }
+            else {
+                const genertedOTP = Number(`${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`);
+                originalOtp = genertedOTP;
+                const transporter = nodemailer_1.default.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: process.env.EMAIL,
+                        pass: process.env.PASSWORD
+                    }
+                });
+                const email_message = {
+                    from: `"Shashank V. WeBlog" <${process.env.EMAIL}>`,
+                    to: email,
+                    subject: "Verify your account",
+                    text: `Your verification code is ${originalOtp} by weblog.`,
+                };
+                transporter.sendMail(email_message).then(() => __awaiter(void 0, void 0, void 0, function* () {
+                    const salt = Number(bcrypt_1.default.genSalt(10));
+                    const hashedPassword = yield bcrypt_1.default.hash(user_password, salt);
+                    const confirmHashedPassword = yield bcrypt_1.default.hash(confirm_password, salt);
+                    const ismatch = yield bcrypt_1.default.compare(user_password, confirmHashedPassword);
+                    if (!ismatch) {
+                        res.json({ success: false, message: 'Password does not match' });
                     }
                     else {
-                        res.json({ success: false, message: 'User cannot be registered' });
+                        const user = yield dbconnect_1.default.query("INSERT INTO users(id, firstname, lastname, email, user_password) VALUES($1, $2, $3, $4, $5)", [id, firstname, lastname, email, hashedPassword]);
+                        if (user) {
+                            res.json({ success: true, id, message: 'Registered Successfully' });
+                        }
+                        else {
+                            res.json({ success: false, message: 'User cannot be registered' });
+                        }
                     }
-                }
-            })).catch((error) => {
-                console.log(error);
-            });
+                })).catch((error) => {
+                    console.log(error);
+                });
+            }
+        }
+        else {
+            res.json({ success: false, message: 'Invalid Email' });
         }
     }
 }));
@@ -463,28 +469,6 @@ router.put('/flag/post/:id', (req, res) => __awaiter(void 0, void 0, void 0, fun
         res.json({ success: false, message: "Post Id not receieved" });
     }
 }));
-router.get('/test/email', (req, res) => {
-    let config = {
-        service: 'gmail',
-        auth: {
-            user: 'shashankvishwakarma416@gmail.com',
-            pass: 'wvjvcddffannskap'
-        }
-    };
-    let message = {
-        from: process.env.EMAIL,
-        to: 'shashankvishwakarma222@gmail.com',
-        subject: "test success",
-        text: "Hello world?",
-        html: "<b>Hello world?</b>",
-    };
-    let transporter = nodemailer_1.default.createTransport(config);
-    transporter.sendMail(message).then(() => {
-        res.json("Verfied test mail");
-    }).catch((error) => {
-        res.json(error);
-    });
-});
 router.get('/search/post/:query', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { query } = req.params;
     try {
