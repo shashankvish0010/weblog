@@ -24,7 +24,7 @@ const Flag: React.FC = () => {
             if (response) {
                 const data = await response.json();
                 console.log(data);
-                if(data.success === true){
+                if (data.success === true) {
                     setStatus(data)
                 }
             }

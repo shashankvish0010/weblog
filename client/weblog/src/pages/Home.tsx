@@ -27,7 +27,7 @@ const Home: React.FC = () => {
 
   const hanldeSearch = async () => {
     try {
-      const response = await fetch('/search/post/'+searchQuery, {
+      const response = await fetch('/search/post/' + searchQuery, {
         method: "GET",
         headers: {
           "Content-Type": "application/json"
@@ -36,7 +36,7 @@ const Home: React.FC = () => {
       if (response) {
         const data = await response.json();
         console.log(data);
-        
+
         setResultData(data.filteredPosts)
       } else {
         console.log("No response");
@@ -66,14 +66,14 @@ const Home: React.FC = () => {
         {usercontext?.loginstatus.success === true && usercontext?.user ? (
           usercontext.user.subscription === false ? (
             <button
-              onClick={()=>{usercontext.dispatch({ type:"SUBSCRIBE", id:usercontext.user.id})}}
+              onClick={() => { usercontext.dispatch({ type: "SUBSCRIBE", id: usercontext.user.id }) }}
               className='bg-indigo-600 shadow-md rounded-sm p-2 text-base font-semibold text-white'
             >
               SUBSCRIBE
             </button>
           ) : (
             <button
-              onClick={()=>{usercontext.dispatch({type:"UNSUBSCRIBE", id: usercontext.user.id})}}
+              onClick={() => { usercontext.dispatch({ type: "UNSUBSCRIBE", id: usercontext.user.id }) }}
               className='bg-indigo-600 shadow-md rounded-sm p-2 text-base font-semibold text-white'
             >
               UNSUBSCRIBE
@@ -96,7 +96,7 @@ const Home: React.FC = () => {
         </div>
       </div>
       <div className='h-[100vh] w-[100vw] flex flex-wrap justify-center mt-2 p-3 gap-10'>
-        { resultData?.length > 0 ?
+        {resultData?.length > 0 ?
           (resultData?.map((post) =>
             <PostContainer
               id={post.id}

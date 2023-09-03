@@ -38,7 +38,7 @@ const Header: React.FC = () => {
                 <button onClick={() => { admincontext?.dispatch({ type: "ADMINLOGOUT" }) }} className='bg-indigo-600 rounded-sm p-1 text-sm text-white hover:shadow-md'>Logout</button>
               </li>
             ) : (
-             null
+              null
             )
           )}
           {usercontext?.loginstatus.success === true ? (
@@ -68,7 +68,7 @@ const Header: React.FC = () => {
               {
                 usercontext?.loginstatus.success === true ?
                   <li className='hidden' onClick={() => { setMobileDevice(false) }}><Link to='/register'>Login/SignUp</Link></li>
-                  : 
+                  :
                   <li onClick={() => { setMobileDevice(false) }}><Link to='/register'>Login/SignUp</Link></li>
               }  </ul>
           </div>

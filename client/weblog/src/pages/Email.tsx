@@ -10,13 +10,13 @@ const Email: React.FC = () => {
             const response = await fetch('/send/updates', {
                 method: "POST",
                 headers: {
-                    "Content-Type" : "application/json"
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
                     title, body
                 })
             })
-            if(response){
+            if (response) {
                 const data = await response.json();
                 console.log(data);
             }

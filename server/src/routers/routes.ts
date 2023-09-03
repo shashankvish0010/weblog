@@ -26,7 +26,7 @@ router.post('/user/register', async (req, res) => {
             res.json({ success: false, message: 'Email already registered' });
         } else {
             const genertedOTP = Number(`${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`)
-            originalOtp = genertedOTP            
+            originalOtp = genertedOTP
             const transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
@@ -42,23 +42,23 @@ router.post('/user/register', async (req, res) => {
                 text: `Your verification code is ${originalOtp} by weblog.`,
             }
 
-            transporter.sendMail(email_message).then( async ()=>{
-            const salt = Number(bcrypt.genSalt(10))
-            const hashedPassword = await bcrypt.hash(user_password, salt)
-            const confirmHashedPassword = await bcrypt.hash(confirm_password, salt)
-            const ismatch = await bcrypt.compare(user_password, confirmHashedPassword)
-            if (!ismatch) {
-                res.json({ success: false, message: 'Password does not match' });
-            } else {
-                const user = await dbpool.query("INSERT INTO users(id, firstname, lastname, email, user_password) VALUES($1, $2, $3, $4, $5)", [id, firstname, lastname, email, hashedPassword])
-                if (user) {
-                    res.json({ success: true, id, message: 'Registered Successfully' })
-                } else { res.json({ success: false, message: 'User cannot be registered' }) }
-            }
-        }).catch((error)=>{
-            console.log(error);
-        })
-        } 
+            transporter.sendMail(email_message).then(async () => {
+                const salt = Number(bcrypt.genSalt(10))
+                const hashedPassword = await bcrypt.hash(user_password, salt)
+                const confirmHashedPassword = await bcrypt.hash(confirm_password, salt)
+                const ismatch = await bcrypt.compare(user_password, confirmHashedPassword)
+                if (!ismatch) {
+                    res.json({ success: false, message: 'Password does not match' });
+                } else {
+                    const user = await dbpool.query("INSERT INTO users(id, firstname, lastname, email, user_password) VALUES($1, $2, $3, $4, $5)", [id, firstname, lastname, email, hashedPassword])
+                    if (user) {
+                        res.json({ success: true, id, message: 'Registered Successfully' })
+                    } else { res.json({ success: false, message: 'User cannot be registered' }) }
+                }
+            }).catch((error) => {
+                console.log(error);
+            })
+        }
     }
 });
 
@@ -66,7 +66,7 @@ router.put('/verify/account/:id', async (req, res) => {
     const { id } = req.params
     const { otp } = req.body;
     console.log(id, otp);
-    
+
     if (otp) {
         if (otp === originalOtp) {
             const result = await dbpool.query('UPDATE users SET account_verified=$2 WHERE id=$1', [id, true])
@@ -84,9 +84,9 @@ router.get('/verify/account/re/:id', async (req, res) => {
     const genertedOTP = Number(`${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`)
     originalOtp = genertedOTP
     if (id) {
-        if(id){
+        if (id) {
             const user = await dbpool.query('SELECT * FROM users WHERE id=$1', [id])
-            if(user){
+            if (user) {
                 const transporter = nodemailer.createTransport({
                     service: 'gmail',
                     auth: {
@@ -94,7 +94,7 @@ router.get('/verify/account/re/:id', async (req, res) => {
                         pass: process.env.PASSWORD
                     }
                 })
-    
+
                 const email_message = {
                     from: `"Shashank V. WeBlog" <${process.env.EMAIL}>`,
                     to: user.rows[0].email,
@@ -102,9 +102,9 @@ router.get('/verify/account/re/:id', async (req, res) => {
                     text: `Your verification code is ${originalOtp} by weblog.`,
                 }
 
-                transporter.sendMail(email_message).then(()=>{
+                transporter.sendMail(email_message).then(() => {
                     res.json({ success: true, message: "Check your email to get the OTP" })
-                }).catch((error)=>{
+                }).catch((error) => {
                     console.log(error);
                     res.json({ success: false, message: "Error occurred" })
                 })
@@ -112,7 +112,7 @@ router.get('/verify/account/re/:id', async (req, res) => {
         }
     }
 })
- 
+
 router.post('/user/login', async (req, res) => {
     const { email, user_password } = req.body;
     if (!email || !user_password) {
@@ -123,7 +123,7 @@ router.post('/user/login', async (req, res) => {
             res.json({ success: false, message: "Email does not exists." });
         }
         else {
-            if(userInfo.rows[0].account_verified === true){
+            if (userInfo.rows[0].account_verified === true) {
                 const storedPassword = userInfo.rows[0].user_password;
                 const ismatch = await bcrypt.compare(user_password, storedPassword);
                 if (ismatch) {
@@ -133,7 +133,7 @@ router.post('/user/login', async (req, res) => {
                     res.json({ success: false, message: "Password is incorrect." });
                 }
             }
-            else{
+            else {
                 res.json({ success: false, message: "Please verify your account" });
             }
         }
@@ -201,7 +201,7 @@ router.post('/admin/login', async (req, res) => {
     }
 });
 
-router.get('/user/logout', async (req, res) => {    
+router.get('/user/logout', async (req, res) => {
     const result = res.clearCookie("user_access_token");
     if (result) {
         res.json({ success: true, message: "Logout" })
@@ -307,17 +307,17 @@ router.post('/publish/blogpost', async (req, res) => {
     }
 })
 
-router.put('/edit/blogpost', async (req,res) => {
+router.put('/edit/blogpost', async (req, res) => {
     const { id, title, image, meta, tags, description, key } = req.body;
     try {
-        if(id){
+        if (id) {
             const blog = await dbpool.query('UPDATE blogposts SET blog_title=$1, blog_image=$2, meta_description=$3, blog_keywords=$4, blog_description=$5, public_view=$7 WHERE id=$6', [title, image, meta, tags, description, id, key])
-            if(blog){
+            if (blog) {
                 res.json({ success: true, message: "Posts Updated" })
-            }else{
+            } else {
                 res.json({ success: false, message: "Posts not updated" })
             }
-        }else{
+        } else {
             res.json({ success: false, message: "Posts Id not found" })
         }
     } catch (error) {
@@ -357,7 +357,7 @@ router.get('/view/post/:id', async (req, res) => {
     }
 })
 
-router.get('/admin/logout', async (req, res) => {    
+router.get('/admin/logout', async (req, res) => {
     const result = res.clearCookie("admin_access_token");
     if (result) {
         res.json({ success: true, message: "Admin Logout" })
@@ -398,80 +398,56 @@ router.delete('/delete/post/:id', async (req, res) => {
 
 router.put('/flag/post/:id', async (req, res) => {
     const { id } = req.params;
-    const {body} = req.body
+    const { body } = req.body
     if (id) {
         const WriterEmail = await dbpool.query('SELECT writer_firstname, writer_email FROM blogposts WHERE id=$1', [id])
-        if(WriterEmail.rows.length>0){
-        const result = await dbpool.query('UPDATE blogposts SET public_view=$2 WHERE id=$1', [id, false])        
-        if (result) {
-            const transporter = nodemailer.createTransport({
-                service:'gmail',
-                auth: {
-                    user: process.env.EMAIL,
-                    pass: process.env.PASSWORD
+        if (WriterEmail.rows.length > 0) {
+            const result = await dbpool.query('UPDATE blogposts SET public_view=$2 WHERE id=$1', [id, false])
+            if (result) {
+                const transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: process.env.EMAIL,
+                        pass: process.env.PASSWORD
+                    }
+                })
+                const email_message = {
+                    from: `"Shashank V. WeBlog" <${process.env.EMAIL}>`,
+                    to: WriterEmail.rows[0].writer_email,
+                    subject: `${WriterEmail.rows[0].writer_firstname}, Your Post Got Flagged`,
+                    html: body
                 }
-            })
-            const email_message = {
-                from: `"Shashank V. WeBlog" <${process.env.EMAIL}>`,
-                to: WriterEmail.rows[0].writer_email,
-                subject: `${WriterEmail.rows[0].writer_firstname}, Your Post Got Flagged`,
-                html: body
+                transporter.sendMail(email_message).then(() => {
+                    res.json({ success: true, message: "Post flagged" })
+                }).catch((error) => { console.log(error) })
+
+            } else {
+                res.json({ success: false, message: "Post not flagged" })
             }
-            transporter.sendMail(email_message).then(()=>{
-            res.json({ success: true, message: "Post flagged" })}).catch((error)=> {console.log(error)})
-            
         } else {
-            res.json({ success: false, message: "Post not flagged" })
+            res.json({ success: false, message: "Cannot get writers email" })
         }
-    }else{
-        res.json({ success: false, message: "Cannot get writers email" })
-    }
     } else {
         res.json({ success: false, message: "Post Id not receieved" })
     }
 })
 
-router.get('/test/email', (req, res) => {
-    let config = {
-        service: 'gmail',
-        auth: {
-            user: 'shashankvishwakarma416@gmail.com',
-            pass: 'wvjvcddffannskap'
-        }
-    }
-
-    let message = {
-        from: process.env.EMAIL,
-        to: 'shashankvishwakarma222@gmail.com',
-        subject: "test success",
-        text: "Hello world?", // plain text body
-        html: "<b>Hello world?</b>",
-    }
-
-    let transporter = nodemailer.createTransport(config);
-    transporter.sendMail(message).then(() => {
-        res.json("Verfied test mail")
-    }).catch((error) => {
-        res.json(error)
-    })
-})
-
-router.get('/search/post/:query', async (req,res)=>{
-    const {query} = req.params    
+router.get('/search/post/:query', async (req, res) => {
+    const { query } = req.params
     try {
         const TotalPosts = await dbpool.query('SELECT * FROM blogposts')
-        if(TotalPosts.rows.length > 0){
-            const filteredPosts = TotalPosts.rows.filter((post)=>{    
-                return(            
-                post.blog_title.toLowerCase().includes((query).toLowerCase()) ||
-                post.blog_description.toLowerCase().includes((query).toLowerCase()) ||
-                post.blog_keywords.toLowerCase().includes((query).toLowerCase())
+        if (TotalPosts.rows.length > 0) {
+            const filteredPosts = TotalPosts.rows.filter((post) => {
+                return (
+                    post.blog_title.toLowerCase().includes((query).toLowerCase()) ||
+                    post.blog_description.toLowerCase().includes((query).toLowerCase()) ||
+                    post.blog_keywords.toLowerCase().includes((query).toLowerCase())
                 )
-            })            
-            if(filteredPosts.length>0){
-                res.json({success: true, filteredPosts, message: 'Sent Filtered Results'})
-            }else{
-                res.json({success: false, message: 'No result found'})
+            })
+            if (filteredPosts.length > 0) {
+                res.json({ success: true, filteredPosts, message: 'Sent Filtered Results' })
+            } else {
+                res.json({ success: false, message: 'No result found' })
             }
         }
     } catch (error) {
@@ -479,14 +455,14 @@ router.get('/search/post/:query', async (req,res)=>{
     }
 })
 
-router.post('/send/updates', async (req,res) => {
-    const {title, body} = req.body
-    
+router.post('/send/updates', async (req, res) => {
+    const { title, body } = req.body
+
     try {
-        const emails = await dbpool.query('SELECT email FROM users WHERE subscription=$1', [true]) 
+        const emails = await dbpool.query('SELECT email FROM users WHERE subscription=$1', [true])
         console.log(emails.rows.map((curr) => console.log(curr.email))
         );
-        
+
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -496,12 +472,12 @@ router.post('/send/updates', async (req,res) => {
         })
         const email_message = {
             from: `"Shashank V. WeBlog" <${process.env.EMAIL}>`,
-            to: emails.rows.map((curr) => {return(curr.email)}),
+            to: emails.rows.map((curr) => { return (curr.email) }),
             subject: title,
             html: body
         }
 
-        transporter.sendMail(email_message).then(()=> {res.json({success: true, message: "email sent"})}).catch((err)=>console.log(err))
+        transporter.sendMail(email_message).then(() => { res.json({ success: true, message: "email sent" }) }).catch((err) => console.log(err))
     } catch (error) {
         console.log(error);
     }

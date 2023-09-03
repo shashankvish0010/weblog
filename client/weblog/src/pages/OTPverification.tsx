@@ -11,7 +11,7 @@ const OTPverification: React.FC = () => {
     const Navigate = useNavigate()
     const regitserInfo = useContext(RegisterContext);
     console.log(regitserInfo);
-    
+
     const [status, setStatus] = useState<statusType>({
         success: false, message: 'OTP sent, Please Check your inbox/spam folder'
     })
@@ -22,7 +22,7 @@ const OTPverification: React.FC = () => {
             const response = await fetch('/verify/account/re/' + UserId, {
                 method: "GET",
                 headers: {
-                    "Content-Type" : "application/json"
+                    "Content-Type": "application/json"
                 },
             });
             if (response) {
@@ -37,12 +37,12 @@ const OTPverification: React.FC = () => {
     }
     const OtpSubmit = async (UserId: String) => {
         console.log("user");
-        
+
         try {
             const response = await fetch('/verify/account/' + UserId, {
                 method: "PUT",
                 headers: {
-                    "Content-Type" : "application/json"
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
                     otp
@@ -51,7 +51,7 @@ const OTPverification: React.FC = () => {
             if (response) {
                 const data = await response.json();
                 setStatus(data)
-                if(data.success === true){
+                if (data.success === true) {
                     Navigate('/login')
                 }
             } else {

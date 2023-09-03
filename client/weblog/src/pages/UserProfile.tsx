@@ -40,7 +40,7 @@ const UserProfile: React.FC = () => {
       })
       if (response) {
         const data = await response.json()
-        if(data.success){
+        if (data.success) {
           setUserPosts((data.userPostsData))
         }
       } else {
@@ -48,9 +48,9 @@ const UserProfile: React.FC = () => {
       }
     } catch (error) {
       console.log(error);
-    }            
+    }
   }
-  
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setEditProfile((currentProfile) => ({
@@ -81,7 +81,7 @@ const UserProfile: React.FC = () => {
     }
   }
 
-  useEffect(()=> {fetchPostsData(userdata?.user.email)}, [])
+  useEffect(() => { fetchPostsData(userdata?.user.email) }, [])
 
   return (
     <div className='h-[100vh] w-[100vw] flex flex-col gap-5 items-center'>
@@ -95,38 +95,38 @@ const UserProfile: React.FC = () => {
         <>
           <div className='h-max w-[100vw] flex flex-col gap-5'>
             <div className='h-max w-[100vw] flex md:flex-row flex-col gap-3 items-center justify-center'>
-            <Icon icon="gg:profile" color="#3949ab" height={'10vh'} />
-            <p className='md:text-2xl text-xl font-medium'>{userdata?.user.firstname} <span className='text-indigo-600'>{userdata?.user.lastname}</span></p>          </div>
-            </div>
+              <Icon icon="gg:profile" color="#3949ab" height={'10vh'} />
+              <p className='md:text-2xl text-xl font-medium'>{userdata?.user.firstname} <span className='text-indigo-600'>{userdata?.user.lastname}</span></p>          </div>
+          </div>
           <div className='flex md:flex-row flex-col items-center justify-around gap-5 '>
-          <span className='flex flex-row flex-wrap items-center gap-2'>
-            <Icon icon="mdi:email-check" color="orange" height={'5vh'} />
-            <p className='text-base font-medium'>{userdata?.user.email}</p>
-          </span>
-          <span className='flex md:w-max w-[80vw] md:flex-row overflow-auto flex-col items-center gap-2'>
-            <Icon icon="iconoir:password-pass" color="#3949ab" height={'5vh'} />
-            <span className='overflow-auto'>
-            <p className='text-base font-medium overflow-auto'>{userdata?.user.user_password}</p>
+            <span className='flex flex-row flex-wrap items-center gap-2'>
+              <Icon icon="mdi:email-check" color="orange" height={'5vh'} />
+              <p className='text-base font-medium'>{userdata?.user.email}</p>
             </span>
-          </span>
+            <span className='flex md:w-max w-[80vw] md:flex-row overflow-auto flex-col items-center gap-2'>
+              <Icon icon="iconoir:password-pass" color="#3949ab" height={'5vh'} />
+              <span className='overflow-auto'>
+                <p className='text-base font-medium overflow-auto'>{userdata?.user.user_password}</p>
+              </span>
+            </span>
           </div>
           <div className='flex flex-col gap-5'>
-            { userdata ?  (userPosts?.map((post) =>
+            {userdata ? (userPosts?.map((post) =>
               <ProfilePost
                 id={post.id}
                 title={post.blog_title}
                 meta={post.meta_description}
                 image={post.blog_image}
                 publicView={post.public_view}
-                admin = {false}
+                admin={false}
               />
             ))
-            :
-            (
-              <div>
-                <p>No user post</p>
-              </div>
-            )}
+              :
+              (
+                <div>
+                  <p>No user post</p>
+                </div>
+              )}
           </div>
         </>) :
 
