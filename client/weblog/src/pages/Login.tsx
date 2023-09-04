@@ -35,11 +35,11 @@ const Login: React.FC = () => {
                     <form method='POST' className='flex gap-3 flex-col justify-center'>
                         <span className='flex flex-col gap-1'>
                             <p className='text-sm text-gray-600'>Email</p>
-                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[35vw] border rounded' type="text" name='email' value={user.email} onChange={handleChange} />
+                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[35vw] border rounded' type="text" name='email' value={user.email.toString()} onChange={handleChange} />
                         </span>
                         <span className='flex flex-col gap-1'>
                             <p className='text-sm text-gray-600'>Password</p>
-                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[35vw] border rounded' type="password" name='user_password' value={user.user_password} onChange={handleChange} />
+                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[35vw] border rounded' type="password" name='user_password' value={user.user_password.toString()} onChange={handleChange} />
                         </span>
                     </form>
                 </div>

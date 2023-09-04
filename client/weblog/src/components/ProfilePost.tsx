@@ -3,9 +3,16 @@ import { Icon } from '@iconify/react'
 import { useNavigate, Link } from 'react-router-dom'
 import { postContext } from '../Context/PostData'
 
+interface PropsType {
+    id: String;
+    image: any;
+    title: String;
+    meta: String;
+    publicView: boolean;
+    admin: boolean
+}
 
-const ProfilePost: React.FC = (props) => {
-    const { id, image, title, meta, publicView, admin } = props;
+const ProfilePost: React.FC<PropsType> = ({ id, image, title, meta, publicView, admin }) => {
     const Navigate = useNavigate();
     const post = useContext(postContext)
     const EditPost = (blogId: String) => Navigate('/edit/post/' + blogId)

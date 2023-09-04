@@ -5,16 +5,14 @@ import { useNavigate } from 'react-router-dom';
 interface blogpostbody {
     id: String;
     title: String;
-    image: String;
+    image: any;
     description: String;
     meta: String;
-    tags: String;
     firstname: String;
     lastname: String;
-    email: String
 }
 
-const PostContainer: React.FC<blogpostbody> = (props) => {
+const PostContainer: React.FC<blogpostbody> = ({ id, title, image, meta, firstname, lastname }) => {
     const blogInfo = useContext(postContext);
     const Navigate = useNavigate();
 
@@ -45,7 +43,7 @@ const PostContainer: React.FC<blogpostbody> = (props) => {
             console.log(error);
         }
     }
-    const { id, title, image, meta, firstname, lastname } = props;
+    // const { id, title, image, meta, firstname, lastname } = props;
     return (
         <div className='h-max md:w-[40vw] w-[80vw] shadow-2xl rounded flex flex-col p-3 gap-4 object-fill items-center'>
             <div className='h-[200px]'>

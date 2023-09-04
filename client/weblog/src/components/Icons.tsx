@@ -1,10 +1,14 @@
 import React from 'react'
 import { Icon } from '@iconify/react'
 
-const Icons: React.FC = (props) => {
+interface PropsType {
+    iconName: any;
+}
+
+const Icons: React.FC<PropsType> = ({ iconName }) => {
     return (
         <span className='h-max p-0.5 w-max border shadow'>
-            <Icon icon={props.iconName} height={'6vh'} />
+            <Icon icon={iconName} height={'6vh'} />
         </span>
     )
 }

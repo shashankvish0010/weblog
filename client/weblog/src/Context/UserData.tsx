@@ -1,21 +1,13 @@
-import React, { createContext, useEffect, useState, useReducer } from 'react'
+import { createContext, useEffect, useState, useReducer } from 'react'
 
 interface ContextValue {
-  Login: (input: userInput) => Promise<void>;
-  Logout: () => Promise<void>;
   fetchPostsData: (email: String) => Promise<void>;
-  addSubscribe: (id: String) => Promise<void>;
-  unSubscribe: (id: String) => Promise<void>;
   reducer: (state: any, action: any) => Promise<void>;
   loginstatus: userStatus;
   state: any
   dispatch: any
   user: any;
   setUser: any
-}
-interface userInput {
-  email: String,
-  user_password: String
 }
 
 interface userStatus {
@@ -27,8 +19,10 @@ export const UserContext = createContext<ContextValue | null>(null)
 
 export const UserContextProvider = (props: any) => {
   const [loginstatus, setLoginStatus] = useState<userStatus>({ success: false, message: '' })
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || null)
-  const reducer = async (_state: userStatus, action: { type: string; data?: any, id?: String }) => {
+  const storedUser = localStorage.getItem("user");
+  const initialUser = storedUser ? JSON.parse(storedUser) : null
+  const [user, setUser] = useState(initialUser || null)
+  const reducer = async (state: String, action: { type: string; data?: any, id?: String }) => {
     switch (action.type) {
       case "LOGIN": {
         try {
@@ -43,7 +37,7 @@ export const UserContextProvider = (props: any) => {
             if (data.success) {
               setUser(data.userData);
             }
-            setLoginStatus( (state) => ({...state, success: data.success, message: data.message }))
+            setLoginStatus( (Loginstate) => ({...Loginstate, success: data.success, message: data.message }))
           } else {
             console.log("data not sent");
           }
@@ -63,7 +57,7 @@ export const UserContextProvider = (props: any) => {
           });
           if (res) {
             setUser('');
-            setLoginStatus( (state) => ({...state, success: false, message: "Please Login" }))
+            setLoginStatus( (Loginstate) => ({...Loginstate, success: false, message: "Please Login" }))
           }
           else {
             console.log("Cant logout");
@@ -120,20 +114,11 @@ export const UserContextProvider = (props: any) => {
       }
 
       default:
-        return loginstatus; // Move the default return statement outside of the switch
+        return state;
     }  
   }
-  console.log(loginstatus);
-  
-  const [state, dispatch] = useReducer(reducer, '');  
-
-  const addSubscribe = async (id: String) => {
-
-  };
-
-  const unSubscribe = async (id: String) => {
-
-  }
+  const initialState = ''
+  const [state, dispatch] = useReducer<any>(reducer, initialState);  
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
@@ -141,7 +126,16 @@ export const UserContextProvider = (props: any) => {
   }, [user]);
 
 
-  const info: ContextValue = {  unSubscribe, addSubscribe, dispatch, user,state, loginstatus }
+  const info: ContextValue = {
+     dispatch, user, state, loginstatus,
+    fetchPostsData: function (): Promise<void> {
+      throw new Error('Function not implemented.');
+    },
+    reducer: function (): Promise<void> {
+      throw new Error('Function not implemented.');
+    },
+    setUser: undefined
+  }
   return (
     <UserContext.Provider value={info}>
       {props.children}

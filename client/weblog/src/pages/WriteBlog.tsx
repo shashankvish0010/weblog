@@ -6,7 +6,7 @@ import { Icon } from '@iconify/react';
 
 interface blogdata {
     title: String;
-    image: String;
+    image: string | undefined;
     meta: String;
     tags: String
 }
@@ -92,7 +92,7 @@ const WriteBlog: React.FC = () => {
                 {status.success === false && document.cookie ?
                     (<><span className='p-1 text-center font-semibold shadow-md'><p>{status.message}</p></span><form method="POST" className='h-max w-max flex flex-col items-center gap-5'>
                         <span className='text-2xl text-indigo-600 font-medium'>Title</span>
-                        <input className='border-indigo-600 border rounded shadow w-[75vw] h-[7vh] px-2' type="text" value={blog.title} onChange={handlechange} name='title' />
+                        <input className='border-indigo-600 border rounded shadow w-[75vw] h-[7vh] px-2' type="text" value={blog.title.toString()} onChange={handlechange} name='title' />
                         <div className='bg-indigo-600 rounded w-[65vw] h-max p-3 text-white items-center justify-evenly flex flex-col'>
                             <label id='imageupload' className='cursor-pointer flex gap-2 flex-col items-center'>
                                 <span>Choose Image</span>
@@ -106,10 +106,10 @@ const WriteBlog: React.FC = () => {
                             <JoditEditor ref={editor} value={description} onChange={newDescription => setDescription(newDescription)} />
                         </div>
                         <span className='text-2xl text-indigo-600 font-medium'>Meta Description - 100 words</span>
-                        <textarea className='border-indigo-600 border rounded shadow w-[75vw] h-max p-1' type="text" value={blog.meta} onChange={handlechange} name='meta' />
+                        <textarea className='border-indigo-600 border rounded shadow w-[75vw] h-max p-1' value={blog.meta.toString()} onChange={handlechange} name='meta' />
                         <span className='text-2xl text-indigo-600 font-medium'>Keywords / Tags</span>
                         <p className='title text-base font-bold'>Separate with commas</p>
-                        <input className='border-indigo-600 border rounded shadow w-[75vw] h-[7vh] px-2' type="text" value={blog.tags} onChange={handlechange} name='tags' />
+                        <input className='border-indigo-600 border rounded shadow w-[75vw] h-[7vh] px-2' type="text" value={blog.tags.toString()} onChange={handlechange} name='tags' />
                     </form><div className='flex md:flex-row flex-col items-center gap-5'>
                             <button
                                 onClick={() => hanldeSubmit(true)}

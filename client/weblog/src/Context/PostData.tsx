@@ -2,12 +2,12 @@ import { createContext, useEffect, useState } from 'react'
 
 interface ContextValue {
     fetchPosts: () => Promise<void>;
-    LoadPost: (Postid: String) => Promise<void>;
+    LoadPost: (Postid: string | undefined) => Promise<void>;
     DeletePost: (PostId: String) => Promise<void>;
     FlagPost: (PostId: String) => Promise<void>;
-    blogdata: blogpostbody | undefined;
+    blogdata: postbody | undefined;
     setBlogData: any;
-    allposts: allblogs[];
+    allposts: allblogs[] | undefined;
     deletePost: datastatus;
     postStatus: datastatus;
     setPostStatus: any
@@ -19,6 +19,7 @@ interface datastatus {
 }
 
 interface allblogs {
+    id: String;
     blog_id: '',
     blog_title: '',
     blog_image: '',
@@ -26,20 +27,20 @@ interface allblogs {
     blog_description: '',
     writer_firstname: '',
     writer_lastname: '',
-    public_view: '',
+    public_view: boolean,
 }
 
-interface blogpostbody {
+interface postbody {
     id: String;
-    title: String;
-    image: String;
-    description: String;
-    meta: String;
-    tags: String;
-    firstname: String;
-    lastname: String;
-    email: String;
-    posted: String
+    blog_title: String;
+    blog_image: string | undefined;
+    blog_description: String;
+    meta_description: String;
+    blog_keywords: String;
+    writer_firstname: String;
+    writer_lastname: String;
+    writer_email: String;
+    posted: String | undefined;
 }
 
 export const postContext = createContext<ContextValue | null>(null);
@@ -48,7 +49,7 @@ export const PostContextProvider = (props: any) => {
     const [postStatus, setPostStatus] = useState<datastatus>({ success: false, message: '' })
     const [allposts, SetAllPosts] = useState<allblogs[]>()
     const [deletePost, setDeletePost] = useState<datastatus>({ success: false, message: '' })
-    const [blogdata, setBlogData] = useState<blogpostbody>() 
+    const [blogdata, setBlogData] = useState<postbody>() 
     
     const fetchPosts = async () => {
         try {
@@ -75,7 +76,7 @@ export const PostContextProvider = (props: any) => {
         }
     };
 
-    const LoadPost = async (Postid: String) => {
+    const LoadPost = async (Postid: string | undefined) => {
         console.log('call');
 
         try {
@@ -153,7 +154,7 @@ export const PostContextProvider = (props: any) => {
         fetchPosts();
     }, [])
 
-    const info = { fetchPosts, DeletePost, FlagPost, allposts, deletePost, blogdata, setBlogData, LoadPost, postStatus, setPostStatus };
+    const info: ContextValue = { fetchPosts, DeletePost, FlagPost, allposts, deletePost, blogdata, setBlogData, LoadPost, postStatus, setPostStatus };
 
     return (
         <postContext.Provider value={info}>

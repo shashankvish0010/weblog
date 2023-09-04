@@ -1,10 +1,10 @@
 import React, { useState, createContext } from 'react'
 
 interface ContextValue {
-    user: userdata
-    handleChange: () => Promise<void>
-    handleSubmit: () => Promise<void>
-    registeredUserId: String;
+    user: userdata;
+    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleSubmit: (e: React.FormEvent) => void;
+    registeredUserId: String | undefined;
     status: authinfo
 }
 
@@ -71,7 +71,7 @@ export const RegisterContextProvider = (props: any) => {
         }
     }
 
-    const info = { handleChange, handleSubmit, registeredUserId, user, status }
+    const info: ContextValue = { handleChange, handleSubmit, registeredUserId, user, status }
     return (
         <RegisterContext.Provider value={info}>
             {props.children}

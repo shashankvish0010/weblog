@@ -20,23 +20,23 @@ const Register: React.FC = () => {
                     <form method='POST' className='flex gap-3 flex-col justify-center'>
                         <span className='flex flex-col gap-1'>
                             <p className='text-sm text-gray-600'>Firstname</p>
-                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border rounded' type="text" name='firstname' value={userreginfo?.user.firstname} onChange={userreginfo?.handleChange} />
+                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border rounded' type="text" name='firstname' value={userreginfo?.user.firstname.toString()} onChange={userreginfo?.handleChange} />
                         </span>
                         <span className='flex flex-col gap-1'>
                             <p className='text-sm text-gray-600'>Lastname</p>
-                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border rounded' type="text" name='lastname' value={userreginfo?.user.lastname} onChange={userreginfo?.handleChange} />
+                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border rounded' type="text" name='lastname' value={userreginfo?.user.lastname.toString()} onChange={userreginfo?.handleChange} />
                         </span>
                         <span className='flex flex-col gap-1'>
                             <p className='text-sm text-gray-600'>Email</p>
-                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border rounded' type="text" name='email' value={userreginfo?.user.email} onChange={userreginfo?.handleChange} />
+                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border rounded' type="text" name='email' value={userreginfo?.user.email.toString()} onChange={userreginfo?.handleChange} />
                         </span>
                         <span className='flex flex-col gap-1'>
                             <p className='text-sm text-gray-600'>Password</p>
-                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border rounded' type="password" name='user_password' value={userreginfo?.user.user_password} onChange={userreginfo?.handleChange} />
+                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border rounded' type="password" name='user_password' value={userreginfo?.user.user_password.toString()} onChange={userreginfo?.handleChange} />
                         </span>
                         <span className='flex flex-col gap-1'>
                             <p className='text-sm text-gray-600'>Confirm Password</p>
-                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border rounded' type="password" name='confirm_password' value={userreginfo?.user.confirm_password} onChange={userreginfo?.handleChange} />
+                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border rounded' type="password" name='confirm_password' value={userreginfo?.user.confirm_password.toString()} onChange={userreginfo?.handleChange} />
                         </span>
                     </form>
                 </div>

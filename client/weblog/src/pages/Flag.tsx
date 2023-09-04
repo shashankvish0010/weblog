@@ -10,7 +10,7 @@ const Flag: React.FC = () => {
     const editor = useRef(null)
     const [body, setBody] = useState('')
     const [status, setStatus] = useState<dataStatus>()
-    const hanldeSubmit = async (PostId: String) => {
+    const hanldeSubmit = async (PostId: String | undefined) => {
         try {
             const response = await fetch('/flag/post/' + PostId, {
                 method: "PUT",

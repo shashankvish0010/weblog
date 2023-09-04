@@ -8,6 +8,7 @@ import Buffering from '../components/Buffering';
 import Footer from '../components/Footer';
 
 interface PostInt {
+  id: String;
   blog_id: '',
   blog_title: '',
   blog_image: '',
@@ -23,7 +24,7 @@ const Home: React.FC = () => {
   const postinfo = useContext(postContext)
   const usercontext = useContext(UserContext);
   const [searchQuery, setSearchQuery] = useState<String>('')
-  const [resultData, setResultData] = useState<PostInt[]>()
+  const [resultData, setResultData] = useState<PostInt[] | undefined>()
 
   const hanldeSearch = async () => {
     try {
@@ -55,7 +56,7 @@ const Home: React.FC = () => {
       <div className='h-[40vh] w-[100vw] flex flex-col justify-center items-center gap-3 p-2'>
         <p className='title text-3xl font-bold text-center'>Latest news, updates, and stories for <span className='text-indigo-600'>developers</span></p>
         <div className='h-max w-max rounded-full p-1.5 text-base border-2 border-indigo-600 flex flex-row items-center'>
-          <input className='md:w-[30vw] w-[70vw] placeholder:text-black placeholder:font-semibold' type="text" placeholder='Search' value={searchQuery} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)} />
+          <input className='md:w-[30vw] w-[70vw] placeholder:text-black placeholder:font-semibold' type="text" placeholder='Search' value={searchQuery.toString()} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)} />
           <Icon onClick={hanldeSearch} className='cursor-pointer' icon="majesticons:search-line" height={'4vh'} color='#3949ab' />
         </div>
         {usercontext?.user?.subscription === true ? (
@@ -96,7 +97,7 @@ const Home: React.FC = () => {
         </div>
       </div>
       <div className='h-[100vh] w-[100vw] flex flex-wrap justify-center mt-2 p-3 gap-10'>
-        {resultData?.length > 0 ?
+        {resultData ? (resultData.length > 0 ?
           (resultData?.map((post) =>
             <PostContainer
               id={post.id}
@@ -105,8 +106,11 @@ const Home: React.FC = () => {
               meta={post.meta_description}
               description={post.blog_description}
               firstname={post.writer_firstname}
-              lastname={post.writer_lastname} />
-          )) : null
+              lastname={post.writer_lastname}
+              />
+          )) : null)
+          :
+          null
         }
         {postinfo?.allposts?.length ? ((postinfo.allposts.length > 0) ?
           (postinfo?.allposts.map((post: any) =>

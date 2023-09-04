@@ -9,7 +9,7 @@ interface blogpostbody {
   blog_image: String;
   blog_description: String;
   blog_keywords: String;
-  public_view: String;
+  public_view: boolean;
   meta_description: String;
   writer_firstname: String;
   writer_lastname: String;

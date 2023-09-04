@@ -1,19 +1,23 @@
 import React, { useState, createContext, useEffect, useReducer } from 'react'
 
 interface ContextValue {
-    AdminLogin : () => Promise<void>;
-    AdminLogout : () => Promise<void>;
-    handleChange : () => Promise<void>;
+    AdminLogin : (e: React.FormEvent) => void;
+    handleChange : (e: React.ChangeEvent<HTMLInputElement>) => void;
     reducer: (state: any, type: any) => Promise<void>;
     dispatch: any;
     admin : adminCredentials;
-    storeAdmin : adminInfo;
+    storeAdmin : adminInfo | null;
     status : credentialinfo
+    state: any
 }
 
 interface adminCredentials {
     email : String;
     admin_password : String;
+}
+
+type Action = {
+  type: String
 }
 
 interface adminInfo {
@@ -33,14 +37,16 @@ interface credentialinfo {
 export const AdminContext = createContext<ContextValue | null>(null);
 
 export const AdminContextProvider = (props: any) => {
-    const [status, setStatus] = useState({ success : false, message : ''})
-    const [storeAdmin, setStoreAdmin] = useState(JSON.parse(localStorage.getItem("admin")) || null)
+  const [status, setStatus] = useState<credentialinfo>({ success : false, message : ''})
+    const storedAdmin = localStorage.getItem("admin");
+    const initialAdmin = storedAdmin ? JSON.parse(storedAdmin) : null;
+    const [storeAdmin, setStoreAdmin] = useState<adminInfo | null>(initialAdmin || null);    
     const [admin, setAdmin] = useState<adminCredentials>({
         email : '',
         admin_password : ''
     });
 
-    const reducer = async (_state: any, action: { type: String} ) => {
+    const reducer = async (state: credentialinfo, action: Action) => {
       switch (action.type){
         case "ADMINLOGOUT" : {
           try {
@@ -50,7 +56,10 @@ export const AdminContextProvider = (props: any) => {
                 'Content-Type' : 'application/json'
               }
             })
-            if(res){setStatus({ success : false, message : 'Logout' }); setStoreAdmin('');}
+            if(res){
+              setStoreAdmin(null);
+              setStatus( (AdminState) => ({...AdminState, success : false, message : 'Logout'})); 
+            }
             else{ console.log("Cant logout");
             }
           } catch (error) {
@@ -58,10 +67,17 @@ export const AdminContextProvider = (props: any) => {
           }
           break
         }
-      }
+      default:
+        return state
     }
+  }
 
-    const [state, dispatch] = useReducer(reducer, '')
+  const initialState = {
+    success: false,
+    message: '',
+  };
+
+  const [state, dispatch] = useReducer<any>(reducer, initialState);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
@@ -94,29 +110,18 @@ export const AdminContextProvider = (props: any) => {
       }
   };
 
-  const AdminLogout = async () => {
-    // try {
-    //   const res = await fetch('/admin/logout', {
-    //     method: 'GET',
-    //     headers: {
-    //       'Content-Type' : 'application/json'
-    //     }
-    //   })
-    //   if(res){setStatus({ success : false, message : 'Logout' }); setStoreAdmin('');}
-    //   else{ console.log("Cant logout");
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
-  }
-
   useEffect(()=> {
         localStorage.setItem("admin", JSON.stringify(storeAdmin));
         document.cookie != '' && storeAdmin != null ? setStatus({success : true, message : "Login successfully"}) :
         setStatus({success : false, message : "Please Login"})
   }, [storeAdmin]);
 
-    const info = {AdminLogin, dispatch, handleChange, storeAdmin, admin, status};
+    const info: ContextValue = {
+      AdminLogin, dispatch, handleChange, storeAdmin, admin, status, state, 
+      reducer: function (_state: any, _type: any): Promise<void> {
+        throw new Error('Function not implemented.');
+      },
+    };
 
   return (
     <AdminContext.Provider value={info}>

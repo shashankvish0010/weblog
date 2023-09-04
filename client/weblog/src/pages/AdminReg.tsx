@@ -58,27 +58,27 @@ const AdminReg: React.FC = () => {
                     <form method='POST' className='flex gap-3 flex-col justify-center'>
                         <span className='flex flex-col gap-1'>
                             <p className='text-sm text-gray-600'>Firstname</p>
-                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border rounded' type="text" name='firstname' value={user.firstname} onChange={handleChange} />
+                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border rounded' type="text" name='firstname' value={user.firstname.toString()} onChange={handleChange} />
                         </span>
                         <span className='flex flex-col gap-1'>
                             <p className='text-sm text-gray-600'>Lastname</p>
-                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border rounded' type="text" name='lastname' value={user.lastname} onChange={handleChange} />
+                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border rounded' type="text" name='lastname' value={user.lastname.toString()} onChange={handleChange} />
                         </span>
                         <span className='flex flex-col gap-1'>
                             <p className='text-sm text-gray-600'>Email</p>
-                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border rounded' type="text" name='email' value={user.email} onChange={handleChange} />
+                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border rounded' type="text" name='email' value={user.email.toString()} onChange={handleChange} />
                         </span>
                         <span className='flex flex-col gap-1'>
                             <p className='text-sm text-gray-600'>Password</p>
-                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border rounded' type="password" name='admin_password' value={user.user_password} onChange={handleChange} />
+                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border rounded' type="password" name='admin_password' value={user.admin_password.toString()} onChange={handleChange} />
                         </span>
                         <span className='flex flex-col gap-1'>
                             <p className='text-sm text-gray-600'>Confirm Password</p>
-                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border rounded' type="password" name='confirm_password' value={user.confirm_password} onChange={handleChange} />
+                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border rounded' type="password" name='confirm_password' value={user.confirm_password.toString()} onChange={handleChange} />
                         </span>
                         <span className='flex flex-col gap-1'>
                             <p className='text-sm text-gray-600'>Activation Key</p>
-                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border rounded' type="text" name='activation_key' value={user.activation_key} onChange={handleChange} />
+                            <input className='px-2 h-[2.25rem] w-[65vw] md:w-[45vw] border rounded' type="text" name='activation_key' value={user.activation_key.toString()} onChange={handleChange} />
                         </span>
                     </form>
                 </div>

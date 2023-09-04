@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import JoditEditor from 'jodit-react'
 import { Icon } from '@iconify/react';
 import { useParams } from 'react-router-dom';
@@ -7,19 +7,6 @@ import { useParams } from 'react-router-dom';
 interface datafetch {
     success: boolean;
     message: String;
-}
-
-interface blogpostbody {
-    id: String;
-    blog_title: String;
-    blog_image: String;
-    blog_description: String;
-    blog_keywords: String;
-    public_view: String;
-    meta_description: String;
-    writer_firstname: String;
-    writer_lastname: String;
-    writer_email: String;
 }
 
 const EditPost: React.FC = () => {
@@ -151,7 +138,7 @@ const EditPost: React.FC = () => {
                                 <JoditEditor ref={editor} value={description} onChange={newDescription => setDescription(newDescription)} />
                             </div>
                             <span className='text-2xl text-indigo-600 font-medium'>Meta Description - 100 words</span>
-                            <textarea className='border-indigo-600 border rounded shadow w-[75vw] h-max p-1' type="text" value={blog.meta} onChange={handlechange} name='meta' />
+                            <textarea className='border-indigo-600 border rounded shadow w-[75vw] h-max p-1' value={blog.meta} onChange={handlechange} name='meta' />
                             <span className='text-2xl text-indigo-600 font-medium'>Keywords / Tags</span>
                             <input className='border-indigo-600 border rounded shadow w-[75vw] h-[7vh] px-2' type="text" value={blog.tags} onChange={handlechange} name='tags' />
                         </form><div className='flex md:flex-row flex-col items-center gap-5'>

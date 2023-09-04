@@ -17,7 +17,7 @@ const OTPverification: React.FC = () => {
     })
     const [otp, setOtp] = useState<Number>()
 
-    const ResendOtp = async (UserId: String) => {
+    const ResendOtp = async (UserId: String | undefined) => {
         try {
             const response = await fetch('/verify/account/re/' + UserId, {
                 method: "GET",
@@ -35,7 +35,7 @@ const OTPverification: React.FC = () => {
             console.log(error);
         }
     }
-    const OtpSubmit = async (UserId: String) => {
+    const OtpSubmit = async (UserId: String | undefined) => {
         console.log("user");
 
         try {
@@ -71,7 +71,7 @@ const OTPverification: React.FC = () => {
                         OTP
                     </div>
                     <div>
-                        <input className='px-2 h-[2.25rem] w-[65vw] md:w-[25vw] border rounded' type="text" placeholder='Enter 4 digits OTP' value={otp} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setOtp(Number(e.target.value))} />
+                        <input className='px-2 h-[2.25rem] w-[65vw] md:w-[25vw] border rounded' type="text" placeholder='Enter 4 digits OTP' value={Number(otp)} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setOtp(Number(e.target.value))} />
                     </div>
                     <span className='h-[0.15rem] rounded-md w-[65vw] md:w-[25vw] bg-indigo-600 text-center'></span>
                     <div className='flex flex-row flex-wrap justify-around text-base'>
