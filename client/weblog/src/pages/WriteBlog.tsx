@@ -61,7 +61,7 @@ const WriteBlog: React.FC = () => {
 
     const hanldeSubmit = async (key: boolean) => {
         const { title, image, meta, tags } = blog;
-        const id: String = userinfo?.user.id || admininfo?.storeAdmin.id
+        const id: String = userinfo?.user.id || admininfo?.storeAdmin?.id
         try {
             const response = await fetch('/publish/blogpost', {
                 method: "POST",
