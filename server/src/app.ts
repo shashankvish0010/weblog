@@ -9,7 +9,7 @@ dotenv.config();
 app.use(bodyParser.json({ limit: '10mb' }))
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }))
 app.use(cors({
-    origin: "https://weblog-13zx.onrender.com/"
+    origin: "https://weblog-lake.vercel.app"
 }))
 app.use(require('./routers/routes'))
 
