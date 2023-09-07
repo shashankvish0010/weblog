@@ -8,7 +8,9 @@ import dotenv from 'dotenv';
 dotenv.config();
 app.use(bodyParser.json({ limit: '10mb' }))
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }))
-app.use(cors())
+app.use(cors(
+    {origin: "http://localhost:5173/"}
+))
 app.use(require('./routers/routes'))
 
 app.listen(process.env.PORT, () => console.log("Server running"))
