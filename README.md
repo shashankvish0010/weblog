@@ -61,11 +61,12 @@ Content Contributors have a user-friendly platform for adding, editing, and remo
 
 ### Technology Used
 
-MongoDB: Database for storing data
-Express.js: Backend framework for handling server-side logic
-Vite + React.js: Frontend library for building user interfaces
-Node.js: JavaScript runtime environment for server-side development
-Tailwind CSS: Utility-first CSS framework for styling
+- PostgreSql: Database for storing data
+- Express.js: Backend framework for handling server-side logic
+- Vite + React.js: Frontend library for building user interfaces
+- Node.js: JavaScript runtime environment for server-side development
+- Tailwind CSS: Utility-first CSS framework for styling
+- TypeScript: For Type Safe code.
 
 ## Insights
 
