@@ -50,7 +50,7 @@ export const AdminContextProvider = (props: any) => {
       switch (action.type){
         case "ADMINLOGOUT" : {
           try {
-            const res = await fetch('/admin/logout', {
+            const res = await fetch(process.env.BACKEND_URL+'/admin/logout', {
               method: 'GET',
               headers: {
                 'Content-Type' : 'application/json'
@@ -91,7 +91,7 @@ export const AdminContextProvider = (props: any) => {
         e.preventDefault();
         const { email, admin_password } = admin;
       try {
-          const response = await fetch('/admin/login', {
+          const response = await fetch(process.env.BACKEND_URL+'/admin/login', {
               method: 'POST',
               headers: { 'Content-type' : 'application/json' },
               body : JSON.stringify({ email, admin_password })

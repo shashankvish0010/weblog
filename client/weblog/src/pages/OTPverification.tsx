@@ -19,7 +19,7 @@ const OTPverification: React.FC = () => {
 
     const ResendOtp = async (UserId: String | undefined) => {
         try {
-            const response = await fetch('/verify/account/re/' + UserId, {
+            const response = await fetch(process.env.BACKEND_URL+'/verify/account/re/' + UserId, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
@@ -39,7 +39,7 @@ const OTPverification: React.FC = () => {
         console.log("user");
 
         try {
-            const response = await fetch('/verify/account/' + UserId, {
+            const response = await fetch(process.env.BACKEND_URL+'/verify/account/' + UserId, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"

@@ -18,7 +18,7 @@ const PostContainer: React.FC<blogpostbody> = ({ id, title, image, meta, firstna
 
     const LoadPost = async (Postid: String) => {
         try {
-            const response = await fetch('/view/post/' + Postid, {
+            const response = await fetch(process.env.BACKEND_URL+'/view/post/' + Postid, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"

@@ -12,7 +12,7 @@ const Flag: React.FC = () => {
     const [status, setStatus] = useState<dataStatus>()
     const hanldeSubmit = async (PostId: String | undefined) => {
         try {
-            const response = await fetch('/flag/post/' + PostId, {
+            const response = await fetch(process.env.BACKEND_URL+'/flag/post/' + PostId, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"

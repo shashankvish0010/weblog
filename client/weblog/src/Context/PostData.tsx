@@ -53,7 +53,7 @@ export const PostContextProvider = (props: any) => {
     
     const fetchPosts = async () => {
         try {
-            const response = await fetch('/api/posts', {
+            const response = await fetch(process.env.BACKEND_URL+'/api/posts', {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json"
@@ -80,7 +80,7 @@ export const PostContextProvider = (props: any) => {
         console.log('call');
 
         try {
-            const response = await fetch('/view/post/' + Postid, {
+            const response = await fetch(process.env.BACKEND_URL+'/view/post/' + Postid, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
@@ -109,7 +109,7 @@ export const PostContextProvider = (props: any) => {
 
     const DeletePost = async (PostId: String) => {
         try {
-            const response = await fetch('/delete/post/'+PostId, {
+            const response = await fetch(process.env.BACKEND_URL+'/delete/post/'+PostId, {
                 method: 'DELETE',
                 headers: {
                     "Content-Type" : "application/json"
@@ -133,7 +133,7 @@ export const PostContextProvider = (props: any) => {
         console.log("enter");
         
         try {
-            const response = await fetch('/flag/post/'+PostId, {
+            const response = await fetch(process.env.BACKEND_URL+'/flag/post/'+PostId, {
                 method: 'PUT',
                 headers: {
                     "Content-Type" : "application/json"

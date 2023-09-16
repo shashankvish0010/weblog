@@ -63,7 +63,7 @@ const WriteBlog: React.FC = () => {
         const { title, image, meta, tags } = blog;
         const id: String = userinfo?.user.id || admininfo?.storeAdmin?.id
         try {
-            const response = await fetch('/publish/blogpost', {
+            const response = await fetch(process.env.BACKEND_URL+'/publish/blogpost', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
