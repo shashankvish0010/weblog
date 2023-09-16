@@ -44,6 +44,8 @@ export const RegisterContextProvider = (props: any) => {
         }));
     }
 
+    console.log(process.env.BACKEND_URL);
+    
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const { firstname, lastname, email, user_password, confirm_password } = user;
