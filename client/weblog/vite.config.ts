@@ -8,7 +8,7 @@ export default defineConfig({
       '/api': { target: 'http://localhost:8080' },
       '/search/post': { target: 'http://localhost:8080' },
       '/send/updates': { target: 'http://localhost:8080'},
-      '/user/register': { target: 'http://localhost:8080'},
+      '/user/register': { target: 'https://weblog-backend-247o.onrender.com'},
       '/user/login': { target: 'http://localhost:8080' },
       '/admin/register': { target: 'http://localhost:8080' },
       '/admin/login': { target: 'http://localhost:8080' },
