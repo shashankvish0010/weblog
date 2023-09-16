@@ -43,8 +43,6 @@ export const RegisterContextProvider = (props: any) => {
             [name]: value
         }));
     }
-
-    console.log(process.env.BACKEND_URL);
     
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
