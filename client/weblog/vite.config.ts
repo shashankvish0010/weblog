@@ -7,10 +7,10 @@ export default defineConfig({
     proxy: {
       '/api': { target: 'https://weblog-backend-247o.onrender.com' },
       '/search/post': { target: 'https://weblog-backend-247o.onrender.com' },
-      '/send/updates': { target: 'https://weblog-backend-247o.onrender.com' },
+      '/send/updates': { target: 'https://weblog-backend-247o.onrender.com'},
       '/user/register':  'https://weblog-backend-247o.onrender.com' ,
       '/user/login': { target: 'https://weblog-backend-247o.onrender.com' },
-      '/admin/register': { target: 'https://weblog-backend-247o.onrender.com' },
+      '/admin/register': { target: 'https://weblog-backend-247o.onrender.com' + '/admin/register' },
       '/admin/login': { target: 'https://weblog-backend-247o.onrender.com' },
       '/user/logout': { target: 'https://weblog-backend-247o.onrender.com' },
       '/admin/logout': { target: 'https://weblog-backend-247o.onrender.com' },
