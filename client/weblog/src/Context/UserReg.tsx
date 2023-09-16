@@ -48,7 +48,7 @@ export const RegisterContextProvider = (props: any) => {
         e.preventDefault();
         const { firstname, lastname, email, user_password, confirm_password } = user;
         try {
-            const response = await fetch('https://weblog-backend-247o.onrender.com/user/register', {
+            const response = await fetch('https://weblog-backend-247o.onrender.com'+'/user/register', {
                 method: 'POST',
                 headers: { 'Content-type': 'application/json' },
                 body: JSON.stringify({ firstname, lastname, email, user_password, confirm_password })
