@@ -8,7 +8,7 @@ export default defineConfig({
       '/api': { target: 'https://weblog-backend-247o.onrender.com' },
       '/search/post': { target: 'https://weblog-backend-247o.onrender.com' },
       '/send/updates': { target: 'https://weblog-backend-247o.onrender.com'},
-      '/user/register':  'https://weblog-backend-247o.onrender.com',
+      '/user/register': { target: 'https://weblog-backend-247o.onrender.com'},
       '/user/login': { target: 'https://weblog-backend-247o.onrender.com' },
       '/admin/register': { target: 'https://weblog-backend-247o.onrender.com' },
       '/admin/login': { target: 'https://weblog-backend-247o.onrender.com' },
