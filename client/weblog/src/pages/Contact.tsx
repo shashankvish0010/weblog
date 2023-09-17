@@ -36,24 +36,24 @@ const Contact: React.FC = () => {
             <h1 className='text-indigo-600 font-semibold md:text-xl capitalize text-base'>Let's connect on</h1>
           </div>
           <div className='flex md:flex-row flex-col items-center h-max w-max gap-5 p-2'>
-            <div className='flex flex-row items-center gap-2 p-1 h-max w-max'>
+            <div className='flex flex-row justify-center gap-2 p-1 h-max w-max'>
               <Icon icon="ic:baseline-email" color='orange' height='4vh' />
               <p className='text-gray-600 font-medium'>shashankvishwakarma001@gmail.com</p>
             </div>
             <a href="https://github.com/shashankvish0010">
-              <div className='flex flex-row items-center gap-2 p-1 h-max w-max'>
+              <div className='flex flex-row justify-center gap-2 p-1 h-max w-max'>
                 <Icon icon="icon-park:github" height='4vh' />
                 <p className='text-gray-600 font-medium'>GitHub</p>
               </div></a>
 
 
             <a href="https://www.linkedin.com/in/shashank-vishwakarma-650555283/">
-              <div className='flex flex-row items-center gap-2 p-1 h-max w-max'>
+              <div className='flex flex-row justify-center gap-2 p-1 h-max w-max'>
                 <Icon icon="devicon:linkedin" height='4vh' />
                 <p className='text-gray-600 font-medium'>Linkedin</p>
               </div></a>
             <a href="https://twitter.com/ShashankVis001">
-              <div className='flex flex-row items-center gap-2 p-1 h-max w-max'>
+              <div className='flex flex-row justify-center gap-2 p-1 h-max w-max'>
                 <Icon icon="line-md:twitter-x-alt" height='4vh' />
                 <p className='text-gray-600 font-medium'>Twitter</p>
               </div></a>
