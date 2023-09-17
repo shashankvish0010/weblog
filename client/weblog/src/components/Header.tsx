@@ -14,7 +14,7 @@ const Header: React.FC = () => {
       <div>
         <Link to='/'><h1 className='text-2xl font-bold'>We<span className='text-indigo-600'>Blog</span></h1></Link>
       </div>
-      <div className='w-[30vw] h-max'>
+      <div className='md:w-[30vw] w-[40vw] h-max'>
         <ul className='hidden md:flex flex-row justify-between items-center font-semibold'>
           <li className='hover:text-indigo-600'><Link to='/'>Home</Link></li>
           <li className='hover:text-indigo-600'><Link to='/about'>About</Link></li>
