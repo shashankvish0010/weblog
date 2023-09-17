@@ -21,7 +21,7 @@ const Header: React.FC = () => {
           <li className='hover:text-indigo-600'><Link to='/contact'>Contact</Link></li>
           <li className='hover:text-indigo-600'><Link to='/write'>Add Post</Link></li>
           {(admincontext?.status.success === false) ? (
-            usercontext?.loginstatus.success === false ? (
+            usercontext?.loginstatus.success == false ? (
               <li className='hover:text-indigo-600'>
                 <Link to='/register'>
                   <button className='bg-indigo-600 rounded-sm p-1 text-sm text-white hover:shadow-md'>Login/SignUp</button>
