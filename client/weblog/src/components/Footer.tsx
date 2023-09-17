@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
       </div>
       <div className='flex flex-wrap w-screen h-max items-center justify-center gap-1 mt-3'>
         <h1 className='text-base font-bold'><Link to='/'>We<span className='text-indigo-600'>Blog</span></Link></h1>
-        <p className='text-center font-medium'>&copy; Designed and Developed by <span className='text-indigo-600 font-semibold'
+        <p className='flex flex-wrap text-center w-max font-medium'>&copy; Designed and Developed by <span className='text-indigo-600  font-semibold'
         > <a href="https://www.linkedin.com/in/shashank-vishwakarma-650555283/">Shashank Vishwakarma</a></span></p>
       </div>
     </div>
