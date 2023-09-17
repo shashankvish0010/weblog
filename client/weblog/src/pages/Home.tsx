@@ -53,7 +53,7 @@ const Home: React.FC = () => {
 
   return (
     <div className='h-[100vh] w-[100vw]'>
-      <div className='h-max w-[100vw] flex flex-col justify-center items-center gap-3 p-2'>
+      <div className='h-[35vh] w-[100vw] flex flex-col justify-evenly items-center gap-3 p-2'>
         <p className='title text-3xl font-bold text-center'>Latest news, updates, and stories for <span className='text-indigo-600'>developers</span></p>
         <div className='h-max w-max rounded-full p-1.5 text-base border-2 border-indigo-600 flex flex-row items-center'>
           <input className='md:w-[30vw] w-[70vw] placeholder:text-black placeholder:font-semibold' type="text" placeholder='Search' value={searchQuery.toString()} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)} />
