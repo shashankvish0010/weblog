@@ -8,7 +8,6 @@ import {AdminContextProvider} from './Context/AdminData.tsx'
 import {PostContextProvider} from './Context/PostData.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
  <UserContextProvider>
   <AdminContextProvider>
   <RegisterContextProvider>
@@ -18,5 +17,4 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   </RegisterContextProvider>
   </AdminContextProvider>
  </UserContextProvider>
- </React.StrictMode>
 )
