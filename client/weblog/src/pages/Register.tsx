@@ -9,7 +9,7 @@ const Register: React.FC = () => {
         if (userreginfo?.status.success === true && userreginfo?.verified === false) {
             Navigate('/verify')
         }
-    }, [userreginfo])
+    }, [])
 
     return (
         <div className='relative h-[100vh] w-[100vw] flex flex-col gap-2 items-center justify-center'>
