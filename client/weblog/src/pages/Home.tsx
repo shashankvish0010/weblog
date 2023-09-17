@@ -52,7 +52,7 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <div className='h-[100vh] w-[100vw]'>
+    <div className='h-[max] w-[100vw]'>
       <div className='md:h-[35vh] h-[15vh] w-[100vw] flex flex-col justify-evenly items-center gap-3 p-2'>
         <p className='title text-3xl font-bold text-center'>Latest news, updates, and stories for <span className='text-indigo-600'>developers</span></p>
         <div className='h-max w-max rounded-full p-1.5 text-base border-2 border-indigo-600 flex flex-row items-center'>
