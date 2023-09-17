@@ -49,22 +49,10 @@ export const AdminContextProvider = (props: any) => {
     const reducer = async (state: credentialinfo, action: Action) => {
       switch (action.type){
         case "ADMINLOGOUT" : {
-          try {
-            const res = await fetch('https://weblog-backend-247o.onrender.com'+'/admin/logout', {
-              method: 'GET',
-              headers: {
-                'Content-Type' : 'application/json'
-              }
-            })
-            if(res){
-              setStoreAdmin(null);
-              setStatus( (AdminState) => ({...AdminState, success : false, message : 'Logout'})); 
-            }
-            else{ console.log("Cant logout");
-            }
-          } catch (error) {
-            console.log(error);
-          }
+          const cookie = document.cookie
+          document.cookie = cookie + ";amx-age=0;"
+          setStoreAdmin(null);
+          setStatus( (AdminState) => ({...AdminState, success : false, message : 'Logout'})); 
           break
         }
       default:

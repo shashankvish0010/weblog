@@ -206,13 +206,6 @@ router.post('/admin/login', async (req, res) => {
     }
 });
 
-router.get('/user/logout', async (req, res) => {
-    const result = res.clearCookie("user_access_token");
-    if (result) {
-        res.json({ success: true, message: "Logout" })
-    }
-});
-
 router.put('/add/subscriber/:id', async (req, res) => {
     const { id } = req.params;
     const subscriberInfo = await dbpool.query('SELECT * FROM users WHERE id=$1', [id]);
@@ -359,13 +352,6 @@ router.get('/view/post/:id', async (req, res) => {
         }
     } else {
         res.json({ success: false, message: "Post Id not recieved" })
-    }
-})
-
-router.get('/admin/logout', async (req, res) => {
-    const result = res.clearCookie("admin_access_token");
-    if (result) {
-        res.json({ success: true, message: "Admin Logout" })
     }
 })
 
