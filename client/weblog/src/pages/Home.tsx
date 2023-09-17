@@ -49,6 +49,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     postinfo?.fetchPosts();
+    usercontext
   }, []);
 
   return (
