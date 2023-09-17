@@ -70,7 +70,7 @@ export const UserContextProvider = (props: any) => {
 
       case "SUBSCRIBE": {
         try {
-          const response = await fetch('https://weblog-backend-247o.onrender.com'+'/add/subscriber/' + action.id, {
+          const response = await fetch('https://weblog-backend-247o.onrender.com'+'/add/subscriber/'+action.id, {
             method: 'PUT',
             headers: { "Content-Type": "application/json" }
           })
