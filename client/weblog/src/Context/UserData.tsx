@@ -35,7 +35,7 @@ export const UserContextProvider = (props: any) => {
             const data = await response.json();
             if (data.success) {
               setUser(data.userData);
-              document.cookie = `jwt=${data.token}; secure; path=/`
+              document.cookie = `jwt=${data.token}; path=/`
             }
             setLoginStatus( (Loginstate) => ({...Loginstate, success: data.success, message: data.message }))
           } else {
@@ -109,7 +109,7 @@ export const UserContextProvider = (props: any) => {
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
-    // document.cookie != "" && user != "" ? setLoginStatus({ success: true, message: 'User login' }) : setLoginStatus({ success: false, message: 'Please Login' })
+    (document.cookie != "" || null) && (user != "" || null) ? setLoginStatus({ success: true, message: 'User login' }) : setLoginStatus({ success: false, message: 'Please Login' })
   }, [user]);
 
 
