@@ -36,6 +36,7 @@ export const UserContextProvider = (props: any) => {
             const data = await response.json();
             if (data.success) {
               setUser(data.userData);
+              document.cookie = `jwt=${data.token}; path=/`
             }
             setLoginStatus( (Loginstate) => ({...Loginstate, success: data.success, message: data.message }))
           } else {

@@ -133,7 +133,7 @@ router.post('/user/login', async (req, res) => {
                 const ismatch = await bcrypt.compare(user_password, storedPassword);
                 if (ismatch) {
                     const token = jwt.sign(userInfo.rows[0].id, process.env.USERS_SECRET || '');
-                    res.cookie("user_access_token", token).status(201).json({ success: true, userData: userInfo.rows[0], message: "Login Successfully" });
+                    res.cookie("user_access_token", token).status(201).json({ success: true,token, userData: userInfo.rows[0], message: "Login Successfully" });
                 } else {
                     res.json({ success: false, message: "Password is incorrect." });
                 }
