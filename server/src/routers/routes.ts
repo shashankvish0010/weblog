@@ -54,7 +54,7 @@ router.post('/user/register', async (req, res) => {
                 } else {
                     const user = await dbpool.query("INSERT INTO users(id, firstname, lastname, email, user_password) VALUES($1, $2, $3, $4, $5)", [id, firstname, lastname, email, hashedPassword])
                     if (user) {
-                        res.json({ success: true, id, message: 'Registered Successfully' })
+                        res.json({ success: true, id, Verified : false, message: 'Registered Successfully' })
                     } else { res.json({ success: false, message: 'User cannot be registered' }) }
                 }
             }).catch((error) => {

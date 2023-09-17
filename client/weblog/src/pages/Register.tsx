@@ -6,7 +6,7 @@ const Register: React.FC = () => {
     const Navigate = useNavigate()
 
     useEffect(() => {
-        if (userreginfo?.status.success === true) {
+        if (userreginfo?.status.success === true && userreginfo?.verified === false) {
             Navigate('/verify')
         }
     }, [userreginfo])
