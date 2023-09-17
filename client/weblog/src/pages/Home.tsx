@@ -55,9 +55,9 @@ const Home: React.FC = () => {
     <div className='h-[100vh] w-[100vw]'>
       <div className='h-[40vh] w-[100vw] flex flex-col justify-center items-center gap-3 p-2'>
         <p className='title text-3xl font-bold text-center'>Latest news, updates, and stories for <span className='text-indigo-600'>developers</span></p>
-        <div className='h-max w-max rounded-full p-1.5 text-base border-2 border-indigo-600 flex flex-row items-center'>
+        <div className='h-max w-max rounded-full md:p-1.5 text-base border-2 border-indigo-600 flex flex-row items-center'>
           <input className='md:w-[30vw] w-[70vw] placeholder:text-black placeholder:font-semibold' type="text" placeholder='Search' value={searchQuery.toString()} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)} />
-          <Icon onClick={hanldeSearch} className='cursor-pointer md:h-[4vh] h-2vh' icon="majesticons:search-line" color='#3949ab' />
+          <Icon onClick={hanldeSearch} className='cursor-pointer' icon="majesticons:search-line" height={'4vh'} color='#3949ab' />
         </div>
         {usercontext?.user?.subscription === true ? (
           <p className='title text-xl font-bold'>Thanks for subscribing.</p>
