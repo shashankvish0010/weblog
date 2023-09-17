@@ -1,7 +1,6 @@
 import React, { useState, createContext } from 'react'
 
 interface ContextValue {
-    verified: Boolean
     user: userdata;
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleSubmit: (e: React.FormEvent) => void;
@@ -26,7 +25,6 @@ interface userdata {
 export const RegisterContext = createContext<ContextValue | null>(null);
 
 export const RegisterContextProvider = (props: any) => {
-    const [verified, setVerified] = useState(false)
     const [registeredUserId, setRegisteredUserId] = useState()
     const [user, setUser] = useState<userdata>({
         firstname: '',
@@ -61,7 +59,6 @@ export const RegisterContextProvider = (props: any) => {
                 if (data.success === true) {
                     setRegisteredUserId(data.id)
                     console.log(registeredUserId);
-                    setVerified(data.Verified)
                 }
                 setStatus(prevStatus => ({
                     ...prevStatus, success: data.success, message: data.message
@@ -72,7 +69,7 @@ export const RegisterContextProvider = (props: any) => {
         }
     }
 
-    const info: ContextValue = { handleChange, handleSubmit, registeredUserId, verified, user, status }
+    const info: ContextValue = { handleChange, handleSubmit, registeredUserId, user, status }
     return (
         <RegisterContext.Provider value={info}>
             {props.children}
