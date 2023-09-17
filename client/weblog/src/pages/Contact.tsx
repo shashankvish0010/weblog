@@ -7,7 +7,7 @@ const Contact: React.FC = () => {
     , "logos:nodejs", "skill-icons:expressjs-dark", "devicon:tailwindcss", "logos:webrtc", "devicon:socketio", "logos:html-5", "devicon:css3-wordmark", "vscode-icons:file-type-scss",
     "logos:figma", "devicon:git", "devicon:github", "logos:docker-icon"]
   return (
-    <div className='flex flex-col h-max w-screen'>
+    <div className='flex flex-col md:h-max h-screen w-screen'>
       <div className='flex flex-col h-[100vh] w-screen md:justify-evenly gap-y-10 items-center'>
         <div className='h-max flex md:flex-row flex-col gap-5 shadow-2xl rounded md:w-max w-[75vw] p-3 items-center'>
           <div>
@@ -52,7 +52,7 @@ const Contact: React.FC = () => {
             </div></a>
             <a href="https://twitter.com/ShashankVis001">
               <div className='flex flex-row gap-2 p-1 h-max w-max'>
-                <Icon icon="devicon:twitter" height='4vh' />
+                <Icon icon="line-md:twitter-x-alt" height='4vh' />
                 <p className='text-gray-600 font-medium'>Twitter</p>
               </div></a>
           </div>
