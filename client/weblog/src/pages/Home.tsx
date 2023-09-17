@@ -58,7 +58,6 @@ const Home: React.FC = () => {
         <div className='h-max w-max rounded-full p-1.5 text-base border-2 border-indigo-600 flex flex-row items-center'>
           <input className='md:w-[30vw] w-[70vw] placeholder:text-black placeholder:font-semibold' type="text" placeholder='Search' value={searchQuery.toString()} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)} />
           <Icon onClick={hanldeSearch} className='md:hidden cursor-pointer' icon="majesticons:search-line" color='#3949ab' />
-          <Icon onClick={hanldeSearch} className='md:block cursor-pointer' icon="majesticons:search-line" color='#3949ab' height={'2vh'}/>
         </div>
         {usercontext?.user?.subscription === true ? (
           <p className='title text-xl font-bold'>Thanks for subscribing.</p>
