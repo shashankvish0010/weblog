@@ -67,9 +67,7 @@ export const UserContextProvider = (props: any) => {
         //   console.log(error);
         // }
         const cookie = document.cookie;
-        document.cookie = cookie + ";max-age=0";
-        console.log(cookie);
-        
+        document.cookie = cookie + ";max-age=0";        
         setUser('');
         setLoginStatus( (Loginstate) => ({...Loginstate, success: false, message: "Please Login" }))
         break;
