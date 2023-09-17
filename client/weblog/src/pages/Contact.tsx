@@ -12,7 +12,7 @@ const Contact: React.FC = () => {
         <div className='h-max flex md:flex-row flex-col gap-5 shadow-2xl rounded md:w-max w-[75vw] p-3 items-center'>
           <div>
             <img
-              className='rounded-full shadow-xl border-2 border-indigo-600 hover: hover:shadow-2xl cursor-pointer' src="https://media.licdn.com/dms/image/D4E03AQEutysDmmKD9Q/profile-displayphoto-shrink_400_400/0/1689167832524?e=1694649600&v=beta&t=XPC0wTrU4VRZdJt0M9uCM8qR_Vrwgd2XSGTFVnkUv-Q" alt="" height='200px' width='200px' />
+              className='rounded-full shadow-xl border-2 border-indigo-600 hover: hover:shadow-2xl cursor-pointer' src="https://media.licdn.com/dms/image/D4E03AQEutysDmmKD9Q/profile-displayphoto-shrink_400_400/0/1689167832524?e=1700697600&v=beta&t=ax4Vp9kY3Hj0p4guS0zQfLIMnELA0zZ632MbNeKj0IU" alt="" height='200px' width='200px' />
           </div>
           <div className='flex flex-col h-max gap-3 p-2 md:w-[65vw] w-[50vw]'>
             <h1 className='md:text-xl text-base font-semibold'>Shashank Vishwakarma</h1>
