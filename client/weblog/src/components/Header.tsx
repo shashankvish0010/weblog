@@ -29,7 +29,7 @@ const Header: React.FC = () => {
               </li>
             ) : (
               <li className='hover:text-indigo-600'>
-                <button onClick={ usercontext?.dispatch({ type: "LOGOUT" }) } className='bg-indigo-600 rounded-sm p-1 text-sm text-white hover:shadow-md'>Logout</button>
+                <button onClick={() => { usercontext?.dispatch({ type: "LOGOUT" }) } } className='bg-indigo-600 rounded-sm p-1 text-sm text-white hover:shadow-md'>Logout</button>
               </li>
             )
           ) : (
