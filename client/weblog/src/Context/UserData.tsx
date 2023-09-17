@@ -49,23 +49,27 @@ export const UserContextProvider = (props: any) => {
       }
   
       case "LOGOUT": {
-        try {
-          const res = await fetch('https://weblog-backend-247o.onrender.com'+'/user/logout', {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          });
-          if (res) {
-            setUser('');
-            setLoginStatus( (Loginstate) => ({...Loginstate, success: false, message: "Please Login" }))
-          }
-          else {
-            console.log("Cant logout");
-          }
-        } catch (error) {
-          console.log(error);
-        }
+        // try {
+        //   const res = await fetch('https://weblog-backend-247o.onrender.com'+'/user/logout', {
+        //     method: 'GET',
+        //     headers: {
+        //       'Content-Type': 'application/json'
+        //     }
+        //   });
+        //   if (res) {
+        //     setUser('');
+        //     setLoginStatus( (Loginstate) => ({...Loginstate, success: false, message: "Please Login" }))
+        //   }
+        //   else {
+        //     console.log("Cant logout");
+        //   }
+        // } catch (error) {
+        //   console.log(error);
+        // }
+        const cookie = document.cookie;
+        document.cookie = cookie + ";max-age=0";
+        setUser('');
+        setLoginStatus( (Loginstate) => ({...Loginstate, success: false, message: "Please Login" }))
         break;
       }
 
