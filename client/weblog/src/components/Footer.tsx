@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
         <a href='https://www.linkedin.com/in/shashank-vishwakarma-650555283/'><Icon className='shadow-xl cursor-pointer hover:shadow-2xl' height='3vh' icon="devicon:linkedin" /></a>
         <a href='https://twitter.com/ShashankVis001'><Icon className='shadow-xl cursor-pointer hover:shadow-2xl' height='3vh' icon="line-md:twitter-x-alt" /></a>
       </div>
-      <div className='flex flex-wrap w-screen h-max items-center justify-center gap-1 mt-3'>
+      <div className='flex md:flex-row flex-col w-screen h-max items-center justify-center gap-1 mt-3'>
         <h1 className='text-base font-bold'><Link to='/'>We<span className='text-indigo-600'>Blog</span></Link></h1>
         <p className='flex md:flex-row flex-col justify-center gap-1 text-center w-max font-medium'>&copy; Designed and Developed by <span className='text-indigo-600  font-semibold'
         > <a href="https://www.linkedin.com/in/shashank-vishwakarma-650555283/">Shashank Vishwakarma</a></span></p>
