@@ -7,7 +7,7 @@ const Email: React.FC = () => {
     const [body, setBody] = useState('')
     const hanldeSubmit = async () => {
         try {
-            const response = await fetch(process.env.BACKEND_URL+'/send/updates', {
+            const response = await fetch('https://weblog-backend-247o.onrender.com'+'/send/updates', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

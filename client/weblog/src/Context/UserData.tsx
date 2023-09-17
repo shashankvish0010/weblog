@@ -27,7 +27,7 @@ export const UserContextProvider = (props: any) => {
       case "LOGIN": {
         try {
           const { email, user_password } = action.data;
-          const response = await fetch(process.env.BACKEND_URL+'/user/login', {
+          const response = await fetch('https://weblog-backend-247o.onrender.com'+'/user/login', {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify({ email, user_password })
@@ -49,7 +49,7 @@ export const UserContextProvider = (props: any) => {
   
       case "LOGOUT": {
         try {
-          const res = await fetch(process.env.BACKEND_URL+'/user/logout', {
+          const res = await fetch('https://weblog-backend-247o.onrender.com'+'/user/logout', {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json'
@@ -70,7 +70,7 @@ export const UserContextProvider = (props: any) => {
 
       case "SUBSCRIBE": {
         try {
-          const response = await fetch(`${process.env.BACKEND_URL}/add/subscriber/${action.id}`, {
+          const response = await fetch(`https://weblog-backend-247o.onrender.com/add/subscriber/${action.id}`, {
             method: 'PUT',
             headers: { "Content-Type": "application/json" }
           })
@@ -92,7 +92,7 @@ export const UserContextProvider = (props: any) => {
 
       case "UNSUBSCRIBE": {
         try {
-          const response = await fetch(`${process.env.BACKEND_URL}/unsubscribe/${action.id}`, {
+          const response = await fetch(`https://weblog-backend-247o.onrender.com/unsubscribe/${action.id}`, {
             method: 'PUT',
             headers: { "Content-Type": "application/json" }
           })

@@ -32,7 +32,7 @@ const AdminReg: React.FC = () => {
         e.preventDefault();
         const { firstname, lastname, email, admin_password, confirm_password, activation_key } = user;
         try {
-            const response = await fetch(process.env.BACKEND_URL+'/admin/register', {
+            const response = await fetch('https://weblog-backend-247o.onrender.com'+'/admin/register', {
                 method: 'POST',
                 headers: { 'Content-type': 'application/json' },
                 body: JSON.stringify({ firstname, lastname, email, admin_password, confirm_password, activation_key })

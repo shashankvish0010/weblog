@@ -25,7 +25,7 @@ const EditPost: React.FC = () => {
 
     const LoadPost = async (UserId: String) => {
         try {
-            const response = await fetch(process.env.BACKEND_URL+'/view/post/' + UserId, {
+            const response = await fetch('https://weblog-backend-247o.onrender.com'+'/view/post/' + UserId, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
@@ -94,7 +94,7 @@ const EditPost: React.FC = () => {
     const hanldeSubmit = async (key: boolean) => {
         const { title, image, meta, tags } = blog;
         try {
-            const response = await fetch(process.env.BACKEND_URL+'/edit/blogpost', {
+            const response = await fetch('https://weblog-backend-247o.onrender.com'+'/edit/blogpost', {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

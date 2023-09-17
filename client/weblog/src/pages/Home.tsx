@@ -28,7 +28,7 @@ const Home: React.FC = () => {
 
   const hanldeSearch = async () => {
     try {
-      const response = await fetch( process.env.BACKEND_URL+'/search/post/' + searchQuery, {
+      const response = await fetch( 'https://weblog-backend-247o.onrender.com'+'/search/post/' + searchQuery, {
         method: "GET",
         headers: {
           "Content-Type": "application/json"

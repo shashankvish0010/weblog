@@ -32,7 +32,7 @@ const UserProfile: React.FC = () => {
 
   const fetchPostsData = async (email: String) => {
     try {
-      const response = await fetch(process.env.BACKEND_URL+'/fetch/user/posts/' + email, {
+      const response = await fetch('https://weblog-backend-247o.onrender.com'+'/fetch/user/posts/' + email, {
         method: "GET",
         headers: {
           'Content-Type': 'application/json'
@@ -61,7 +61,7 @@ const UserProfile: React.FC = () => {
   const handleSubmit = async () => {
     const { id, firstname, lastname, email } = editProfile;
     try {
-      const response = await fetch(process.env.BACKEND_URL+'/edit/profile', {
+      const response = await fetch('https://weblog-backend-247o.onrender.com'+'/edit/profile', {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
