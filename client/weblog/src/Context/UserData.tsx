@@ -7,7 +7,6 @@ interface ContextValue {
   state: any
   dispatch: any
   user: any;
-  setUser: any
 }
 
 interface userStatus {
@@ -122,7 +121,6 @@ export const UserContextProvider = (props: any) => {
     reducer: function (): Promise<void> {
       throw new Error('Function not implemented.');
     },
-    setUser: undefined
   }
   return (
     <UserContext.Provider value={info}>
