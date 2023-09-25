@@ -109,9 +109,11 @@ export const UserContextProvider = (props: any) => {
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
-    document.cookie != null && user != null ? setLoginStatus({ success: true, message: 'User login' }) : setLoginStatus({ success: false, message: 'Please Login' })
   }, [user]);
 
+  useEffect(()=>{
+    document.cookie != null ? setLoginStatus({ success: true, message: 'User login' }) : setLoginStatus({ success: false, message: 'Please Login' })
+  }, [])
 
   const info: ContextValue = {
      dispatch, user, state, loginstatus,
