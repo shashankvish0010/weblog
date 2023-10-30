@@ -22,9 +22,9 @@ const Header: React.FC = () => {
           <li className='hover:text-indigo-600'><Link to='/write'><span className='text-center'>Add Post</span></Link></li>
           {(admincontext?.status.success === false) ? (
             usercontext?.loginstatus.success == false ? (
-              <li className='hover:text-indigo-600'>
+              <li className='hover:text-indigo-600 p-1'>
                 <Link to='/register'>
-                  <button className='bg-indigo-600 rounded-sm p-1 text-sm text-white hover:shadow-md'>Login/SignUp</button>
+                  <button className='bg-indigo-600 rounded-md p-1 text-sm text-white hover:shadow-md'>Login/SignUp</button>
                 </Link>
               </li>
             ) : (
