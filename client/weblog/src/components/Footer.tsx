@@ -16,9 +16,9 @@ const Footer: React.FC = () => {
         </div>
       </div>
       <div className='w-max h-max flex flex-row items-center mt-5 gap-6'>
-        <a href='https://github.com/shashankvish0010'><Icon className='shadow-xl cursor-pointer hover:shadow-2xl' height='3vh' icon="mdi:github" /></a>
-        <a href='https://www.linkedin.com/in/shashank-vishwakarma-650555283/'><Icon className='shadow-xl cursor-pointer hover:shadow-2xl' height='3vh' icon="devicon:linkedin" /></a>
-        <a href='https://twitter.com/ShashankVis001'><Icon className='shadow-xl cursor-pointer hover:shadow-2xl' height='3vh' icon="line-md:twitter-x-alt" /></a>
+        <a href='https://github.com/shashankvish0010'><Icon className='shadow-xl cursor-pointer hover:shadow-2xl transition duration-300 ease-in-out transform hover:-translate-y+1 hover:scale-105' height='3vh' icon="mdi:github" /></a>
+        <a href='https://www.linkedin.com/in/shashank-vishwakarma-650555283/'><Icon className='shadow-xl cursor-pointer hover:shadow-2xl transition duration-300 ease-in-out transform hover:-translate-y+1 hover:scale-105' height='3vh' icon="devicon:linkedin" /></a>
+        <a href='https://twitter.com/ShashankVis001'><Icon className='shadow-xl cursor-pointer hover:shadow-2xl transition duration-300 ease-in-out transform hover:-translate-y+1 hover:scale-105' height='3vh' icon="line-md:twitter-x-alt" /></a>
       </div>
       <div className='flex md:flex-row flex-col w-screen h-max items-center justify-center gap-1 mt-3'>
         <h1 className='text-base font-bold'><Link to='/'>We<span className='text-indigo-600'>Blog</span></Link></h1>
