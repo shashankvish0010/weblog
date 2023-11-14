@@ -50,11 +50,12 @@ const AdminReg: React.FC = () => {
     }
 
     return (
-        <div className='h-[100vh] w-[100vw] flex flex-col gap-2 items-center justify-center'>
+        <div className='h-[100vh] w-[100vw] flex flex-col gap-2 items-center justify-center mt-2'>
             <span className='p-1 text-center font-semibold shadow-md'><p>{status.message}</p></span>
             <div className='flex flex-col justify-around gap-5 border shadow-md w-max h-max p-4'>
-                <div className='text-2xl text-indigo-600 font-semibold'><h1>Admin Register</h1></div>
+                <div className='text-2xl text-indigo-600 font-semibold mt-1'><h1>Admin Register</h1></div>
                 <div>
+                    {/* The Admin registration Page  */}
                     <form method='POST' className='flex gap-3 flex-col justify-center'>
                         <span className='flex flex-col gap-1'>
                             <p className='text-sm text-gray-600'>Firstname</p>

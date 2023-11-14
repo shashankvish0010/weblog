@@ -24,7 +24,7 @@ const Header: React.FC = () => {
             usercontext?.loginstatus.success == false ? (
               <li className='hover:text-indigo-600'>
                 <Link to='/register'>
-                  <button className='bg-indigo-600 rounded-sm p-1 text-sm text-white hover:shadow-md'>Login/SignUp</button>
+                  <button className='bg-indigo-600 rounded-sm p-1 text-sm text-white hover:shadow-md transition duration-300 ease-in-out transform hover:-translate-y+1 hover:scale-105'>Login/SignUp</button>
                 </Link>
               </li>
             ) : (
