@@ -112,7 +112,7 @@ export const UserContextProvider = (props: any) => {
   }, [user]);
 
   useEffect(()=>{
-    document.cookie != null ? setLoginStatus({ success: true, message: 'User login' }) : setLoginStatus({ success: false, message: 'Please Login' })
+    document.cookie ? setLoginStatus({ success: true, message: 'User login' }) : setLoginStatus({ success: false, message: 'Please Login' })
   }, [])
 
   const info: ContextValue = {
