@@ -21,7 +21,7 @@ const Header: React.FC = () => {
           <li className='hover:text-indigo-600'><Link to='/contact'>Contact</Link></li>
           <li className='hover:text-indigo-600'><Link to='/write'><span className='text-center'>Add Post</span></Link></li>
           {(admincontext?.status.success === false) ? (
-            usercontext?.loginstatus.success == false ? (
+            usercontext?.loginstatus.success == true ? (
               <li className='hover:text-indigo-600'>
                 <Link to='/register'>
                   <button className='bg-indigo-600 rounded-sm p-1 text-sm text-white hover:shadow-md transition duration-300 ease-in-out transform hover:-translate-y+1 hover:scale-105'>Login/SignUp</button>
@@ -29,7 +29,7 @@ const Header: React.FC = () => {
               </li>
             ) : (
               <li className='hover:text-indigo-600'>
-                <button onClick={() => { usercontext?.dispatch({ type: "LOGOUT" }) } } className='bg-indigo-600 rounded-sm p-1 text-sm text-white hover:shadow-md'>Logout</button>
+                <button onClick={() => { usercontext?.dispatch({ type: "LOGOUT" }) } } className='bg-indigo-600 rounded-lg p-1 text-sm text-white hover:shadow-md'>Logout</button>
               </li>
             )
           ) : (
@@ -41,7 +41,7 @@ const Header: React.FC = () => {
               null
             )
           )}
-          {usercontext?.loginstatus.success === true ? (
+          {usercontext?.loginstatus.success === false ? (
             <li className='hover:text-indigo-600'>
               <Link to='/profile'>
                 <Icon icon='gg:profile' height='4vh' />
