@@ -10,7 +10,7 @@ const Header: React.FC = () => {
   const [mobileDevice, setMobileDevice] = useState<boolean>(false)
 
   return (
-    <div className='bg-white h-[8vh] w-[100vw] flex flex-row justify-around items-center shadow-sm'>
+    <div className='bg-white h-[10vh] w-[100vw] flex flex-row justify-around items-center shadow-sm'>
       <div className='h-max'>
         <Link to='/'>
           <span className='h-max flex items-center gap-2'>
@@ -19,8 +19,8 @@ const Header: React.FC = () => {
           </span>
         </Link>
       </div>
-      <div className='w-[30vw] h-max'>
-        <ul className='hidden md:flex gap-2 flex-row justify-between items-center font-semibold'>
+      <div className='w-max h-max'>
+        <ul className='hidden md:flex w-[40vw] flex-row justify-evenly items-center font-semibold'>
           <li className='hover:text-indigo-600'><Link to='/'>Home</Link></li>
           <li className='hover:text-indigo-600'><Link to='/about'>About</Link></li>
           <li className='hover:text-indigo-600'><Link to='/contact'>Contact</Link></li>
