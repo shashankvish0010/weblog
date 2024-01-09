@@ -54,9 +54,9 @@ const Home: React.FC = () => {
 
   return (
     <div className='h-[100vh] w-[100vw]'>
-      <div className='h-max w-[100vw] flex flex-col justify-evenly mb-3 items-center gap-5'>
-        <div className='h-max w-[100dvw] bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 p-4 flex flex-col'>
-        <div className=' p-5 h-max w-[100vw] flex md:flex-row flex-col items-center md:justify-evenly justify-center'>
+      <div className='h-max w-screen flex flex-col justify-evenly mb-3 items-center gap-5'>
+        <div className='h-max bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 p-4 flex flex-col'>
+        <div className='h-max flex md:flex-row flex-col items-center md:justify-evenly justify-center'>
           <div className='h-max md:w-[45%] w-[90vw] flex flex-col md:gap-8 gap-4 p-3'>
             <h2 className='md:text-5xl text-2xl font-bold text-slate-100 md:shadow-sm'>Your coding odyssey begins.</h2>
             <p className='text-slate-200 font-semibold text-sm'>Elevate your code, empower your creativity, and connect with a community of developers on the ultimate blogging platform for tech enthusiasts</p>
@@ -76,7 +76,7 @@ const Home: React.FC = () => {
             <img width={'500px'} src={bannerImage} />
           </div>
         </div>
-        <div className='h-max w-[100vw]  flex flex-col justify-evenly mb-3 items-center gap-5'>
+        <div className='h-max w-[100%]  flex flex-col justify-evenly mb-3 items-center gap-5'>
         {usercontext?.user?.subscription === true ? (
           <p className='title text-white text-xl font-bold'>Thanks for subscribing.</p>
         ) : (
@@ -114,13 +114,13 @@ const Home: React.FC = () => {
       </div>
       </div>
       <div>
-        <div className='w-[100vw] flex flex-row justify-around items-center'>
+        <div className='w-[100%] flex flex-row justify-around items-center'>
           <span className='rounded-md h-[0.15rem] bg-indigo-600 w-[30vw]'></span>
           <h1 className='text-xl font-semibold'>All Articles</h1>
           <span className='rounded-md h-[0.15rem] bg-indigo-600 w-[30vw]'></span>
         </div>
       </div>
-      <div className='h-[100vh] w-[100vw] flex flex-wrap justify-center mt-2 p-3 gap-10'>
+      <div className='h-[100vh] w-[100%] flex flex-wrap justify-center mt-2 p-3 gap-10'>
         {resultData ? (resultData.length > 0 ?
           (resultData?.map((post) =>
             <PostContainer
@@ -149,13 +149,13 @@ const Home: React.FC = () => {
           )))
           :
           (
-            <div className='h-max w-[100vw] p-3 flex items-center justify-center'>
+            <div className='h-max w-[100%] p-3 flex items-center justify-center'>
               <Buffering />
             </div>
           ))
           :
           (
-            <div className='h-max w-[100vw] p-3 flex items-center justify-center'>
+            <div className='h-max w-[100%] p-3 flex items-center justify-center'>
               <Buffering />
             </div>
           )
