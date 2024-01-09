@@ -19,8 +19,8 @@ const Header: React.FC = () => {
           </span>
         </Link>
       </div>
-      <div className='w-max h-max'>
-        <ul className='hidden md:flex w-[40vw] flex-row justify-evenly items-center font-semibold'>
+      <div className='w-[40vw] h-max'>
+        <ul className='hidden md:flex w-[100%] flex-row justify-evenly items-center font-semibold'>
           <li className='hover:text-indigo-600'><Link to='/'>Home</Link></li>
           <li className='hover:text-indigo-600'><Link to='/about'>About</Link></li>
           <li className='hover:text-indigo-600'><Link to='/contact'>Contact</Link></li>
