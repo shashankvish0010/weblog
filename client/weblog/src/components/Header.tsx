@@ -10,9 +10,14 @@ const Header: React.FC = () => {
   const [mobileDevice, setMobileDevice] = useState<boolean>(false)
 
   return (
-    <div className='h-[8vh] w-[100vw] flex flex-row justify-around items-center shadow-sm'>
-      <div>
-        <Link to='/'><h1 className='text-2xl font-bold'>We<span className='text-indigo-600'>Blog</span></h1></Link>
+    <div className='bg-white h-[8vh] w-[100vw] flex flex-row justify-around items-center shadow-sm'>
+      <div className='h-max'>
+        <Link to='/'>
+          <span className='h-max flex items-center gap-2'>
+            <Icon icon="material-symbols:developer-mode-tv-outline" color='3949AB' height='4vh'/>
+            <h1 className='logo md:text-2xl text-xl text-black font-bold'>We<span className='text-indigo-600'>Blog</span></h1>
+          </span>
+        </Link>
       </div>
       <div className='w-[30vw] h-max'>
         <ul className='hidden md:flex gap-2 flex-row justify-between items-center font-semibold'>
@@ -24,12 +29,12 @@ const Header: React.FC = () => {
             usercontext?.loginstatus.success == false ? (
               <li className='hover:text-indigo-600'>
                 <Link to='/register'>
-                  <button className='bg-indigo-600 rounded-sm p-1 text-sm text-white hover:shadow-md transition duration-300 ease-in-out transform hover:-translate-y+1 hover:scale-105'>Login/SignUp</button>
+                  <button className='bg-indigo-600 rounded-sm p-2 text-sm text-white hover:shadow-md transition duration-300 ease-in-out transform hover:-translate-y+1 hover:scale-105'>Login/SignUp</button>
                 </Link>
               </li>
             ) : (
               <li className='hover:text-indigo-600'>
-                <button onClick={() => { usercontext?.dispatch({ type: "LOGOUT" }) } } className='bg-indigo-600 rounded-sm p-1 text-sm text-white hover:shadow-md'>Logout</button>
+                <button onClick={() => { usercontext?.dispatch({ type: "LOGOUT" }) }} className='bg-indigo-600 rounded-sm p-1 text-sm text-white hover:shadow-md'>Logout</button>
               </li>
             )
           ) : (
