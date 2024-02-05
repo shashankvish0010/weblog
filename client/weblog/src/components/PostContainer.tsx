@@ -43,9 +43,8 @@ const PostContainer: React.FC<blogpostbody> = ({ id, title, image, meta, firstna
             console.log(error);
         }
     }
-    // const { id, title, image, meta, firstname, lastname } = props;
     return (
-        <div onClick={() => LoadPost(id)} className='bg-gradient-to-r from-indigo-600 via-pink-600 to-purple-600 text-white h-max w-[80vw] shadow-2xl rounded flex md:flex-row flex-col p-3 gap-4 object-fill items-center'>
+        <div onClick={() => LoadPost(id)} className='bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white h-max w-[80vw] shadow-2xl rounded flex md:flex-row flex-col p-3 gap-4 object-fill items-center'>
             <div className='h-[200px] md:w-[400px]'>
                 <img src={image} className='rounded h-[200px] w-[400px] shadow-xl object-cover' />
             </div>
