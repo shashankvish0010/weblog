@@ -20,11 +20,6 @@ interface PostInt {
   public_view: '',
 }
 
-interface fetch {
-  success: Boolean,
-  content: String,
-  message: String
-}
 
 const Home: React.FC = () => {
   const navigate = useNavigate()
@@ -33,7 +28,8 @@ const Home: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<String>('')
   const [resultData, setResultData] = useState<PostInt[] | undefined>()
   const [searchAiQuery, setSearchAiQuery] = useState<String>('')
-  const [resultAiData, setResultAiData] = useState<fetch | undefined>()
+  const [resultAiData, setResultAiData] = useState<string | undefined>()
+  const [startAi, setStartAi] = useState<boolean>()
 
   // https://weblog-backend-247o.onrender.com
   const hanldeSearch = async () => {
@@ -58,8 +54,9 @@ const Home: React.FC = () => {
   }
 
   const fetchAi = async () => {
+    setStartAi(true)
     try {
-      const response = await fetch('/fetch/openai', {
+      const response = await fetch('/fetch/ai', {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -70,8 +67,11 @@ const Home: React.FC = () => {
       })
       if (response) {
         const data = await response.json();
-        console.log(data);
-        setResultAiData(data.content)
+        if (data.success == true) {
+          console.log(data);
+          setStartAi(false)
+          setResultAiData(data.content)
+        }
       } else {
         console.log("No response");
       }
@@ -155,16 +155,23 @@ const Home: React.FC = () => {
         </div>
       </div>
       <div>
-        {resultAiData?.success == true ? 
-        <div className='w-[100%] flex flex-row justify-around items-center mt-[5%]'>
-          <span className='rounded-md h-[0.15rem] bg-indigo-600 w-[30vw]'></span>
-          <h1 className='text-xl font-semibold'>Your Answer</h1>
-          <span className='rounded-md h-[0.15rem] bg-indigo-600 w-[30vw]'></span>
-          <p>
-            {resultAiData.content}
-          </p>
-        </div>
+        {resultAiData && startAi == false ?
+          <div className='w-[100%] flex flex-col justify-around items-center mt-[5%]'>
+            <div className='w-[100%] flex flex-row justify-around items-center'>
+              <span className='rounded-md h-[0.15rem] bg-indigo-600 w-[30vw]'></span>
+              <h1 className='text-xl font-semibold'>Your Answer</h1>
+              <span className='rounded-md h-[0.15rem] bg-indigo-600 w-[30vw]'></span>
+            </div>
+            <p className='text-sm p-2 font-medium gap-2 w-[80%]'>
+              {resultAiData}
+            </p>
+          </div>
           : null
+        }
+        {
+          startAi == true ? <div className='mt-[5%] flex items-center justify-center h-max w-screen'>
+            <Icon icon="eos-icons:three-dots-loading" color='red' height='10vh'/> 
+          </div>: null
         }
         <div className='w-[100%] flex flex-row justify-around items-center mt-[5%]'>
           <span className='rounded-md h-[0.15rem] bg-indigo-600 w-[30vw]'></span>
