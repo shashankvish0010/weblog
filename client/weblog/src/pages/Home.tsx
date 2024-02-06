@@ -56,7 +56,7 @@ const Home: React.FC = () => {
   const fetchAi = async () => {
     setStartAi(true)
     try {
-      const response = await fetch('/fetch/ai', {
+      const response = await fetch('https://weblog-backend-247o.onrender.com/fetch/ai', {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -162,8 +162,7 @@ const Home: React.FC = () => {
               <h1 className='text-xl font-semibold'>Your Answer</h1>
               <span className='rounded-md h-[0.15rem] bg-indigo-600 w-[30vw]'></span>
             </div>
-            <p className='text-sm p-2 font-medium gap-2 w-[80%]'>
-              {resultAiData}
+            <p className='text-sm p-2 font-medium gap-2 w-[80%] ' dangerouslySetInnerHTML={{ __html: resultAiData }}>
             </p>
           </div>
           : null
