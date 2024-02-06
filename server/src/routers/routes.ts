@@ -6,7 +6,8 @@ import bcrypt from 'bcrypt';
 import bodyParser from 'body-parser';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer'
-import { error, log } from "console";
+const { Hercai } = require('hercai');
+
 
 router.use(bodyParser.json())
 let originalOtp: Number
@@ -22,49 +23,49 @@ router.post('/user/register', async (req, res) => {
     }
     else {
         const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if(emailPattern.test(email)){
-        const emailexist = await dbpool.query('SELECT email from users WHERE email=$1', [email])
-        if (emailexist.rows.length > 0) {
-            res.json({ success: false, message: 'Email already registered' });
-        } else {
-            const genertedOTP = Number(`${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`)
-            originalOtp = genertedOTP
-            const transporter = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                    user: process.env.EMAIL,
-                    pass: process.env.PASSWORD
-                }
-            })
+        if (emailPattern.test(email)) {
+            const emailexist = await dbpool.query('SELECT email from users WHERE email=$1', [email])
+            if (emailexist.rows.length > 0) {
+                res.json({ success: false, message: 'Email already registered' });
+            } else {
+                const genertedOTP = Number(`${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`)
+                originalOtp = genertedOTP
+                const transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: process.env.EMAIL,
+                        pass: process.env.PASSWORD
+                    }
+                })
 
-            const email_message = {
-                from: `"Shashank V. WeBlog" <${process.env.EMAIL}>`,
-                to: email,
-                subject: "Verify your account",
-                text: `Your verification code is ${originalOtp} by weblog.`,
+                const email_message = {
+                    from: `"Shashank V. WeBlog" <${process.env.EMAIL}>`,
+                    to: email,
+                    subject: "Verify your account",
+                    text: `Your verification code is ${originalOtp} by weblog.`,
+                }
+
+                transporter.sendMail(email_message).then(async () => {
+                    const salt = Number(bcrypt.genSalt(10))
+                    const hashedPassword = await bcrypt.hash(user_password, salt)
+                    const confirmHashedPassword = await bcrypt.hash(confirm_password, salt)
+                    const ismatch = await bcrypt.compare(user_password, confirmHashedPassword)
+                    if (!ismatch) {
+                        res.json({ success: false, message: 'Password does not match' });
+                    } else {
+                        const user = await dbpool.query("INSERT INTO users(id, firstname, lastname, email, user_password) VALUES($1, $2, $3, $4, $5)", [id, firstname, lastname, email, hashedPassword])
+                        if (user) {
+                            res.json({ success: true, id, Verified: false, message: 'Registered Successfully' })
+                        } else { res.json({ success: false, message: 'User cannot be registered' }) }
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                })
             }
-
-            transporter.sendMail(email_message).then(async () => {
-                const salt = Number(bcrypt.genSalt(10))
-                const hashedPassword = await bcrypt.hash(user_password, salt)
-                const confirmHashedPassword = await bcrypt.hash(confirm_password, salt)
-                const ismatch = await bcrypt.compare(user_password, confirmHashedPassword)
-                if (!ismatch) {
-                    res.json({ success: false, message: 'Password does not match' });
-                } else {
-                    const user = await dbpool.query("INSERT INTO users(id, firstname, lastname, email, user_password) VALUES($1, $2, $3, $4, $5)", [id, firstname, lastname, email, hashedPassword])
-                    if (user) {
-                        res.json({ success: true, id, Verified : false, message: 'Registered Successfully' })
-                    } else { res.json({ success: false, message: 'User cannot be registered' }) }
-                }
-            }).catch((error) => {
-                console.log(error);
-            })
+        } else {
+            res.json({ success: false, message: 'Invalid Email' });
         }
-    }else{
-        res.json({ success: false, message: 'Invalid Email' });
     }
-}
 });
 
 router.put('/verify/account/:id', async (req, res) => {
@@ -472,6 +473,16 @@ router.post('/send/updates', async (req, res) => {
     } catch (error) {
         console.log(error);
     }
+})
+
+router.post('/fetch/ai', async (req,res)=>{
+    const herc = new Hercai();    
+    req.body.query ?
+    herc.question({model:"v3",content:req.body.query}).then((response: any) => {
+        res.json({success: true, content: response.reply})
+    })      
+    :
+    res.json({success: false, message: "No query found."})  
 })
 
 module.exports = router
