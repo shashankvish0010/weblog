@@ -139,7 +139,7 @@ const Home: React.FC = () => {
               </button>
             )}
             <div className='bg-slate-100 h-max w-max rounded-full p-1.5 text-base flex flex-row items-center'>
-              <input className='md:w-[30vw] w-[70vw] bg-slate-100 placeholder:text-black placeholder:font-semibold' type="text" placeholder='Search' value={searchQuery.toString()} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)} />
+              <input className='md:w-[30vw] w-[70vw] bg-slate-100 placeholder:text-black placeholder:font-semibold' type="text" placeholder='Search blogpost...' value={searchQuery.toString()} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)} />
               <Icon onClick={hanldeSearch} className='cursor-pointer' icon="majesticons:search-line" color='#3949ab' />
             </div>
           </div>
