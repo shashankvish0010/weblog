@@ -26,6 +26,13 @@ const About: React.FC = () => {
           </li>
           <li className='flex flex-row items-center h-max gap-2'>
             <p>
+              <span className='text-indigo-600 font-semibold'>Ai Suggestions: </span>
+              <br />
+              Users can take suggestions, help of Ai to get new ideas or to solve a problem.
+            </p>
+          </li>
+          <li className='flex flex-row items-center h-max gap-2'>
+            <p>
               <span className='text-indigo-600 font-semibold'>Secure Access: </span>
               <br />
               Security is paramount at WeBlog. We employ OTP (One-Time Password) verification, seamlessly integrated with Nodemailer, ensuring secure access to admin functionalities while preserving user data with encrypted cookies.
