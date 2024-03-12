@@ -233,13 +233,13 @@ const Home: React.FC = () => {
                   usercontext.user.subscription == false ? (
                     <button
                       onClick={() => { usercontext.dispatch({ type: "SUBSCRIBE", id: usercontext.user.id }) }}
-                      className='bg-indigo-600 shadow-md rounded-sm p-2 text-base font-semibold text-white'
+                      className='rounded-xl border-2 bg-slate-200 shadow-md p-5 text-base font-semibold text-black'
                     >
                       SUBSCRIBE
                     </button>
                   ) : (<button
                     onClick={() => { usercontext.dispatch({ type: "UNSUBSCRIBE", id: usercontext.user.id }) }}
-                    className='bg-indigo-600 shadow-md rounded-sm p-2 text-base font-semibold text-white'
+                    className='rounded-xl border-2 bg-red-600 shadow-md p-5 text-base font-semibold text-white'
                   >
                     UNSUBSCRIBE
                   </button>)
