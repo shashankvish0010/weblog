@@ -88,7 +88,7 @@ const Home: React.FC = () => {
   return (
     <>
       <div className='h-max w-[100vw]'>
-        <div className='relative h-max w-screen flex flex-col justify-evenly mb-3 items-center gap-5'>
+        <div className='h-max w-screen flex flex-col justify-evenly mb-3 items-center gap-5'>
           <div className='h-max bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 p-4 flex flex-col'>
             <div className='h-max flex md:flex-row flex-col items-center md:justify-evenly justify-center'>
               <div className='h-max md:w-[45%] w-[90vw] flex flex-col md:gap-8 gap-4 p-3'>
