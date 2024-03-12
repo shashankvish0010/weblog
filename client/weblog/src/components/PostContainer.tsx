@@ -44,17 +44,17 @@ const PostContainer: React.FC<blogpostbody> = ({ id, title, image, meta, firstna
         }
     }
     return (
-        <div onClick={() => LoadPost(id)} className='bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white h-max w-[80vw] shadow-2xl rounded flex md:flex-row flex-col p-3 gap-4 object-fill items-center'>
+        <div onClick={() => LoadPost(id)} className='bg-slate-100 border-2 text-black h-max w-[80vw] shadow-2xl rounded flex md:flex-row flex-col p-3 gap-4 object-fill items-center'>
             <div className='h-[200px] md:w-[400px]'>
                 <img src={image} className='rounded h-[200px] w-[400px] shadow-xl object-cover' />
             </div>
-            <span className='rounded-md md:h-[180px] bg-slate-200 md:w-[0.15rem] h-[0.15rem] w-[100%]'></span>
+            <span className='rounded-md md:h-[180px] bg-indigo-600 md:w-[0.15rem] h-[0.15rem] w-[100%]'></span>
             <div className='h-[100%] md:w-[60%] w-[100%] flex flex-col justify-evenly gap-5'>
             <h2 className='title text-2xl shadow-sm'>{title}</h2>
-            <p className='shadow-sm font-medium text-slate-100 text-base'>{meta.length > 150 ? meta.slice(0, 150) : meta}...</p>
+            <p className='shadow-sm font-medium text-black text-base'>{meta.length > 150 ? meta.slice(0, 150) : meta}...</p>
             <div className='md:h-[3vh] h-max gap-2 w-[100%] flex md:flex-row flex-col items-center justify-evenly'>
                 <p className='meta_desc text-base shadow-sm font-medium'>Posted: {firstname} {lastname}</p>
-                <button onClick={() => LoadPost(id)} className='bg-indigo-600 font-medium rounded-sm p-1 text-base'>
+                <button onClick={() => LoadPost(id)} className='bg-indigo-600 text-white font-medium rounded-sm p-1 text-base'>
                     Read More
                 </button>
             </div>
