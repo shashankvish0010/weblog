@@ -223,7 +223,7 @@ const Home: React.FC = () => {
         </div>
         <div className='h-max w-screen flex justify-center items-center mt-5 p-3'>
           <div className='bg-indigo-600 text-white rounded-2xl border-2 shadow-xl flex md:flex-row flex-col items-center gap-3 p-5'>
-            <div className='flex flex-col gap-2 w-[85vw]'>
+            <div className='flex flex-col gap-2 md:w-[35vw] w-[85vw]'>
               <p className='text-base'>NEWSLETTER</p>
               <p className='text-2xl font-medium'>Subscribe to our website newsletter to receive news and updates.</p>
             </div>
