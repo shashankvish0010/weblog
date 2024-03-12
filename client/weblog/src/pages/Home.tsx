@@ -26,6 +26,7 @@ const Home: React.FC = () => {
   const navigate = useNavigate()
   const postinfo = useContext(postContext)
   const usercontext = useContext(UserContext);
+  const [sub, setSub] = useState<boolean>(false)
   const [searchQuery, setSearchQuery] = useState<String>('')
   const [resultData, setResultData] = useState<PostInt[] | undefined>()
   const [searchAiQuery, setSearchAiQuery] = useState<String>('')
@@ -119,14 +120,14 @@ const Home: React.FC = () => {
               {usercontext?.loginstatus.success === true && usercontext?.user ? (
                 usercontext.user.subscription === false ? (
                   <button
-                    onClick={() => { usercontext.dispatch({ type: "SUBSCRIBE", id: usercontext.user.id }) }}
+                    onClick={() => { usercontext.dispatch({ type: "SUBSCRIBE", id: usercontext.user.id }); setSub(!sub) }}
                     className='bg-indigo-600 shadow-md rounded-sm p-2 text-base font-semibold text-white'
                   >
                     SUBSCRIBE
                   </button>
                 ) : (
                   <button
-                    onClick={() => { usercontext.dispatch({ type: "UNSUBSCRIBE", id: usercontext.user.id }) }}
+                    onClick={() => { usercontext.dispatch({ type: "UNSUBSCRIBE", id: usercontext.user.id }); setSub(!sub) }}
                     className='bg-indigo-600 shadow-md rounded-sm p-2 text-base font-semibold text-white'
                   >
                     UNSUBSCRIBE
@@ -232,13 +233,13 @@ const Home: React.FC = () => {
                 (
                   usercontext.user.subscription == false ? (
                     <button
-                      onClick={() => { usercontext.dispatch({ type: "SUBSCRIBE", id: usercontext.user.id }) }}
+                      onClick={() => { usercontext.dispatch({ type: "SUBSCRIBE", id: usercontext.user.id }); setSub(!sub) }}
                       className='rounded-xl border-2 bg-slate-200 shadow-md p-5 text-base font-semibold text-black'
                     >
                       SUBSCRIBE
                     </button>
                   ) : (<button
-                    onClick={() => { usercontext.dispatch({ type: "UNSUBSCRIBE", id: usercontext.user.id }) }}
+                    onClick={() => { usercontext.dispatch({ type: "UNSUBSCRIBE", id: usercontext.user.id }); setSub(!sub) }}
                     className='rounded-xl border-2 bg-red-600 shadow-md p-5 text-base font-semibold text-white'
                   >
                     UNSUBSCRIBE
