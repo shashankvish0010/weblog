@@ -85,12 +85,6 @@ const UserProfile: React.FC = () => {
 
   return (
     <div className='h-[100vh] w-[100vw] flex flex-col gap-5 items-center'>
-      <div>
-        <div>
-          {/* <button className='bg-indigo-600 w-[35vw] shadow-md rounded-sm p-2 text-md font-semibold text-white' onClick={handleSubmit}>Set Profile Photo</button>
-       <button className='bg-indigo-600 w-[35vw] shadow-md rounded-sm p-2 text-md font-semibold text-white' onClick={handleSubmit}>Delete Photo</button> */}
-        </div>
-      </div>
       {edit === false ? (
         <>
           <div className='h-max w-[100vw] flex flex-col gap-5'>
@@ -102,12 +96,6 @@ const UserProfile: React.FC = () => {
             <span className='flex flex-row flex-wrap items-center gap-2'>
               <Icon icon="mdi:email-check" color="orange" height={'5vh'} />
               <p className='text-base font-medium'>{userdata?.user.email}</p>
-            </span>
-            <span className='flex md:w-max w-[80vw] md:flex-row overflow-auto flex-col items-center gap-2'>
-              <Icon icon="iconoir:password-pass" color="#3949ab" height={'5vh'} />
-              <span className='overflow-auto'>
-                <p className='text-base font-medium overflow-auto'>{userdata?.user.user_password}</p>
-              </span>
             </span>
           </div>
           <div className='flex flex-col gap-5'>
