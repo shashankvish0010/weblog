@@ -228,20 +228,20 @@ const Home: React.FC = () => {
               <p className='text-2xl font-medium'>Subscribe to our website newsletter to receive news and updates.</p>
             </div>
             <div className='md:w-[20vw] w-max flex flex-col items-center'>
-              {usercontext?.loginstatus.success === true && usercontext?.user ? (
-                usercontext.user.subscription === false ? (
+              {usercontext?.loginstatus.success == true && usercontext?.user ? (
+                usercontext.user.subscription == false ? (
                   <button
                     onClick={() => { usercontext.dispatch({ type: "SUBSCRIBE", id: usercontext.user.id }) }}
                     className='bg-indigo-600 shadow-md rounded-sm p-2 text-base font-semibold text-white'
                   >
                     SUBSCRIBE
                   </button>
-                ) : <button
+                ) : (<button
                   onClick={() => { usercontext.dispatch({ type: "UNSUBSCRIBE", id: usercontext.user.id }) }}
                   className='bg-indigo-600 shadow-md rounded-sm p-2 text-base font-semibold text-white'
                 >
                   UNSUBSCRIBE
-                </button>
+                </button>)
               ) :
                 <div>
                   <Link to='/register'>
