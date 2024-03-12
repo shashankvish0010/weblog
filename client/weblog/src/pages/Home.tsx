@@ -228,23 +228,28 @@ const Home: React.FC = () => {
               <p className='text-2xl font-medium'>Subscribe to our website newsletter to receive news and updates.</p>
             </div>
             <div className='md:w-[20vw] w-max flex flex-col items-center'>
-            {usercontext?.loginstatus.success === true && usercontext?.user ? (
-              usercontext.user.subscription === false ? (
-                <button
-                  onClick={() => { usercontext.dispatch({ type: "SUBSCRIBE", id: usercontext.user.id }) }}
+              {usercontext?.loginstatus.success === true && usercontext?.user ? (
+                usercontext.user.subscription === false ? (
+                  <button
+                    onClick={() => { usercontext.dispatch({ type: "SUBSCRIBE", id: usercontext.user.id }) }}
+                    className='bg-indigo-600 shadow-md rounded-sm p-2 text-base font-semibold text-white'
+                  >
+                    SUBSCRIBE
+                  </button>
+                ) : <button
+                  onClick={() => { usercontext.dispatch({ type: "UNSUBSCRIBE", id: usercontext.user.id }) }}
                   className='bg-indigo-600 shadow-md rounded-sm p-2 text-base font-semibold text-white'
                 >
-                  SUBSCRIBE
+                  UNSUBSCRIBE
                 </button>
-              ) : null
-            ) :
-              <div>
-                <Link to='/register'>
-                  <button className='bg-slate-200 rounded-lg border-2 p-4 text-XL text-indigo-600 font-medium hover:shadow-md transition duration-300 ease-in-out transform hover:-translate-y+1 hover:scale-105'>SignUp for FREE!</button>
-                </Link>
-              </div>
-            }
-          </div>
+              ) :
+                <div>
+                  <Link to='/register'>
+                    <button className='bg-slate-200 rounded-lg border-2 p-4 text-XL text-indigo-600 font-medium hover:shadow-md transition duration-300 ease-in-out transform hover:-translate-y+1 hover:scale-105'>SignUp for FREE!</button>
+                  </Link>
+                </div>
+              }
+            </div>
           </div>
         </div>
       </div>
