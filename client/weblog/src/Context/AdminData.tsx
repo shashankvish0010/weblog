@@ -86,8 +86,11 @@ export const AdminContextProvider = (props: any) => {
           });
           if(response) {
               const data = await response.json();
-              if(data.success){
+              console.log(data);
+              
+              if(data.success == true){
                 setStoreAdmin(data.adminData);
+                document.cookie = `jwt=${data.token}; path=/`
               }
               setStatus( prevStatus => ({
                   ...prevStatus, success : data.success, message : data.message
